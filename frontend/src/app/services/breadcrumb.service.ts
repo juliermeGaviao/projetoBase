@@ -45,8 +45,7 @@ export class BreadcrumbService {
 
   private updateBreadcrumb(links: any[]) {
     const updatedLinks = [
-      { label: 'Home', url: '/', home: true },
-      { label: 'Dashboard Bens Apreendidos', url: '/dashboard' }
+      { label: 'Home', url: '/home', home: true }
     ];
     this.breadcrumbSource.next([...updatedLinks, ...links]);
   }

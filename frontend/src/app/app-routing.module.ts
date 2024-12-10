@@ -14,7 +14,8 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [homeAuthGuard],
     children: [
-      { path: 'sector', component: LoginComponent, data: { breadCrumb: 'Setor' } }
+      { path: 'sector', component: LoginComponent, data: { breadCrumb: 'Setor' } },
+      { path: 'product', component: LoginComponent, data: { breadCrumb: 'Produto' } }
     ]
   },
   { path: '**', redirectTo: 'login' }
