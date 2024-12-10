@@ -1,59 +1,49 @@
-import { Injectable } from '@angular/core';
-import { UsuarioResponse } from '../interfaces/usuarioResponse.interface';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { UsuarioResponse } from '../interfaces/usuarioResponse.interface'
+import { BehaviorSubject } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
 
-  private ticket: string;
-  private token: string;
-  private readonly userResponse = new BehaviorSubject<UsuarioResponse>(null);
+  private readonly userResponse = new BehaviorSubject<UsuarioResponse>(null)
 
   constructor() { }
 
-  getTicket(): string {
-    return this.ticket;
-  }
-
   getUsuarioResponse(): UsuarioResponse {
     if(this.userResponse.getValue()) {
-      return this.userResponse.getValue();
+      return this.userResponse.getValue()
     }
-    return JSON.parse(localStorage.getItem('usuarioResponse_SCA2'));
-  }
 
-  getToken(): string {
-    return this.token;
+    return JSON.parse(localStorage.getItem('usuarioResponse_SCA2'))
   }
 
   setUsuarioResponse(userResponse: UsuarioResponse) {
-    this.userResponse.next(userResponse);
+    this.userResponse.next(userResponse)
   }
 
   clearUsuarioResponse() {
-    this.userResponse.next(null);
-  }
-
-  setTicket(ticket: string) {
-    this.ticket = ticket;
-  }
-
-  setToken(token: string) { 
-    this.token = token; 
+    this.userResponse.next(null)
   }
 
   isAuthenticated(): boolean {
-    return localStorage.getItem('token_SCA2') != null;
+    return localStorage.getItem('token_SCA2')?.length > 0
+  }
+
+  hasTicket(): boolean {
+    return localStorage.getItem('ticket_SCA2')?.length > 0
+  }
+
+  getTicket(): string {
+    return localStorage.getItem('ticket_SCA2')
   }
 
   clear() {
-    localStorage.removeItem('token_SCA2');
-    localStorage.removeItem('ticket_SCA2');
-    localStorage.removeItem('usuarioResponse_SCA2');
-    this.ticket = null;
-    this.token = null;
-    this.userResponse.next(null);
+    localStorage.removeItem('token_SCA2')
+    localStorage.removeItem('ticket_SCA2')
+    localStorage.removeItem('usuarioResponse_SCA2')
+    this.userResponse.next(null)
   }
+
 }

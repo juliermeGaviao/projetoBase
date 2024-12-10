@@ -1,17 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { take } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
-import { LoginService } from 'src/app/services/login.service';
-
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
+import { take } from 'rxjs'
+import { AuthService } from 'src/app/services/auth.service'
+import { LoginService } from 'src/app/services/login.service'
+import { UsuarioResponse } from 'src/app/interfaces/usuarioResponse.interface'
 
 @Component({
   selector: 'app-login',
   template: ''
 })
 export class LoginComponent implements OnInit {
-
-  ticket: string;
 
   constructor(
     private readonly router: Router,
@@ -20,49 +18,58 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const urlParams = new URLSearchParams(window.location.search);
-    this.ticket = urlParams.get('ticket');
+    const ticket: string = this.getTicket()
 
-    if (this.ticket) {
-      this.verifyTicketAndGetToken();
+    if (this.loginService.isAuthenticated()) {
+      this.router.navigate(['home'])
+    } else if (ticket) {
+      this.getToken(ticket)
     } else {
-      this.redirectToSCA2Login();
+      this.redirectToSCA2Login()
     }
   }
 
-  verifyTicketAndGetToken() {
-    this.authService.token(this.ticket)
-      .pipe(take(1))
+  getTicket(): string {
+    if (this.loginService.hasTicket()) {
+      return this.loginService.getTicket()
+    } else {
+      const url = this.router.url
+
+      if (url?.includes('?ticket=')) {
+        return url.substring(url.indexOf('=') + 1, url.length)
+      }
+    }
+
+    return null
+  }
+
+  getToken(ticket: string) {
+    console.log(ticket)
+    this.authService.token(ticket).pipe(take(1))
       .subscribe({
-        next: (response) => {
-          if (response) {
-            localStorage.setItem('token_SCA2', response.sessionToken);
-            localStorage.setItem('usuarioResponse_SCA2', JSON.stringify(response));
-            this.loginService.setToken(response.sessionToken);
-            this.loginService.setUsuarioResponse(response);
-            this.router.navigate(['dashboard']);
-          } else {
-            this.redirectToSCA2Login();
-          }
+        next: (usuario: UsuarioResponse) => {
+          localStorage.setItem('token_SCA2', usuario.sessionToken)
+          localStorage.setItem('usuarioResponse_SCA2', JSON.stringify(usuario))
+
+          this.loginService.setUsuarioResponse(usuario)
+          this.router.navigate(['home'])
         },
         error: () => {
-          this.redirectToSCA2Login();
-        }
-      });
+          this.loginService.clear()
+          this.router.navigate(['/error-page'])
+        },
+      })
   }
 
   redirectToSCA2Login() {
-    this.authService.login()
-      .pipe(take(1))
+    this.authService.login().pipe(take(1))
       .subscribe({
         next: (loginUrl: string) => {
-          if (loginUrl) {
-            window.location.href = loginUrl;
-          }
+          window.location.href = loginUrl
         },
         error: () => {
-          this.router.navigate(['error-page']);
+          this.router.navigate(['/error-page'])
         }
-      });
+      })
   }
 }
