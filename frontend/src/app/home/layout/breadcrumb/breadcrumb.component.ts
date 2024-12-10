@@ -13,7 +13,8 @@ interface Breadcrumb {
   templateUrl: './breadcrumb.component.html'
 })
 export class BreadcrumbComponent implements AfterViewInit {
-  links: Breadcrumb[] = [];
+
+  links: Breadcrumb[] = []
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
