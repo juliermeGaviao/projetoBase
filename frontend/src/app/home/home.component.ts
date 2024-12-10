@@ -7,11 +7,7 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent  {
-  menuOpen: boolean = true;
 
   constructor(public sharedService: SharedService) {}
 
-  toggleMenu(): void {
-    this.menuOpen = !this.menuOpen;
-  }
 }
