@@ -1,0 +1,18 @@
+  <h3>Detalhes Gerais</h3>
+
+  <app-breadcrumb class="breadcrumb-container"></app-breadcrumb>
+  
+  <br-menu
+    [id]="id"
+    [attr.show-menu]="sharedService.isOpen === true ? true : null"
+    is-push
+    [list]="menuItems"
+    data-breakpoints="col-sm-4 col-lg-3"
+    (navigate)="navigate($event)"
+  >
+  
+  
+  </br-menu>
+
+
+

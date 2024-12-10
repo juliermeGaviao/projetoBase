@@ -1,0 +1,37 @@
+{"properties": [
+  {
+    "name": "spring.security.sca2-login-get-jwt",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.security.sca2-login-get-jwt'"
+  },
+  {
+    "name": "spring.security.sca-get-token",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.security.sca-get-token'"
+  },
+  {
+    "name": "spring.security.sca2-system-url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.security.sca2-system-url'"
+  },
+  {
+    "name": "spring.security.sca2-login-redirect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.security.sca2-login-redirect'"
+  },
+  {
+    "name": "spring.security.sca-token-validator",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.security.sca2-login-redirect'"
+  },
+  {
+    "name": "spring.security.sca-logout",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.security.sca2-login-redirect'"
+  },
+  {
+    "name": "spring.security.sca-logout-redirect",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.security.sca2-login-redirect'"
+  }
+]}

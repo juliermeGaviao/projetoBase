@@ -1,0 +1,24 @@
+.table-header-blue th {
+  color: rgb(82, 118, 236);
+  font-size: .9rem;
+  font-weight: bold;
+}
+
+.table-hover tbody tr td {
+  font-size: .8rem;
+}
+
+.hidden-data {
+  visibility: hidden;
+}
+
+.table-hover thead th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.input-search-container {
+  max-width: 70%;
+}
+

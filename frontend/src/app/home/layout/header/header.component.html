@@ -1,0 +1,55 @@
+<br-header
+  [alt]="image.alt"
+  [image]="image.src"
+  [signature]="signature"
+  [title]="title"
+  container-fluid="true"
+  has-menu
+  has-title-link="true"
+  id="header"
+  title-link-url="/"
+>
+  <div slot="headerMenu">
+    <br-button
+      circle
+      density="small"
+      aria-label="Menu"
+      [icon]="sharedService.isOpen ? 'bars' : 'bars'"
+      (click)="toggleMenu()" onkeypress=""
+    ></br-button>
+  </div>
+  <br-header-action
+  slot="headerAction"
+  title-links="Bibliotecas de componentes"
+  [listLinks]="links"
+  title-functions="Links relacionados"
+  [listFunctions]="functions"
+  has-login=""
+  (click)="showLogoutModal($event)"
+  label-login="Sair do sistema"
+  onkeypress=""
+  image-avatar-login="https://picsum.photos/id/823/400"
+  >
+  </br-header-action>
+</br-header>
+
+
+<br-modal
+  *ngIf="showModalLogout"
+  style="position: fixed; z-index: 99999999; right: 1%; top: 10%"
+  title="Confirmação"
+  show
+  closable
+  buttons='
+<div slot="buttons">
+  <br-button type="secondary" class="m-1">Ação 1</br-button>
+  <br-button type="primary" class="m-1">Ação 2</br-button>
+</div>
+'
+  ><p>
+    Deseja sair do sistema? </p
+  ><div slot="buttons"
+    ><br-button type="secondary" class="m-1" (click)="showModalLogout = false" onkeypress="">Não</br-button
+    ><br-button type="primary" class="m-1" (click)="onLogout()" onkeypress="">Sim</br-button></div
+  ></br-modal
+>

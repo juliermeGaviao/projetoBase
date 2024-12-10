@@ -1,0 +1,14 @@
+.space-content{
+margin-top: 6rem;
+
+}
+
+@media (max-width: 1400px) {
+    .sidebar  {
+      width: 100vw;
+    }
+    .menu-open .content-container {
+      width: calc(100% - 100vw);
+    }
+  }
+

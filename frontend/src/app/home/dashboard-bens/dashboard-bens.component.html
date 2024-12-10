@@ -1,0 +1,111 @@
+<app-header></app-header>
+<div class="container-fluid mt-4">
+  <div class="row align-items-center">
+    <div class="col-md-6 d-flex align-items-center w-100">
+      <h3 class="my-4">Dashboard Bens Apreendidos</h3>
+    </div>
+    <div class="col-md-6 d-flex justify-content-end">
+      <div class="br-input large input-button flex-grow-1 input-search-container">
+        <input
+          id="input-search-larg"
+          type="search"
+          placeholder="Pesquise por número do processo, responsável pela guarda, CPF/CNPJ ou Nome do Autuado"
+          class="form-control"
+          [(ngModel)]="criteriosBusca"
+          (ngModelChange)="onSearchInputChange($event)"
+        />
+        <button class="br-button" type="button" (click)="aplicarFiltroLocal()" aria-label="Buscar">
+          <i class="fas fa-search" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <h4 class="my-4">Últimas entradas</h4>
+
+  <div class="br-table">
+    <table class="table table-hover">
+      <thead class="thead-light table-header-blue">
+        <tr>
+          <th>Processo</th>
+          <th>Tipo do Bem</th>
+          <th>Modalidade de Destinação</th>
+          <th>Situação</th>
+          <th>Responsável pela Guarda</th>
+          <th>CPF/CNPJ do Responsável pela Guarda</th>
+          <th>Localização do Bem</th>
+          <th>Nome do Autuado</th>
+          <th>CPF/CNPJ do Autuado</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bem of bensFiltrados">
+          <td>{{ bem.processo?.numeroProcesso || '-' }}</td>
+          <td>{{ bem.tipoBem?.descricao || '-' }}</td>
+          <td>{{ bem.processoDestinacao?.modalidadeDestinacao || '-' }}</td>
+          <td>{{ bem.situacaoBem }}</td>
+          <td>{{ bem.processoDestinacao?.cpfFielDepositario || '-' }}</td>
+          <td>{{ bem.processoDestinacao?.cnpjFielDepositario || '-' }}</td>
+          <td>{{ bem.processoDestinacao?.localizacao || '-' }}</td>
+          <td>{{ bem.processo?.processado?.nome || '-' }}</td>
+          <td>{{ bem.processo?.processado?.cpf || bem.processo?.processado?.cnpj || '-' }}</td>
+          <td>
+            <button
+              class="br-button circle small"
+              type="button"
+              (click)="visualizarDetalhes(bem)"
+              aria-label="Ver detalhes"
+            >
+              <i class="fas fa-eye" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="bensFiltrados.length === 0">
+          <td colspan="10" class="text-center">Nenhum bem encontrado</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="table-footer">
+      <nav class="br-pagination d-flex justify-content-between align-items-center" aria-label="Paginação">
+        <div class="pagination-per-page d-flex align-items-center">
+          <label for="per-page-selection" class="mr-2">Exibir</label>
+          <select
+            id="per-page-selection"
+            class="form-control"
+            aria-label="Itens por página"
+            (change)="mudarTamanhoPagina($event)"
+          >
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+          </select>
+        </div>
+        <div class="pagination-information">
+          {{ pagina * tamanho + 1 }}-{{ (pagina + 1) * tamanho }} de {{ totalRegistros }} itens
+        </div>
+        <div class="pagination-arrows">
+          <button
+            class="br-button circle"
+            type="button"
+            aria-label="Voltar página"
+            (click)="paginaAnterior()"
+            [disabled]="pagina === 0"
+          >
+            <i class="fas fa-angle-left" aria-hidden="true"></i>
+          </button>
+          <button
+            class="br-button circle"
+            type="button"
+            aria-label="Página seguinte"
+            (click)="proximaPagina()"
+            [disabled]="bensFiltrados.length < tamanho"
+          >
+            <i class="fas fa-angle-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="template-base" [ngClass]="{'menu-open': sharedService.isOpen, 'menu-closed': !sharedService.isOpen}">
+  <app-header (menuToggle)="toggleMenu()"></app-header>
+
+  <main class="d-flex flex-fill" id="main" style="margin-top: 1%;">
+    <div class="container-fluid d-flex flex-grow-1">
+
+      <app-menu *ngIf="sharedService.isOpen" class="sidebar"></app-menu>
+
+
+      <div class="content-container flex-grow-1 space-content" [ngClass]="{'full-width': !sharedService.isOpen}">
+    
+
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </main>
+
+  <footer class="br-footer d-flex justify-content-center text-center">
+    <p>Texto destinado a exibição das informações relacionadas à <b>licença de uso.</b></p>
+  </footer>
+</div>

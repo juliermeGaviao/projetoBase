@@ -1,0 +1,75 @@
+<div class="container-fluid">
+
+  <div class="border p-2 rounded bg-light">
+    <h3 class="font-weight-bold mb-2">Nº do Processo - {{ processo?.numeroProcesso || 'Dado não encontrado' }}</h3>
+    <p class="mb-1">Descrição do Processo: {{ processo?.descricao || 'Dado não encontrado' }}</p>
+    <p class="mb-2">Nome do Autuado: {{ processo?.processado?.nome || 'Dado não encontrado' }}</p>
+  </div>
+
+  <form [formGroup]="userForm" class="mb-3">
+    <br-divider size="small" class="my-2"></br-divider>
+    <h4 class="mb-3">Identificação:</h4>
+    <div class="row mb-2">
+      <div class="col-md-6 mb-2">
+        <br-input id="input-highlight-labeless" [attr.readonly]="true" name="name" label="Nome:" 
+          [value]="userForm.get('name')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+      <div class="col-md-3 mb-2">
+        <br-input [attr.readonly]="true" id="cpf" name="cpf" label="CPF/CNPJ:" 
+          [value]="userForm.get('cpf')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+      <div class="col-md-3 mb-2">
+        <br-input [attr.readonly]="true" id="rg" name="rg" label="Doc. de Identidade:" 
+          [value]="userForm.get('rg')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+      <div class="col-md-6 mb-2">
+        <br-input [attr.readonly]="true" id="pai" name="pai" label="Pai:" 
+          [value]="userForm.get('pai')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+      <div class="col-md-6 mb-2">
+        <br-input [attr.readonly]="true" id="mae" name="mae" label="Mãe:" 
+          [value]="userForm.get('mae')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+      <div class="col-md-3 mb-2">
+        <br-input [attr.readonly]="true" id="estadoCivil" name="estadoCivil" label="Estado civil:" 
+          [value]="userForm.get('estadoCivil')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+    </div>
+
+    <h4 class="mb-3">Endereço:</h4>
+    <div class="row mb-2">
+      <div class="col-md-8 mb-2">
+        <br-input [attr.readonly]="true" id="address" name="address" label="Logradouro:" 
+          [value]="userForm.get('address')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+      <div class="col-md-2 mb-2">
+        <br-input [attr.readonly]="true" id="cep" name="cep" label="CEP:" 
+          [value]="userForm.get('cep')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+      <div class="col-md-2 mb-2">
+        <br-input [attr.readonly]="true" id="uf" name="uf" label="UF:" 
+          [value]="userForm.get('uf')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+      <div class="col-md-8 mb-2">
+        <br-input [attr.readonly]="true" id="bairro" name="bairro" label="Bairro ou Distrito:" 
+          [value]="userForm.get('bairro')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+      <div class="col-md-4 mb-2">
+        <br-input [attr.readonly]="true" id="cidade" name="cidade" label="Cidade:" 
+          [value]="userForm.get('cidade')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+    </div>
+
+    <h4 class="mb-2">Contato:</h4>
+    <div class="row mb-2">
+      <div class="col-md-6 mb-2">
+        <br-input [attr.readonly]="true" id="email" name="email" label="E-mail:" 
+          [value]="userForm.get('email')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+      <div class="col-md-6 mb-2">
+        <br-input [attr.readonly]="true" id="mobile" name="mobile" label="Telefone Celular:" 
+          [value]="userForm.get('mobile')?.value || 'Dado não encontrado'"></br-input>
+      </div>
+    </div>
+  </form>
+</div>

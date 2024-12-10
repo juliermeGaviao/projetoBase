@@ -1,0 +1,11 @@
+
+.breadcrumb-container {
+  width: 30%; 
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 1500px) {
+  .breadcrumb-container {
+    width: 50%; 
+  }
+}

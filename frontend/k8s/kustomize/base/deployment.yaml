@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bens-apreendidos-frontend
+  annotations:
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"bens-apreendidos-frontend:hom", "namespace":"bens-apreendidos-hom"},"fieldPath":"spec.template.spec.containers[?(@.name==\"bens-apreendidos-frontend\")].image"}]'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bens-apreendidos-frontend
+  template:
+    metadata:
+      labels:
+        app: bens-apreendidos-frontend
+    spec:
+      containers:
+        - name: bens-apreendidos-frontend
+          image: "image-registry.openshift-image-registry.svc:5000/bens-apreendidos-hom/bens-apreendidos-frontend:hom"
+          envFrom:
+            - configMapRef:
+                name: bens-apreendidos-frontend
+          ports:
+            - containerPort: 8080           

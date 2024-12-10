@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: test
+
+  datasource:
+    url: jdbc:h2:file:./data/testbase;NON_KEYWORDS=user;INIT=CREATE SCHEMA IF NOT EXISTS base
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+
+  liquibase:
+    change-log: classpath:db/changelog-master.xml
+    default-schema: base
+
+  security:
+    sca2-login-get-jwt: https://homsca2.ibama.serpro.gov.br/sca2sessao/api/v2/sessao/login?service=%s&ticket=%s
+    sca2-login-redirect: https://homlogin.sso2.ibama.serpro.gov.br/cas/login?service=%s
+    sca2-system-url: https://127.0.0.1/ticket
+    sca-get-token: https://homlogin.sso2.ibama.serpro.gov.br/sca2sessao/api/v2/sessao/login
+    sca-token-validator: https://homsca2.ibama.serpro.gov.br/sca2sessao/api/v2/sessao/validar
+    sca-logout: https://homsca2.ibama.serpro.gov.br/sca2sessao/api/v1/sessao/logout
+    sca-logout-redirect: https://homlogin.sso2.ibama.serpro.gov.br/cas/logout?service=
