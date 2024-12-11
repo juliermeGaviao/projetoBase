@@ -1,15 +1,15 @@
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment'
 
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { UsuarioResponse } from '../interfaces/usuarioResponse.interface';
+import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { UsuarioResponse } from '../interfaces/usuarioResponse.interface'
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
-private readonly apiurl = environment.apiUrl;
+private readonly apiurl = environment.apiUrl
 
 constructor(private readonly httpClient: HttpClient) { }
 
@@ -30,19 +30,11 @@ constructor(private readonly httpClient: HttpClient) { }
    * Ex: https://t1-sso2-scaibama.estaleiro.serpro.gov.br/cas/login?service=http%3A%2F%2Flocalhost.localdomain%2Flaf%2Fticket
    */
   login() {
-    return this.httpClient.get(environment.apiUrl + 'sso/login', { responseType: 'text' });
+    return this.httpClient.get(environment.apiUrl + 'sso/login', { responseType: 'text' })
   }
 
   logout()  {
-    return this.httpClient.get(this.apiurl + 'sso/logout', { responseType: 'text' });
-  }
-
-  getDummy() {
-    return this.httpClient.get(this.apiurl + 'test/dummy', { responseType: 'text' });
-  }
-
-  postDummy() {
-    return this.httpClient.post(this.apiurl + 'test/dummy', {});
+    return this.httpClient.get(this.apiurl + 'sso/logout', { responseType: 'text' })
   }
 
 }

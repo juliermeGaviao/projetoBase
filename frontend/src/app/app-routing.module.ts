@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './security/components/login/login.component';
-import { homeAuthGuard } from './security/guards/homeAuth.guard';
-import { PageErrorComponent } from './shared/component/page-error/page-error.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+import { HomeComponent } from './home/home.component'
+import { LoginComponent } from './security/components/login/login.component'
+import { homeAuthGuard } from './security/guards/homeAuth.guard'
+import { PageErrorComponent } from './shared/component/page-error/page-error.component'
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,7 +19,7 @@ const routes: Routes = [
     ]
   },
   { path: '**', redirectTo: 'login' }
-];
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

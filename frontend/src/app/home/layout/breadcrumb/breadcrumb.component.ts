@@ -1,11 +1,11 @@
-import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, startWith } from 'rxjs';
+import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core'
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { filter, startWith } from 'rxjs'
 
 interface Breadcrumb {
-  label: string;
-  url: string;
-  visible: boolean;
+  label: string
+  url: string
+  visible: boolean
 }
 
 @Component({
@@ -33,44 +33,44 @@ export class BreadcrumbComponent implements AfterViewInit {
           url: '/',
           home: true,
         }
-      ];
+      ]
 
-      this.links = this.buildBreadcrumbs(this.activatedRoute.root, '', initialLinks);
+      this.links = this.buildBreadcrumbs(this.activatedRoute.root, '', initialLinks)
 
       // Forçar detecção de mudanças
-      this.cdr.detectChanges();
-    });
+      this.cdr.detectChanges()
+    })
   }
 
   buildBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: any[] = []): Breadcrumb[] {
-    const children: ActivatedRoute[] = route.children;
+    const children: ActivatedRoute[] = route.children
 
     if (children.length === 0) {
-      return breadcrumbs;
+      return breadcrumbs
     }
 
     for (let child of children) {
-      const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
+      const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/')
 
       if (routeURL !== '') {
-        url += `/${routeURL}`;
+        url += `/${routeURL}`
         const breadcrumb: Breadcrumb = {
           label: child.snapshot.data['breadCrumb'] || routeURL,
           url,
           visible: true,
-        };
-
-        if (breadcrumb.label === 'home') {
-          breadcrumb.label = 'Página Inicial';
         }
 
-        breadcrumbs.push(breadcrumb);
+        if (breadcrumb.label === 'home') {
+          breadcrumb.label = 'Página Inicial'
+        }
+
+        breadcrumbs.push(breadcrumb)
       }
 
-      return this.buildBreadcrumbs(child, url, breadcrumbs);
+      return this.buildBreadcrumbs(child, url, breadcrumbs)
     }
 
-    return breadcrumbs;
+    return breadcrumbs
   }
 
 }
