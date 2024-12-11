@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing'
 import { CanActivateFn, Router } from '@angular/router'
 
-import { homeAuthGuard } from './homeAuth.guard'
+import { HomeAuthGuard } from './homeAuth.guard'
 
-describe('homeGuardGuard', () => {
+describe('HomeGuardGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>
-      TestBed.runInInjectionContext(() => homeAuthGuard(...guardParameters))
+      TestBed.runInInjectionContext(() => HomeAuthGuard(...guardParameters))
 
   beforeEach(() => {
     TestBed.configureTestingModule({
