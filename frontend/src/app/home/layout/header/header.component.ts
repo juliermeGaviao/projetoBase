@@ -5,6 +5,8 @@ import { UsuarioResponse } from 'src/app/interfaces/usuarioResponse.interface'
 import { AuthService } from 'src/app/services/auth.service'
 import { LoginService } from 'src/app/services/login.service'
 import { SharedService } from 'src/app/services/shared.service'
+import { Router } from '@angular/router'
+
 /**
  * Componente do cabeçalho da aplicação.
  */
@@ -24,6 +26,7 @@ export class HeaderComponent implements OnInit {
   public links: any[] = []
 
   constructor(
+    private readonly router: Router,
     public sharedService: SharedService,
     private readonly loginService: LoginService,
     private readonly authService: AuthService
@@ -75,6 +78,8 @@ export class HeaderComponent implements OnInit {
       },
       error: err => {
         console.error('Erro no logout:', err)
+        this.loginService.clear()
+        this.router.navigate(['login'])
       }
     })
   }

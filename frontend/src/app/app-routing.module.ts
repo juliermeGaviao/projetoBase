@@ -5,7 +5,7 @@ import { LoginComponent } from './security/components/login/login.component'
 import { HomeAuthGuard } from './security/guards/homeAuth.guard'
 import { PageErrorComponent } from './shared/component/page-error/page-error.component'
 
-import { ListSectorComponent } from './home/components/management/sector/list-sector.component'
+import { ListSectorComponent } from './home/component/management/sector/list-sector.component'
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

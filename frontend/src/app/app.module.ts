@@ -1,45 +1,41 @@
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http'
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA, SecurityContext } from '@angular/core'
+import { HttpClient, HttpClientModule } from '@angular/common/http'
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, SecurityContext } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-
-
-import { AppComponent } from './app.component'
-import { CustomValueAccessorDirective } from './directives/CustomValueAccessor.directives'
-import { BreadcrumbComponent } from './home/layout/breadcrumb/breadcrumb.component'
-import { FooterComponent } from './home/layout/footer/footer.component'
-import { MenuComponent } from './home/layout/menu/menu.component'
-import { FilterPipePipe } from './pipes/FilterPipe.pipe'
-import { LoginComponent } from './security/components/login/login.component'
-import { PageErrorComponent } from './shared/component/page-error/page-error.component'
-import { HttpRequestInterceptor } from 'src/interceptor/HttpRequestInterceptor'
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown'
 import { AppRoutingModule } from './app-routing.module'
+import { AppComponent } from './app.component'
+import { BreadcrumbComponent } from './home/layout/breadcrumb/breadcrumb.component'
+import { CookiebarComponent } from './shared/component/cookiebar/cookiebar.component'
+import { CustomValueAccessorDirective } from './directives/CustomValueAccessor.directives'
+import { FooterComponent } from './home/layout/footer/footer.component'
+import { FormComponent } from './shared/component/form/form.component'
 import { HeaderComponent } from './home/layout/header/header.component'
 import { HomeComponent } from './home/home.component'
-import { AuthService } from './services/auth.service'
-import { MarkdownModule, MarkedOptions } from 'ngx-markdown'
+import { MenuComponent } from './home/layout/menu/menu.component'
+import { MessageComponent } from './shared/component/message/message.component'
+import { SignInComponent } from './shared/component/sign-in/sign-in.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    PageErrorComponent,
+    CookiebarComponent,
+    CustomValueAccessorDirective,
     BreadcrumbComponent,
     FooterComponent,
-    MenuComponent,
-    CustomValueAccessorDirective,
-    FilterPipePipe,
+    FormComponent,
     HeaderComponent,
-    HomeComponent, 
+    HomeComponent,
+    MenuComponent,
+    MessageComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
     MarkdownModule.forRoot({
       loader: HttpClient,
       markedOptions: {
@@ -52,13 +48,10 @@ import { MarkdownModule, MarkedOptions } from 'ngx-markdown'
         },
       },
       sanitize: SecurityContext.NONE,
-    })
+    }),
   ],
-  providers: [
-    AuthService,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  bootstrap: [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
