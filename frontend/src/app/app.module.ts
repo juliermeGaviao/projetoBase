@@ -1,5 +1,5 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core'
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http'
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA, SecurityContext } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -18,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { HeaderComponent } from './home/layout/header/header.component'
 import { HomeComponent } from './home/home.component'
 import { AuthService } from './services/auth.service'
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown'
 
 @NgModule({
   declarations: [
@@ -38,7 +39,20 @@ import { AuthService } from './services/auth.service'
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MarkdownModule.forRoot({
+      loader: HttpClient,
+      markedOptions: {
+        provide: MarkedOptions,
+        useValue: {
+          breaks: true,
+          smartLists: true,
+          smartypants: true,
+          tables: true,
+        },
+      },
+      sanitize: SecurityContext.NONE,
+    })
   ],
   providers: [
     AuthService,

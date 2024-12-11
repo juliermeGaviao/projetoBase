@@ -13,7 +13,7 @@ import { SharedService } from 'src/app/services/shared.service'
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
-  public title: string = 'Bens Apreendidos'
+  public title: string = 'Projeto Base'
   public signature: string = 'IBAMA | Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis'
   public image = {
     src: 'assets/ibama-logo-2.png',

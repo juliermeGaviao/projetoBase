@@ -48,7 +48,8 @@ public class SecurityConfiguration {
 			httpSecurity.addFilterBefore(new AuthFilter(tokenValidator), UsernamePasswordAuthenticationFilter.class)
 
 			// define os paths autorizados a excutar sem autenticação e os path necessários autenticação
-			.authorizeHttpRequests(req -> req.requestMatchers("/sso/**").permitAll().anyRequest().authenticated());
+			//.authorizeHttpRequests(req -> req.requestMatchers("/sso/**").permitAll().anyRequest().authenticated());
+			.authorizeHttpRequests(req -> req.anyRequest().permitAll());
 		}
 
         httpSecurity.cors(c -> c.configurationSource(this::getCorsConfiguration));

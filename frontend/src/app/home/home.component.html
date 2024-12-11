@@ -1,9 +1,9 @@
 <div class="template-base" [ngClass]="{'menu-open': sharedService.isOpen, 'menu-closed': !sharedService.isOpen}">
   <app-header></app-header>
   <main class="d-flex flex-fill mb-5" id="main" style="margin-top: 1%;">
+    <app-breadcrumb></app-breadcrumb>
     <div class="container-fluid d-flex flex-grow-1">
       <app-menu *ngIf="sharedService.isOpen" class="sidebar"></app-menu>
-      <app-breadcrumb></app-breadcrumb>
       <div class="content-container flex-grow-1 space-content" [ngClass]="{'full-width': !sharedService.isOpen}">
         <router-outlet></router-outlet>
       </div>
