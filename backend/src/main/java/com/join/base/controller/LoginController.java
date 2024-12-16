@@ -19,16 +19,18 @@ import com.join.base.service.SCA2Service;
 @RequestMapping("/sso")
 public class LoginController {
 
-	@Value("${spring.security.sca2-login-redirect}")
-	private String loginRedirect;
-
-	@Value("${spring.security.sca2-system-url}")
-	private String sca2SystemUrl;
-
 	private SCA2Service sca2Service;
 
-	public LoginController(SCA2Service sca2Service) {
+	private String loginRedirect;
+
+	private String sca2SystemUrl;
+
+	public LoginController(SCA2Service sca2Service,
+			@Value("${spring.security.sca2-login-redirect}") String loginRedirect,
+			@Value("${spring.security.sca2-system-url}") String sca2SystemUrl) {
 		this.sca2Service = sca2Service;
+		this.loginRedirect = loginRedirect;
+		this.sca2SystemUrl = sca2SystemUrl;
 	}
 
 	@PostMapping("/token")
