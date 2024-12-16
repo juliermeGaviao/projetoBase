@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router'
 import { IColumns } from '../../../../interfaces/IColumns';
 
-
 import { SectorService } from './sector.service'
 
 @Component({

@@ -9,8 +9,7 @@ spring:
     password: password
 
   liquibase:
-    change-log: classpath:db/changelog-master.xml
-    default-schema: base
+    enabled: false
 
   security:
     sca2-login-get-jwt: https://homsca2.ibama.serpro.gov.br/sca2sessao/api/v2/sessao/login?service=%s&ticket=%s

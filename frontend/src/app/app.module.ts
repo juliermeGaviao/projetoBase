@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http'
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, SecurityContext } from '@angular/core'
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule, SecurityContext } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown'
@@ -9,12 +9,14 @@ import { BreadcrumbComponent } from './home/layout/breadcrumb/breadcrumb.compone
 import { CookiebarComponent } from './shared/component/cookiebar/cookiebar.component'
 import { CustomValueAccessorDirective } from './directives/CustomValueAccessor.directives'
 import { FooterComponent } from './home/layout/footer/footer.component'
-import { FormComponent } from './shared/component/form/form.component'
 import { HeaderComponent } from './home/layout/header/header.component'
 import { HomeComponent } from './home/home.component'
 import { MenuComponent } from './home/layout/menu/menu.component'
 import { MessageComponent } from './shared/component/message/message.component'
 import { SignInComponent } from './shared/component/sign-in/sign-in.component'
+import { FormComponent } from './shared/component/form/form.component'
+
+import { ListSectorComponent } from './home/component/management/sector/list-sector.component'
 
 @NgModule({
   declarations: [
@@ -23,12 +25,13 @@ import { SignInComponent } from './shared/component/sign-in/sign-in.component'
     CustomValueAccessorDirective,
     BreadcrumbComponent,
     FooterComponent,
-    FormComponent,
     HeaderComponent,
     HomeComponent,
     MenuComponent,
     MessageComponent,
     SignInComponent,
+    FormComponent,
+    ListSectorComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,6 @@ import { SignInComponent } from './shared/component/sign-in/sign-in.component'
   ],
   providers: [],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
 export class AppModule {}

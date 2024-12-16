@@ -25,7 +25,7 @@ import com.join.base.service.SCA2Service;
 
 @Service
 public class SCA2ServiceImpl implements SCA2Service {
-	
+
 	private String sca2LogoutUrl;
 
 	private String urlDoLoginAndJwt;
