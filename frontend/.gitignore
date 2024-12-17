@@ -1,25 +1,3 @@
 .angular
-.scannerwork
-.coverage
+.gitignore
 node_modules
-public
-dist
-report-commitlint.txt
-report-markdownlint.txt
-
-# Miscellaneous
-/.angular/cache
-/.sass-cache
-.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-testem.log
-/typings
-.idea/
-**/data/
-data/
-.idea/**
-.idea/workspace.xml
-
