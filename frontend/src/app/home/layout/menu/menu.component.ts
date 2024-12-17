@@ -19,20 +19,30 @@ export class MenuComponent {
   public menuItems: any[] = [
     {
       id: 1,
+      icon: 'home',
+      name: 'Página Inicial',
+      url: '/home',
+      isSpaLinkBehavior: true,
+    },
+    {
+      id: 2,
+      icon: 'list',
       name: 'Setor',
       url: '/home/sector',
       isSpaLinkBehavior: true,
     },
     {
-      id: 1,
+      id: 3,
+      icon: 'file',
       name: 'Produto',
       url: '/home/product',
       isSpaLinkBehavior: true,
     }
-  ];
+  ]
 
   navigate(route: any) {
     const { detail: pathRouter } = route
     this.router.navigate(pathRouter)
   }
+
 }
