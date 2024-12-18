@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { IColumns } from '../../../../interfaces/IColumns';
+import { IColumns } from '../../../../interfaces/IColumns'
 
 import { SectorService } from './sector.service'
 
@@ -21,7 +21,7 @@ export class ListSectorComponent implements OnInit {
         }
     }
 
-    public form: FormGroup;
+    public form: FormGroup
 
     columns: IColumns[] = [
         { name: 'Indicador de porte', field: 'indicadorPorte' },
@@ -56,6 +56,14 @@ export class ListSectorComponent implements OnInit {
           }
         })
     }
-    
+
+    onClearFilters() {
+      this.form.reset()
+    }
+
+    onSearch() {
+      this.loadSectors({ "nome": this.form.get('nome')?.value, "page": 0, "size": 5 })
+    }
+  
 }
   

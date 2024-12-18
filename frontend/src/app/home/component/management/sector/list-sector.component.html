@@ -12,7 +12,7 @@
     <br-input type="text" id="nome" name="nome" placeholder="Insira o nome do Setor" label="Nome do Setor:" formControlName="nome"></br-input>
   </div>
   <div class="col-8 d-flex justify-content-end">
-    <br-button id="limpar" label="Limpar Filtro" type="secondary" icon="eraser" class="mt-2 mr-1"></br-button>
+    <br-button id="limpar" label="Limpar Filtro" type="secondary" icon="eraser" class="mt-2 mr-1" (click)="onClearFilters()" onkeypress=""></br-button>
     <br-button id="pesquisar" label="Pesquisar" type="primary" icon="search" class="mt-2"></br-button>
   </div>
 </div>
