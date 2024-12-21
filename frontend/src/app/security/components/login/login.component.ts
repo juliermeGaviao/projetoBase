@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
   }
 
   getToken(ticket: string) {
-    console.log(ticket)
     this.authService.token(ticket).pipe(take(1))
       .subscribe({
         next: (usuario: UsuarioResponse) => {

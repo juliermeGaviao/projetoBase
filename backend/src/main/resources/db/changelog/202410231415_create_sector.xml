@@ -27,6 +27,11 @@
 
 		<createSequence sequenceName="seq_setor" incrementBy="1"/>
 
+    <rollback>
+        <dropTable tableName="setor"/>
+        <dropSequence sequenceName="seq_setor"/>
+    </rollback>
+
 	</changeSet>
 
 </databaseChangeLog>

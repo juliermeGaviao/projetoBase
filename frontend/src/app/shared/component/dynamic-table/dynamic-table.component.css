@@ -1,0 +1,23 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    --table-border-width: 0px;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #F0F0F0;
+    color: #1351B4;
+}
+
+select {
+    width: 45px;
+    border-color: transparent;
+    background-color: white;
+    text-align: center;
+}

@@ -31,6 +31,11 @@
 
 		<createSequence sequenceName="seq_produto" incrementBy="1"/>
 
+    <rollback>
+        <dropTable tableName="produto"/>
+        <dropSequence sequenceName="seq_produto"/>
+    </rollback>
+
 	</changeSet>
 
 </databaseChangeLog>

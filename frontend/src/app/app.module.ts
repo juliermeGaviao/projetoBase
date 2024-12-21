@@ -12,8 +12,9 @@ import { HeaderComponent } from './home/layout/header/header.component'
 import { HomeComponent } from './home/home.component'
 import { MenuComponent } from './home/layout/menu/menu.component'
 import { MessageComponent } from './shared/component/message/message.component'
-import { HttpRequestInterceptor } from 'src/interceptor/HttpRequestInterceptor';
-import { AuthService } from './services/auth.service';
+import { HttpRequestInterceptor } from 'src/interceptor/HttpRequestInterceptor'
+import { AuthService } from './services/auth.service'
+import { DynamicTableComponent } from './shared/component/dynamic-table/dynamic-table.component'
 
 import { ListSectorComponent } from './home/component/management/sector/list-sector.component'
 
@@ -27,7 +28,8 @@ import { ListSectorComponent } from './home/component/management/sector/list-sec
     HomeComponent,
     MenuComponent,
     MessageComponent,
-    ListSectorComponent
+    ListSectorComponent,
+    DynamicTableComponent
   ],
   imports: [
     BrowserModule,
