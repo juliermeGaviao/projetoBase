@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ContentChildren, QueryList, TemplateRef } from '@angular/core'
 
 @Component({
   selector: 'app-dynamic-table',
@@ -7,29 +7,25 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class DynamicTableComponent {
 
-  @Input() columns: Array<{ header: string, cell: (row: any) => any }> = [];
-  @Input() data: any[] = [];
-  @Input() pageSizes: number[] = [10, 20, 30];
-  @Input() totalRecords: number = 0;
+  @ContentChildren('header') headers: QueryList<TemplateRef<any>>
+  @ContentChildren('column') columns: QueryList<TemplateRef<any>>
+  @Input() data: any[] = []
+  @Input() pageSizes: number[] = [10, 20, 30]
+  @Input() totalRecords: number = 0
 
-  @Output() pageChange = new EventEmitter<number>();
-  @Output() pageSizeChange = new EventEmitter<number>();
+  @Output() pageChange = new EventEmitter<number>()
+  @Output() pageSizeChange = new EventEmitter<number>()
   constructor() { }
 
-  currentPage = 0;
-  pageSize = 10;
-  options = [
-    { label: '10', value: 10, selected: true},
-    { label: '20', value: 20},
-    { label: '30', value: 30}
-  ]
+  currentPage = 0
+  pageSize = 10
 
   get totalPages(): number {
-    return Math.ceil(this.totalRecords / this.pageSize);
+    return Math.ceil(this.totalRecords / this.pageSize)
   }
 
   get pageStart(): number {
-    return this.currentPage * this.pageSize + 1;
+    return this.currentPage * this.pageSize + 1
   }
 
   get pages(): number[] {
@@ -43,34 +39,34 @@ export class DynamicTableComponent {
   }
 
   get pageEnd(): number {
-    const end = (this.currentPage + 1) * this.pageSize;
-    return end > this.totalRecords ? this.totalRecords : end;
+    const end = (this.currentPage + 1) * this.pageSize
+    return end > this.totalRecords ? this.totalRecords : end
   }
 
   changePageSize(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.pageSize = +target.value;
-    this.currentPage = 0; // Reset to first page
-    this.pageSizeChange.emit(this.pageSize);
+    const target = event.target as HTMLSelectElement
+    this.pageSize = +target.value
+    this.currentPage = 0 // Reset to first page
+    this.pageSizeChange.emit(this.pageSize)
   }
 
   changePage(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.currentPage = +target.value;
-    this.pageChange.emit(this.currentPage);
+    const target = event.target as HTMLSelectElement
+    this.currentPage = +target.value
+    this.pageChange.emit(this.currentPage)
   }
 
   previousPage(): void {
     if (this.currentPage > 0) {
-      this.currentPage--;
-      this.pageChange.emit(this.currentPage);
+      this.currentPage--
+      this.pageChange.emit(this.currentPage)
     }
   }
 
   nextPage(): void {
     if (this.currentPage < this.totalPages - 1) {
-      this.currentPage++;
-      this.pageChange.emit(this.currentPage);
+      this.currentPage++
+      this.pageChange.emit(this.currentPage)
     }
   }
 

@@ -16,7 +16,16 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [HomeAuthGuard],
     children: [
-      { path: 'sector', component: ListSectorComponent, data: { breadCrumb: 'Setor' } },
+      { path: 'sector',
+        component: ListSectorComponent,
+        data: { breadCrumb: 'Setor' },
+        children: [
+          { path: 'new',
+            component: ListSectorComponent,
+            data: { breadCrumb: 'Novo' }
+          }
+        ]
+      },
       { path: 'product', component: LoginComponent, data: { breadCrumb: 'Produto' } }
     ]
   },

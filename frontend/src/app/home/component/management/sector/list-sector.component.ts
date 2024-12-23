@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 
@@ -21,12 +21,6 @@ export class ListSectorComponent implements OnInit {
       totalPages: 0
     }
   }
-
-  columns = [
-    { header: 'Id', cell: (row) => row.id },
-    { header: 'Nome', cell: (row) => row.nome },
-    { header: 'Ações', cell: () => this.getActions() }
-  ]
 
   public form: FormGroup
 
@@ -101,7 +95,6 @@ export class ListSectorComponent implements OnInit {
 
   onPageChange(page: any): void {
     console.log('Página atual:', page);
-    // Atualize os dados conforme necessário
   }
 
   previousPage(): void {
@@ -116,17 +109,20 @@ export class ListSectorComponent implements OnInit {
     }
   }
 
-  getActions(): string {
-    let result: string
+  newItem() {
+    this.router.navigate(['/home/sector/new'])
+  }
 
-    result = '<button type="button" class="br-button circle" (click)="edit(row.id)"><i class="fas fa-pen"></i></button>'
-    result += '&nbsp;<button type="button" class="br-button circle"><i class="fas fa-trash"></i></button>'
-
-    return result
+  view(idSector: number) {
+    console.log('Ver: ' + idSector)
   }
 
   edit(idSector: number) {
     console.log('Editar: ' + idSector)
+  }
+
+  remove(idSector: number) {
+    console.log('Remover: ' + idSector)
   }
 
 }
