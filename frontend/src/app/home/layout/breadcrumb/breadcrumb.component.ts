@@ -1,11 +1,11 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core'
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
+import { ActivatedRoute, NavigationEnd, Router, Route, ActivatedRouteSnapshot } from '@angular/router'
 import { filter, startWith } from 'rxjs'
 
 interface Breadcrumb {
   label: string
   url: string
-  visible: boolean
+  actual: boolean
 }
 
 @Component({
@@ -26,49 +26,57 @@ export class BreadcrumbComponent implements AfterViewInit {
       filter(event => event instanceof NavigationEnd),
       startWith(new NavigationEnd(0, this.router.url, this.router.url)) // Emite um evento inicial de NavigationEnd
     ).subscribe(() => {
-      const initialLinks = [
-        {
-          label: 'Página Inicial',
-          url: '/',
-          home: true,
-        }
-      ]
+      this.links = []
 
-      this.links = this.buildBreadcrumbs(this.activatedRoute.root, '', initialLinks)
+      if (this.activatedRoute.firstChild) {
+        let path: string = ''
+        let snapshot: ActivatedRouteSnapshot = this.activatedRoute.firstChild.snapshot
+        let home: Route = this.getHomeRoute()
+
+        for (let i = 0; i < snapshot.url.length - 1; i++) {
+          path = (path.length > 0 ? '/' : '') + snapshot.url[i].path
+
+          for (let route of home.children) {
+            if (path === route.path) {
+              this.links.push({
+                label: route.data['breadCrumb'],
+                url: 'home/' + path,
+                actual: false
+              })
+            }
+          }
+        }
+
+        this.links.push({
+          label: snapshot.data['breadCrumb'],
+          url: 'home/' + snapshot.routeConfig.path,
+          actual: true
+        })
+      }
 
       // Forçar detecção de mudanças
       this.cdr.detectChanges()
     })
   }
 
-  buildBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: any[] = []): Breadcrumb[] {
-    const children: ActivatedRoute[] = route.children
-
-    if (children.length === 0) {
-      return breadcrumbs
-    }
-
-    for (let child of children) {
-      const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/')
-
-      if (routeURL !== '') {
-        url += `/${routeURL}`
-        const breadcrumb: Breadcrumb = {
-          label: child.snapshot.data['breadCrumb'] || routeURL,
-          url,
-          visible: true,
-        }
-
-        if (breadcrumb.label?.endsWith('home')) {
-          breadcrumb.label = 'Página Inicial'
-        }
-
-        breadcrumbs.push(breadcrumb)
-      }
-
-      return this.buildBreadcrumbs(child, url, breadcrumbs)
-    }
-
-    return breadcrumbs
+  goHome() {
+    this.router.navigate(['/home'])
   }
+
+  getHomeRoute(): Route {
+    let result: Route = null
+
+    for (let route of this.router.config) {
+      if (route.path === 'home') {
+        result = route
+      }
+    }
+
+    return result
+  }
+
+  navigate(url: string) {
+    this.router.navigate([url])
+  }
+
 }

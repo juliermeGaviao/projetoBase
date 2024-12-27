@@ -1,3 +1,14 @@
-<br-breadcrumb label="Breadcrumb" [links]="links"></br-breadcrumb>
-
-
+<div class="br-breadcrumb" aria-label="Breadcrumb" *ngIf="links?.length">
+  <ul class="crumb-list">
+    <li class="crumb home">
+      <button class="br-button small circle" type="button" (click)="goHome()">
+        <i class="fas fa-home"></i>
+      </button>
+    </li>
+    <li class="crumb" *ngFor="let link of links">
+      <i class="fas fa-chevron-right icon"></i>
+      <span *ngIf="link.actual">{{ link.label }}</span>
+      <a (click)="navigate(link.url)" style="cursor: pointer" *ngIf="!link.actual">{{ link.label }}</a>
+    </li>
+  </ul>
+</div>

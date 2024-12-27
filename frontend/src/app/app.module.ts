@@ -17,6 +17,7 @@ import { AuthService } from './services/auth.service'
 import { DynamicTableComponent } from './shared/component/dynamic-table/dynamic-table.component'
 
 import { ListSectorComponent } from './home/component/management/sector/list-sector.component'
+import { SectorComponent } from './home/component/management/sector/sector.component'
 
 @NgModule({
   declarations: [
@@ -28,8 +29,9 @@ import { ListSectorComponent } from './home/component/management/sector/list-sec
     HomeComponent,
     MenuComponent,
     MessageComponent,
+    DynamicTableComponent,
     ListSectorComponent,
-    DynamicTableComponent
+    SectorComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,7 @@ import { ListSectorComponent } from './home/component/management/sector/list-sec
         },
       },
       sanitize: SecurityContext.NONE,
-    }),
+    })
   ],
   providers: [
     AuthService,

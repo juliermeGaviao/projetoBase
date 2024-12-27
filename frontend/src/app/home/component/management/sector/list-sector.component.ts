@@ -37,6 +37,12 @@ export class ListSectorComponent implements OnInit {
     this.resolve()
   }
 
+  buildForm() {
+    this.form = this.fb.group({
+      nome: [null]
+    })
+  }
+
   loadSectors(params: any = { page: 0, size: 5 }) {
     this.sectorService.getByParams(params).subscribe({
       next: (data: any) => {
@@ -81,12 +87,6 @@ export class ListSectorComponent implements OnInit {
     }
   }
 
-  buildForm() {
-    this.form = this.fb.group({
-      nome: [null]
-    })
-  }
-
   changePageSize(event: any): void {
     const target = event.target as HTMLSelectElement
 
@@ -109,20 +109,20 @@ export class ListSectorComponent implements OnInit {
     }
   }
 
-  newItem() {
+  newItem(): void {
     this.router.navigate(['/home/sector/new'])
   }
 
-  view(idSector: number) {
-    console.log('Ver: ' + idSector)
+  view(id: number): void {
+    this.router.navigate(['/home/sector/view', { "id": id, "view": true } ])
   }
 
-  edit(idSector: number) {
-    console.log('Editar: ' + idSector)
+  edit(id: number): void {
+    console.log('Editar: ' + id)
   }
 
-  remove(idSector: number) {
-    console.log('Remover: ' + idSector)
+  remove(id: number): void {
+    console.log('Remover: ' + id)
   }
 
 }

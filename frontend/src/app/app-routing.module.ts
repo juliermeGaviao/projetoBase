@@ -6,6 +6,7 @@ import { HomeAuthGuard } from './security/guards/homeAuth.guard'
 import { PageErrorComponent } from './shared/component/page-error/page-error.component'
 
 import { ListSectorComponent } from './home/component/management/sector/list-sector.component'
+import { SectorComponent } from './home/component/management/sector/sector.component'
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,12 +20,14 @@ const routes: Routes = [
       { path: 'sector',
         component: ListSectorComponent,
         data: { breadCrumb: 'Setor' },
-        children: [
-          { path: 'new',
-            component: ListSectorComponent,
-            data: { breadCrumb: 'Novo' }
-          }
-        ]
+      },
+      { path: 'sector/view',
+        component: SectorComponent,
+        data: { breadCrumb: 'Visualizar' }
+      },
+      { path: 'sector/new',
+        component: SectorComponent,
+        data: { breadCrumb: 'Novo' }
       },
       { path: 'product', component: LoginComponent, data: { breadCrumb: 'Produto' } }
     ]

@@ -5,8 +5,7 @@ import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  templateUrl: './menu.component.html'
 })
 export class MenuComponent {
   public id: string = 'main-navigation'
@@ -17,13 +16,6 @@ export class MenuComponent {
   ) {}
 
   public menuItems: any[] = [
-    {
-      id: 1,
-      icon: 'home',
-      name: 'Página Inicial',
-      url: '/home',
-      isSpaLinkBehavior: true,
-    },
     {
       id: 2,
       icon: 'list',
