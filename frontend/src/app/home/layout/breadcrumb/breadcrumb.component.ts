@@ -28,31 +28,33 @@ export class BreadcrumbComponent implements AfterViewInit {
     ).subscribe(() => {
       this.links = []
 
-      if (this.activatedRoute.firstChild) {
-        let path: string = ''
-        let snapshot: ActivatedRouteSnapshot = this.activatedRoute.firstChild.snapshot
-        let home: Route = this.getHomeRoute()
+      if (!this.activatedRoute.firstChild) {
+        return
+      }
 
-        for (let i = 0; i < snapshot.url.length - 1; i++) {
-          path = (path.length > 0 ? '/' : '') + snapshot.url[i].path
+      let path: string = ''
+      let snapshot: ActivatedRouteSnapshot = this.activatedRoute.firstChild.snapshot
+      let home: Route = this.getHomeRoute()
 
-          for (let route of home.children) {
-            if (path === route.path) {
-              this.links.push({
-                label: route.data['breadCrumb'],
-                url: 'home/' + path,
-                actual: false
-              })
-            }
+      for (let i = 0; i < snapshot.url.length - 1; i++) {
+        path = (path.length > 0 ? '/' : '') + snapshot.url[i].path
+
+        for (let route of home.children) {
+          if (path === route.path) {
+            this.links.push({
+              label: route.data['breadCrumb'],
+              url: 'home/' + path,
+              actual: false
+            })
           }
         }
-
-        this.links.push({
-          label: snapshot.data['breadCrumb'],
-          url: 'home/' + snapshot.routeConfig.path,
-          actual: true
-        })
       }
+
+      this.links.push({
+        label: snapshot.data['breadCrumb'],
+        url: 'home/' + snapshot.routeConfig.path,
+        actual: true
+      })
 
       // Forçar detecção de mudanças
       this.cdr.detectChanges()
