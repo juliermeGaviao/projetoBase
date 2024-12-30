@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router, Params } from '@angular/router'
 
-import { SectorService } from './sector.service'
+import { SectorService } from 'src/app/services/sector.service'
 
 @Component({
   selector: 'app-sector',
@@ -14,7 +14,7 @@ export class SectorComponent implements OnInit {
 
   title: string
   private id: number
-  private view: boolean
+  view: boolean
 
   public form: FormGroup
 
@@ -29,7 +29,7 @@ export class SectorComponent implements OnInit {
     const params: Params = this.route.snapshot.params
 
     this.id = params?.id ? parseInt(params.id) : null
-    this.view = params?.view === 'true'
+    this.view = params?.view
 
     if (this.view) {
       this.title = 'Visualizar Setor'
@@ -46,18 +46,33 @@ export class SectorComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
-      nome: [null]
+      nome: new FormControl({value: null, disabled: this.view}, Validators.required)
     })
   }
 
   loadSector(id: number) {
     this.sectorService.getById(id).subscribe({
       next: (data: any) => {
+        this.form.setValue({
+          nome: data.nome
+        })
       },
       error: err => {
         console.log(err)
       }
     })
+  }
+
+  cancel(): void {
+    this.router.navigate(['/home/sector'])
+  }
+
+  send(): void {
+    if (this.form.valid) {
+console.log('Válido')
+    }
+
+    this.form.markAllAsTouched()
   }
 
 }

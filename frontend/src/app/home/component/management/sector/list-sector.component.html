@@ -24,7 +24,7 @@
 <div class="p-10px">&nbsp;</div>
 
 <app-dynamic-table [data]="dataTable.records" [totalRecords]="dataTable.page.totalItems"
-  (pageSizeChange)="changePageSize($event)" (pageChange)="onPageChange($event)">
+  (pageSizeChange)="changePageSize($event)" (pageChange)="pageChange($event)">
 
   <ng-template #header let-item="row">Id</ng-template>
   <ng-template #column let-item="row">{{ item.id }}</ng-template>

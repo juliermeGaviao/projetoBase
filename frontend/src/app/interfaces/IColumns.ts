@@ -1,4 +1,4 @@
 export interface IColumns {
-  name: string;
-  field: string;
+  name: string
+  field: string
 }

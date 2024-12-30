@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 
-import { SectorService } from './sector.service'
+import { SectorService } from 'src/app/services/sector.service'
 
 @Component({
   selector: 'app-list-sector',
@@ -93,8 +93,8 @@ export class ListSectorComponent implements OnInit {
     this.loadSectors({ page: 0, size: +target.value })
   }
 
-  onPageChange(page: any): void {
-    console.log('Página atual:', page);
+  pageChange(page: any): void {
+    console.log('Página atual:', page)
   }
 
   previousPage(): void {

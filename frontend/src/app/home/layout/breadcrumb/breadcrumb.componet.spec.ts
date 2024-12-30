@@ -1,40 +1,40 @@
-import { TestBed } from "@angular/core/testing";
-import { BreadcrumbComponent } from "./breadcrumb.component";
-import { ActivatedRoute } from "@angular/router";
+import { TestBed } from "@angular/core/testing"
+import { BreadcrumbComponent } from "./breadcrumb.component"
+import { ActivatedRoute } from "@angular/router"
 
 describe('BreadcrumbComponent', () => {
-  let component: BreadcrumbComponent;
+  let component: BreadcrumbComponent
   const fakeActivatedRoute = {
     snapshot: { data: {} },
     children: []
-  } as ActivatedRoute;
+  } as ActivatedRoute
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [ {provide: ActivatedRoute, useValue: fakeActivatedRoute} ],
       declarations: [BreadcrumbComponent],
-    }).compileComponents();
-  });
+    }).compileComponents()
+  })
 
   beforeEach(() => {
-    const fixture = TestBed.createComponent(BreadcrumbComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    const fixture = TestBed.createComponent(BreadcrumbComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(BreadcrumbComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+    const fixture = TestBed.createComponent(BreadcrumbComponent)
+    const app = fixture.componentInstance
+    expect(app).toBeTruthy()
+  })
 
   it('should ngAfterViewInit', () => {
-    component.ngAfterViewInit();
-    expect(component.ngAfterViewInit).toBeTruthy();
-  });
+    component.ngAfterViewInit()
+    expect(component.ngAfterViewInit).toBeTruthy()
+  })
 
   it('should buildBreadcrumbs', () => {
-    component.buildBreadcrumbs(fakeActivatedRoute, 'laf/home');
-    expect(component.buildBreadcrumbs).toBeTruthy();
-  });
-});
+    component.buildBreadcrumbs(fakeActivatedRoute, 'laf/home')
+    expect(component.buildBreadcrumbs).toBeTruthy()
+  })
+})
