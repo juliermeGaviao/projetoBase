@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router, Params } from '@angular/router'
+import { Sector } from 'src/app/model/sector'
 
 import { SectorService } from 'src/app/services/sector.service'
 
@@ -69,7 +70,21 @@ export class SectorComponent implements OnInit {
 
   send(): void {
     if (this.form.valid) {
-console.log('Válido')
+      let sector: Sector = new Sector()
+
+      sector.nome = this.form.value.nome
+
+      if (this.id) {
+        sector.id = this.id
+        this.sectorService.edit(sector)
+      } else {
+        this.sectorService.save(sector).subscribe({
+          next: () => {
+            console.log('Setor salvo com sucesso')
+          },
+          error: (err) => { this.message = { state: 'danger', text: err.error.detail ?? 'Ocorreu um erro ao salvar o setor', show: true } }
+        })
+      }
     }
 
     this.form.markAllAsTouched()

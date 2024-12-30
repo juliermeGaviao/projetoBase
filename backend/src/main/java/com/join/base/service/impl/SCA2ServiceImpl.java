@@ -54,7 +54,7 @@ public class SCA2ServiceImpl implements SCA2Service {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		if (!(authentication.getPrincipal() instanceof SCA2User)) {
-			return ResponseEntity.ok(scaLogoutRedirect + encode(sca2SystemUrl, UTF_8.toString()));
+			return ResponseEntity.ok("Usuário não encontrado!");
 		}
 
 		SCA2User sca2User = (SCA2User) authentication.getPrincipal();
