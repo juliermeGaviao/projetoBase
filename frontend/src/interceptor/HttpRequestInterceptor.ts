@@ -5,34 +5,51 @@ import { catchError, Observable, throwError } from "rxjs"
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
 
-    constructor() {}
+  constructor() { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-      let apiKey: string
-      let token: string = localStorage.getItem('token_SCA2') || 'TOKEN_NOT_PROVIDED'
-      apiKey = ( 'Bearer ' + token )
+    let apiKey: string
+    let token: string = localStorage.getItem('token_SCA2') || 'TOKEN_NOT_PROVIDED'
+    apiKey = ('Bearer ' + token)
 
-      const newRequest = request.clone({
-        setHeaders: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'text/html;charset=UTF-8',
-          'Authorization': apiKey
-        },
-        body: JSON.stringify(request.body)
+    let newRequest: HttpRequest<any>
 
-      })
-
-        return next.handle(newRequest).pipe(
-          catchError((error) => {
-            if(error instanceof HttpErrorResponse) {
-              if(error.status === 403) {
-                console.log('erro 403', error)
-              }
-            }
-              return throwError(() => error)
-          }))
+    if (request.headers.has('x-file-upload')) {
+      newRequest = this.createFileRequest(request, apiKey)
+    } else {
+      newRequest = this.createDefaultRequest(request, apiKey)
     }
+    return next.handle(newRequest).pipe(
+      catchError((error) => {
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 403) {
+            console.log('erro 403', error)
+          }
+        }
+        return throwError(() => error)
+      }))
+  }
+
+  createDefaultRequest(request: HttpRequest<any>, apiKey: string): HttpRequest<any> {
+    return request.clone({
+      setHeaders: {
+        'Content-Type': 'application/json',
+        'Authorization': apiKey
+      },
+      body: JSON.stringify(request.body)
+    })
+  }
+
+  createFileRequest(request: HttpRequest<any>, apiKey: string): HttpRequest<any> {
+    return request.clone({
+      setHeaders: {
+        "Accept": "*/*",
+        "charset": "utf-8",
+        'Authorization': apiKey
+      }
+    })
+  }
 
 }
 
