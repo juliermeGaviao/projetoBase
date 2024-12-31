@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './security/components/login/login.component'
 import { HomeAuthGuard } from './security/guards/homeAuth.guard'
 import { PageErrorComponent } from './shared/component/page-error/page-error.component'
+import { WelcomeComponent } from './home/layout/welcome/welcome.component'
 
 import { ListSectorComponent } from './home/component/management/sector/list-sector.component'
 import { SectorComponent } from './home/component/management/sector/sector.component'
@@ -17,6 +18,11 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [HomeAuthGuard],
     children: [
+      {
+        path: '',
+        component: WelcomeComponent,
+        data: { breadCrumb: 'Página Inicial' }
+      },
       { path: 'sector',
         component: ListSectorComponent,
         data: { breadCrumb: 'Setor' },

@@ -28,7 +28,7 @@ export class BreadcrumbComponent implements AfterViewInit {
     ).subscribe(() => {
       this.links = []
 
-      if (!this.activatedRoute.firstChild) {
+      if (!this.activatedRoute.firstChild || this.activatedRoute.firstChild.snapshot.routeConfig.path.length === 0) {
         return
       }
 

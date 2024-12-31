@@ -15,6 +15,7 @@ import { MessageComponent } from './shared/component/message/message.component'
 import { HttpRequestInterceptor } from 'src/interceptor/HttpRequestInterceptor'
 import { AuthService } from './services/auth.service'
 import { DynamicTableComponent } from './shared/component/dynamic-table/dynamic-table.component'
+import { WelcomeComponent } from './home/layout/welcome/welcome.component'
 
 import { ListSectorComponent } from './home/component/management/sector/list-sector.component'
 import { SectorComponent } from './home/component/management/sector/sector.component'
@@ -30,6 +31,7 @@ import { SectorComponent } from './home/component/management/sector/sector.compo
     MenuComponent,
     MessageComponent,
     DynamicTableComponent,
+    WelcomeComponent,
     ListSectorComponent,
     SectorComponent
   ],

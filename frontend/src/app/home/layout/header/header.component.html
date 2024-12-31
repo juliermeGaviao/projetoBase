@@ -5,9 +5,8 @@
   [title]="title"
   container-fluid="true"
   has-menu
-  has-title-link="true"
+  has-title-link="false"
   id="header"
-  title-link-url="/"
 >
   <div slot="headerMenu">
     <br-button
@@ -15,8 +14,7 @@
       density="small"
       aria-label="Menu"
       [icon]="sharedService.isOpen ? 'bars' : 'bars'"
-      (click)="toggleMenu()" onkeypress=""
-    ></br-button>
+      (click)="toggleMenu()" onkeypress=""></br-button>
   </div>
   <br-header-action
   slot="headerAction"
