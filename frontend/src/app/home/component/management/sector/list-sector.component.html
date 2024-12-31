@@ -13,7 +13,7 @@
 <form [formGroup]="form" (ngSubmit)="search()">
   <div class="row">
     <div class="col-4">
-      <br-input type="text" id="nome" name="nome" placeholder="Insira o nome do Setor" label="Nome do Setor:" formControlName="nome"></br-input>
+      <br-input type="text" id="nome" name="nome" placeholder="Filtrar pelo nome do Setor" label="Nome do Setor:" formControlName="nome"></br-input>
     </div>
     <div class="col-8 d-flex justify-content-end">
       <button id="limpar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cleanFilters()"><i class="fas fa-eraser"></i>Limpar Filtro</button>
@@ -35,9 +35,9 @@
 
   <ng-template #header let-item="row">Ações</ng-template>
   <ng-template #column let-item="row">
-    <button type="button" class="br-button circle small mr-2" (click)="view(item.id)" title="Visualizar setor"><i class="fas fa-eye"></i></button>
-    <button type="button" class="br-button circle small mr-2" (click)="edit(item.id)" title="Editar setor"><i class="fas fa-pen"></i></button>
-    <button type="button" class="br-button circle small" (click)="remove(item.id)" title="Remover setor"><i class="fas fa-trash"></i></button>
+    <button type="button" class="br-button circle small mr-2" (click)="view(item.id)" title="Visualizar"><i class="fas fa-eye"></i></button>
+    <button type="button" class="br-button circle small mr-2" (click)="edit(item.id)" title="Editar"><i class="fas fa-pen"></i></button>
+    <button type="button" class="br-button circle small" (click)="remove(item.id)" title="Remover"><i class="fas fa-trash"></i></button>
   </ng-template>
 
 </app-dynamic-table>
