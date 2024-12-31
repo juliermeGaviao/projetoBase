@@ -17,7 +17,7 @@ export class ListSectorComponent implements OnInit {
     page: {
       totalItems: 0,
       itemsPerPage: 10,
-      currentPage: 1,
+      currentPage: 0,
       totalPages: 0
     }
   }
@@ -33,7 +33,7 @@ export class ListSectorComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm()
-    this.loadSectors()
+    this.search()
     this.resolve()
   }
 
@@ -43,13 +43,19 @@ export class ListSectorComponent implements OnInit {
     })
   }
 
-  loadSectors(params: any = { page: 0, size: 5 }) {
+  search() {
+    let params: any = { "page": this.dataTable.page.currentPage, "size": this.dataTable.page.itemsPerPage }
+
+    if (this.form.get('nome').value) {
+      params.nome = this.form.get('nome').value
+    }
+
     this.sectorService.getByParams(params).subscribe({
       next: (data: any) => {
         this.dataTable.records = data.sectors
 
         this.dataTable.page.totalPages = data.totalPages
-        this.dataTable.page.currentPage = data.currentPage + 1
+        this.dataTable.page.currentPage = data.currentPage
         this.dataTable.page.totalItems = data.totalItems
         this.dataTable.page.itemsPerPage = params.size
       },
@@ -63,16 +69,6 @@ export class ListSectorComponent implements OnInit {
     this.form.reset()
   }
 
-  search() {
-    let params: any = { "page": this.dataTable.page.currentPage - 1, "size": this.dataTable.page.itemsPerPage }
-
-    if (this.form.get('nome').value) {
-      params.nome = this.form.get('nome').value
-    }
-
-    this.loadSectors(params)
-  }
-
   resolve() {
     if (this.route.queryParams) {
       this.route.queryParams.subscribe(params => {
@@ -84,26 +80,29 @@ export class ListSectorComponent implements OnInit {
     }
   }
 
-  changePageSize(event: any): void {
-    const target = event.target as HTMLSelectElement
+  changePageSize(pageSize: number): void {
+    this.dataTable.page.currentPage = 0
+    this.dataTable.page.itemsPerPage = pageSize
 
-    this.loadSectors({ page: 0, size: +target.value })
+    this.search()
   }
 
-  pageChange(page: any): void {
-    console.log('Página atual:', page)
+  pageChange(page: number): void {
+    this.dataTable.page.currentPage = page
+
+    this.search()
   }
 
   previousPage(): void {
-    if (this.dataTable.page.currentPage > 0) {
-      this.loadSectors({ page: this.dataTable.page.currentPage - 1, size: this.dataTable.page.itemsPerPage })
-    }
+    this.dataTable.page.currentPage = this.dataTable.page.currentPage - 1
+
+    this.search()
   }
 
   nextPage(): void {
-    if (this.dataTable.page.currentPage < this.dataTable.page.totalPages - 1) {
-      this.loadSectors({ page: this.dataTable.page.currentPage + 1, size: this.dataTable.page.itemsPerPage })
-    }
+    this.dataTable.page.currentPage = this.dataTable.page.currentPage + 1
+
+    this.search()
   }
 
   newItem(): void {

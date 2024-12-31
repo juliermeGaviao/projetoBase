@@ -5,7 +5,7 @@
 <form [formGroup]="form" (ngSubmit)="send()">
   <div class="row">
     <div class="col-12">
-      <br-input type="text" id="nome" name="nome" placeholder="Insira o nome do Setor" label="Nome do Setor:" formControlName="nome" [attr.disabled]="view"></br-input>
+      <br-input type="text" id="nome" placeholder="Insira o nome do Setor" label="Nome do Setor:" formControlName="nome" [attr.disabled]="view"></br-input>
       <br-message state="danger" feedback *ngIf="form.get('nome').invalid && form.get('nome').touched">Campo obrigatório.</br-message>
     </div>
   </div>

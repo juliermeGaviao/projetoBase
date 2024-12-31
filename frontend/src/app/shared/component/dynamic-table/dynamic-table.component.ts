@@ -9,16 +9,18 @@ export class DynamicTableComponent {
 
   @ContentChildren('header') headers: QueryList<TemplateRef<any>>
   @ContentChildren('column') columns: QueryList<TemplateRef<any>>
+
   @Input() data: any[] = []
-  @Input() pageSizes: number[] = [10, 20, 30]
+  @Input() pageSizes: number[] = [10, 25, 50, 100]
   @Input() totalRecords: number = 0
 
   @Output() pageChange = new EventEmitter<number>()
   @Output() pageSizeChange = new EventEmitter<number>()
+
   constructor() { }
 
-  currentPage = 0
-  pageSize = 10
+  currentPage: number = 0
+  pageSize: number = 10
 
   get totalPages(): number {
     return Math.ceil(this.totalRecords / this.pageSize)
@@ -28,31 +30,29 @@ export class DynamicTableComponent {
     return this.currentPage * this.pageSize + 1
   }
 
+  get pageEnd(): number {
+    const end = (this.currentPage + 1) * this.pageSize
+
+    return end > this.totalRecords ? this.totalRecords : end
+  }
+
   get pages(): number[] {
     let result: number[] = []
 
     for (let i: number = 0; i < this.totalPages; i++) {
-      result.push(i + 1)
+      result.push(i)
     }
 
     return result
   }
 
-  get pageEnd(): number {
-    const end = (this.currentPage + 1) * this.pageSize
-    return end > this.totalRecords ? this.totalRecords : end
-  }
+  changePageSize(): void {
+    this.currentPage = 0
 
-  changePageSize(event: Event): void {
-    const target = event.target as HTMLSelectElement
-    this.pageSize = +target.value
-    this.currentPage = 0 // Reset to first page
     this.pageSizeChange.emit(this.pageSize)
   }
 
-  changePage(event: Event): void {
-    const target = event.target as HTMLSelectElement
-    this.currentPage = +target.value
+  changePage(): void {
     this.pageChange.emit(this.currentPage)
   }
 

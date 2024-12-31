@@ -24,7 +24,7 @@
   <div class="pagination-per-page">
     <label for="per-page-selection" class="mr-1 mt-1">Exibir</label>
     <div class="br-input">
-      <select id="per-page-selection" (change)="changePageSize($event)">
+      <select id="per-page-selection" (change)="changePageSize()" [(ngModel)]="pageSize">
         <option *ngFor="let optionSize of pageSizes">{{ optionSize }}</option>
       </select>
     </div>
@@ -39,8 +39,8 @@
   <div class="pagination-go-to-page">
     <label for="page-selection" class="mr-1 mt-1">Página</label>
     <div class="br-input">
-      <select id="page-selection" (change)="changePage($event)">
-        <option *ngFor="let actualPage of pages">{{ actualPage }}</option>
+      <select id="page-selection" (change)="changePage()" [(ngModel)]="currentPage">
+        <option *ngFor="let actualPage of pages" [ngValue]="actualPage">{{ actualPage + 1 }}</option>
       </select>
     </div>
   </div>
