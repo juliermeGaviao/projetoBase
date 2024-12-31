@@ -35,9 +35,9 @@
 
   <ng-template #header let-item="row">Ações</ng-template>
   <ng-template #column let-item="row">
-    <button type="button" class="br-button circle small" (click)="view(item.id)"><i class="fas fa-eye"></i></button>
-    <button type="button" class="br-button circle small" (click)="edit(item.id)"><i class="fas fa-pen"></i></button>
-    <button type="button" class="br-button circle small" (click)="remove(item.id)"><i class="fas fa-trash"></i></button>
+    <button type="button" class="br-button circle small mr-2" (click)="view(item.id)" title="Visualizar setor"><i class="fas fa-eye"></i></button>
+    <button type="button" class="br-button circle small mr-2" (click)="edit(item.id)" title="Editar setor"><i class="fas fa-pen"></i></button>
+    <button type="button" class="br-button circle small" (click)="remove(item.id)" title="Remover setor"><i class="fas fa-trash"></i></button>
   </ng-template>
 
 </app-dynamic-table>
