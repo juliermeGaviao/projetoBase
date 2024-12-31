@@ -14,11 +14,11 @@ export class SectorService {
   constructor(private readonly httpClient: HttpClient) { }
 
   getByParams(params: any) {
-    return this.httpClient.get<Sector[]>(this.apiUrl + '/page', { params }).pipe(take(1))
+    return this.httpClient.get<Sector[]>(this.apiUrl + '/page', { params })
   }
 
   deleteById(id: number) {
-    return this.httpClient.delete(this.apiUrl + 'sector/' + id)
+    return this.httpClient.delete(this.apiUrl + '/' + id)
   }
 
   public save(sector: Sector) {
@@ -26,11 +26,11 @@ export class SectorService {
   }
 
   public edit(sector: Sector) {
-    return this.httpClient.put<Sector>(`${this.apiUrl}`, sector).pipe(take(1))
+    return this.httpClient.put<Sector>(`${this.apiUrl}`, sector)
   }
 
   getById(id: number): Observable<Sector> {
-    return this.httpClient.get<Sector>(this.apiUrl + '/' + id).pipe(take(1))
+    return this.httpClient.get<Sector>(this.apiUrl + '/' + id)
   }
 
 }

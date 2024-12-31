@@ -35,6 +35,10 @@ const routes: Routes = [
         component: SectorComponent,
         data: { breadCrumb: 'Novo' }
       },
+      { path: 'sector/edit',
+        component: SectorComponent,
+        data: { breadCrumb: 'Editar' }
+      },
       { path: 'product', component: LoginComponent, data: { breadCrumb: 'Produto' } }
     ]
   },

@@ -59,12 +59,12 @@ export class ListSectorComponent implements OnInit {
     })
   }
 
-  onClearFilters() {
+  cleanFilters() {
     this.form.reset()
   }
 
-  onSearch() {
-    let params: any = { "page": 0, "size": 5 }
+  search() {
+    let params: any = { "page": this.dataTable.page.currentPage - 1, "size": this.dataTable.page.itemsPerPage }
 
     if (this.form.get('nome').value) {
       params.nome = this.form.get('nome').value
@@ -77,11 +77,8 @@ export class ListSectorComponent implements OnInit {
     if (this.route.queryParams) {
       this.route.queryParams.subscribe(params => {
         if (params['success']) {
-          this.message = { state: 'success', text: 'Operação realizada com sucesso', show: true }
-
-          setTimeout(() => {
-            this.message = { state: '', text: '', show: false }
-          }, 10000)
+          this.message = { state: 'success', text: params['success'], show: true }
+          setTimeout(() => { this.message = { state: '', text: '', show: false } }, 10000)
         }
       })
     }
@@ -118,11 +115,20 @@ export class ListSectorComponent implements OnInit {
   }
 
   edit(id: number): void {
-    console.log('Editar: ' + id)
+    this.router.navigate(['/home/sector/edit', { "id": id } ])
   }
 
   remove(id: number): void {
-    console.log('Remover: ' + id)
+    this.sectorService.deleteById(id).subscribe({
+      next: () => {
+        this.search()
+        this.message = { state: 'success', text: 'Setor removido com sucesso', show: true }
+        setTimeout(() => { this.message = { state: '', text: '', show: false } }, 10000)
+    },
+      error: err => {
+        console.log(err)
+      }
+    })
   }
 
 }
