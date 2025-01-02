@@ -19,6 +19,8 @@ import { WelcomeComponent } from './home/layout/welcome/welcome.component'
 
 import { ListSectorComponent } from './home/component/management/sector/list-sector.component'
 import { SectorComponent } from './home/component/management/sector/sector.component'
+import { ListProductComponent } from './home/component/management/product/list-product.component'
+import { ProductComponent } from './home/component/management/product/product.component'
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { SectorComponent } from './home/component/management/sector/sector.compo
     DynamicTableComponent,
     WelcomeComponent,
     ListSectorComponent,
-    SectorComponent
+    SectorComponent,
+    ListProductComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,

@@ -17,7 +17,7 @@ public class ProductSpecification {
 			result = (root, query, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.<String>get("nome")), "%" + filterDto.nome().toLowerCase() + "%");
 		}
 
-		if (filterDto.idSetor() > 0) {
+		if (filterDto.idSetor() != null && filterDto.idSetor() > 0) {
 			if (result != null) {
 				result.and(hasSector(filterDto.idSetor()));
 			} else {

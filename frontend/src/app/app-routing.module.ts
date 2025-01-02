@@ -8,6 +8,8 @@ import { WelcomeComponent } from './home/layout/welcome/welcome.component'
 
 import { ListSectorComponent } from './home/component/management/sector/list-sector.component'
 import { SectorComponent } from './home/component/management/sector/sector.component'
+import { ListProductComponent } from './home/component/management/product/list-product.component'
+import { ProductComponent } from './home/component/management/product/product.component'
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -39,7 +41,22 @@ const routes: Routes = [
         component: SectorComponent,
         data: { breadCrumb: 'Editar' }
       },
-      { path: 'product', component: LoginComponent, data: { breadCrumb: 'Produto' } }
+      { path: 'product',
+        component: ListProductComponent,
+        data: { breadCrumb: 'Produto' }
+      },
+      { path: 'product/view',
+        component: ProductComponent,
+        data: { breadCrumb: 'Visualizar' }
+      },
+      { path: 'product/new',
+        component: ProductComponent,
+        data: { breadCrumb: 'Novo' }
+      },
+      { path: 'product/edit',
+        component: ProductComponent,
+        data: { breadCrumb: 'Editar' }
+      },
     ]
   },
   { path: '**', redirectTo: 'login' }
