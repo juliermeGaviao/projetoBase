@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
+import { Scrim } from '@govbr-ds/core'
 
 import { ProductService } from 'src/app/services/product.service'
 import { SectorService } from 'src/app/services/sector.service'
@@ -17,8 +18,6 @@ export class ListProductComponent implements OnInit {
   sectors: any[] = []
 
   private idDelete: number
-  public showDeleteModal: boolean = false
-  public loading: boolean = false
 
   dataTable: any = {
     records: [],
@@ -65,7 +64,7 @@ export class ListProductComponent implements OnInit {
       params.idSetor = this.form.get('idSetor').value.value
     }
 
-    this.loading = true
+    this.toggleScrim('scrimLoading')
     this.productService.getByParams(params).subscribe({
       next: (data: any) => {
         this.dataTable.records = data.products
@@ -75,25 +74,26 @@ export class ListProductComponent implements OnInit {
         this.dataTable.page.totalItems = data.totalItems
         this.dataTable.page.itemsPerPage = params.size
 
-        this.loading = false
+        this.toggleScrim('scrimLoading')
       },
       error: err => {
-        this.loading = false
         console.log(err)
+        this.toggleScrim('scrimLoading')
       }
     })
   }
 
   loadSectors() {
-    this.loading = true
+    this.toggleScrim('scrimLoading')
     this.sectorService.getByParams({ "page": 0, "size": 100, "orderBy": 'nome' }).subscribe({
       next: (data: any) => {
-        this.loading = false
         this.sectors = data.sectors.map( (sector: Sector) => { return { value: sector.id, label: sector.nome } })
+
+        this.toggleScrim('scrimLoading')
       },
       error: err => {
-        this.loading = false
         console.log(err)
+        this.toggleScrim('scrimLoading')
       }
     })
   }
@@ -153,23 +153,38 @@ export class ListProductComponent implements OnInit {
 
   confirm(id: number) {
     this.idDelete = id
-    this.showDeleteModal = true
+    this.toggleScrim('scrimModal')
   }
 
   remove() {
-    this.loading = true
+    this.toggleScrim('scrimModal')
+    this.toggleScrim('scrimLoading')
+
     this.productService.deleteById(this.idDelete).subscribe({
       next: () => {
-        this.showDeleteModal = false
         this.search()
+        this.toggleScrim('scrimLoading')
         this.message = { state: 'success', text: 'Setor removido com sucesso', show: true }
         setTimeout(() => { this.message = { state: '', text: '', show: false } }, 10000)
     },
       error: err => {
-        this.showDeleteModal = false
         console.log(err)
+        this.toggleScrim('scrimLoading')
       }
     })
+  }
+
+  toggleScrim(component: string) {
+    const scrimfoco = new Scrim({
+      trigger: window.document.querySelector('#' + component),
+      escEnable: false
+    })
+
+    if (scrimfoco.trigger.classList.value.indexOf('active') >= 0) {
+      scrimfoco.hideScrim()
+    } else {
+      scrimfoco.showScrim()
+    }
   }
 
 }
