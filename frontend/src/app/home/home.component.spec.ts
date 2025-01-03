@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HomeComponent } from './home.component'
 import { SharedService } from 'src/app/services/shared.service'
 
-
 describe('HomeComponent', () => {
   let component: HomeComponent
   let fixture: ComponentFixture<HomeComponent>
