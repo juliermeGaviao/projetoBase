@@ -17,14 +17,14 @@ export class MenuComponent {
 
   public menuItems: any[] = [
     {
-      id: 2,
+      id: 1,
       icon: 'list',
       name: 'Setor',
       url: '/home/sector',
       isSpaLinkBehavior: true,
     },
     {
-      id: 3,
+      id: 2,
       icon: 'file',
       name: 'Produto',
       url: '/home/product',
