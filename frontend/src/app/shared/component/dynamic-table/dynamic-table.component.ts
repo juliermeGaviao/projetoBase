@@ -9,10 +9,8 @@ export class DynamicTableComponent {
 
   @ContentChildren('column') columns: QueryList<TemplateRef<any>>
 
-  @Input() headers: any[] = []
-  @Input() data: any[] = []
+  @Input() data: any
   @Input() pageSizes: number[] = [10, 25, 50, 100]
-  @Input() totalRecords: number = 0
   
   @Output() pageChange = new EventEmitter<number>()
   @Output() pageSizeChange = new EventEmitter<number>()
@@ -20,29 +18,20 @@ export class DynamicTableComponent {
 
   constructor() { }
 
-  currentPage: number = 0
-  pageSize: number = 10
-  orderBy: string
-  orderDirect: string
-
-  get totalPages(): number {
-    return Math.ceil(this.totalRecords / this.pageSize)
-  }
-
   get pageStart(): number {
-    return this.currentPage * this.pageSize + 1
+    return this.data.page.currentPage * this.data.page.itemsPerPage + 1
   }
 
   get pageEnd(): number {
-    const end = (this.currentPage + 1) * this.pageSize
+    const end = (this.data.page.currentPage + 1) * this.data.page.itemsPerPage
 
-    return end > this.totalRecords ? this.totalRecords : end
+    return end > this.data.page.totalItems ? this.data.page.totalItems : end
   }
 
   get pages(): number[] {
     let result: number[] = []
 
-    for (let i: number = 0; i < this.totalPages; i++) {
+    for (let i: number = 0; i < this.data.page.totalPages; i++) {
       result.push(i)
     }
 
@@ -50,26 +39,26 @@ export class DynamicTableComponent {
   }
 
   changePageSize(): void {
-    this.currentPage = 0
+    this.data.page.currentPage = 0
 
-    this.pageSizeChange.emit(this.pageSize)
+    this.pageSizeChange.emit(this.data.page.itemsPerPage)
   }
 
   changePage(): void {
-    this.pageChange.emit(this.currentPage)
+    this.pageChange.emit(this.data.page.currentPage)
   }
 
   previousPage(): void {
-    if (this.currentPage > 0) {
-      this.currentPage--
-      this.pageChange.emit(this.currentPage)
+    if (this.data.page.currentPage > 0) {
+      this.data.page.currentPage--
+      this.pageChange.emit(this.data.page.currentPage)
     }
   }
 
   nextPage(): void {
-    if (this.currentPage < this.totalPages - 1) {
-      this.currentPage++
-      this.pageChange.emit(this.currentPage)
+    if (this.data.page.currentPage < this.data.page.totalPages - 1) {
+      this.data.page.currentPage++
+      this.pageChange.emit(this.data.page.currentPage)
     }
   }
 
@@ -82,10 +71,10 @@ export class DynamicTableComponent {
   }
 
   sortBy(orderBy: string, orderDirect: string) {
-    this.orderBy = orderBy
-    this.orderDirect = orderDirect
+    this.data.orderBy = orderBy
+    this.data.orderDirect = orderDirect
 
-    this.sort.emit({orderBy, orderDirect})
+    this.changePage()
   }
 
 }

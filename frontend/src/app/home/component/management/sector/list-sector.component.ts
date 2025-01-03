@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Scrim } from '@govbr-ds/core'
+
+import { DataTable } from 'src/app/shared/component/dynamic-table/dynamic-table-interface'
 
 import { SectorService } from 'src/app/services/sector.service'
 
@@ -11,24 +13,27 @@ import { SectorService } from 'src/app/services/sector.service'
 })
 export class ListSectorComponent implements OnInit {
 
+  @ViewChild('listagem') listagem: ElementRef
+
   message: { state: string, text: string, show: boolean } = { state: '', text: '', show: false }
   form: FormGroup
 
-  dataTable: any = {
+  dataTable: DataTable = {
+    headers: [
+      { name: 'Id', column: 'id', sortable: true },
+      { name: 'Nome', column: 'nome', sortable: true },
+      { name: 'Ações', column: null, sortable: false }
+    ],
     records: [],
     page: {
       totalItems: 0,
       itemsPerPage: 10,
       currentPage: 0,
       totalPages: 0
-    }
+    },
+    orderBy: null,
+    orderDirect: null
   }
-
-  headers: any = [
-    { name: 'Id', column: 'id', sortable: true },
-    { name: 'Nome', column: 'nome', sortable: true },
-    { name: 'Ações', column: null, sortable: false }
-  ]
 
   private idDelete: number
 
@@ -51,16 +56,16 @@ export class ListSectorComponent implements OnInit {
     })
   }
 
-  search(orderBy: string = null, orderDirect: string = null) {
+  search() {
     let params: any = { "page": this.dataTable.page.currentPage, "size": this.dataTable.page.itemsPerPage }
 
     if (this.form.get('nome').value) {
       params.nome = this.form.get('nome').value
     }
 
-    if (orderBy) {
-      params['orderBy'] = orderBy
-      params['orderDirect'] = orderDirect
+    if (this.dataTable.orderBy) {
+      params['orderBy'] = this.dataTable.orderBy
+      params['orderDirect'] = this.dataTable.orderDirect
     }
 
     this.toggleScrim('scrimLoading')
@@ -168,12 +173,6 @@ export class ListSectorComponent implements OnInit {
     } else {
       scrimfoco.showScrim()
     }
-  }
-
-  sortBy(criteria: any) {
-    this.dataTable.page.currentPage = 0
-
-    this.search(criteria['orderBy'], criteria['orderDirect'])
   }
 
 }

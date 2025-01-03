@@ -2,31 +2,31 @@
   <table class="table table-hover">
     <thead class="thead-light table-header-blue">
       <tr>
-        <th *ngFor="let header of headers" class="border-bottom">{{ header.name }}
-          <a (click)="sortBy(header.column, 'asc')" *ngIf="header.sortable && orderBy !== header.column"><icon class="fas fa-sort"/></a>
-          <a (click)="sortBy(header.column, 'asc')" *ngIf="header.sortable && (orderBy === header.column && orderDirect === 'desc')"><icon class="fas fa-sort-up"/></a>
-          <a (click)="sortBy(header.column, 'desc')" *ngIf="header.sortable && (orderBy === header.column && orderDirect === 'asc')"><icon class="fas fa-sort-down"/></a>
+        <th *ngFor="let header of data.headers" class="border-bottom">{{ header.name }}
+          <a (click)="sortBy(header.column, 'asc')" *ngIf="header.sortable && data.orderBy !== header.column"><icon class="fas fa-sort"/></a>
+          <a (click)="sortBy(header.column, 'asc')" *ngIf="header.sortable && (data.orderBy === header.column && data.orderDirect === 'desc')"><icon class="fas fa-sort-up"/></a>
+          <a (click)="sortBy(header.column, 'desc')" *ngIf="header.sortable && (data.orderBy === header.column && data.orderDirect === 'asc')"><icon class="fas fa-sort-down"/></a>
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of data" class="border-bottom">
+      <tr *ngFor="let row of data.records" class="border-bottom">
         <td *ngFor="let column of columns">
           <ng-container *ngTemplateOutlet="column; context: { row }"></ng-container>
         </td>
       </tr>
-      <tr *ngIf="data.length === 0">
+      <tr *ngIf="data.records.length === 0">
         <td [attr.colspan]="columns.length" class="text-center">Nenhum dado encontrado</td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<nav class="br-pagination d-flex justify-content-between align-items-center small" *ngIf="data.length > 0">
+<nav class="br-pagination d-flex justify-content-between align-items-center small" *ngIf="data.records.length > 0">
   <div class="pagination-per-page">
     <label for="per-page-selection" class="mr-1 mt-1">Exibir</label>
     <div class="br-input">
-      <select id="per-page-selection" (change)="changePageSize()" [(ngModel)]="pageSize">
+      <select id="per-page-selection" (change)="changePageSize()" [(ngModel)]="data.page.itemsPerPage">
         <option *ngFor="let optionSize of pageSizes">{{ optionSize }}</option>
       </select>
     </div>
@@ -34,24 +34,24 @@
 
   <div class="pagination-information">
     <label for="per-page-selection">
-      {{ pageStart }}-{{ pageEnd }} de {{ totalRecords }} itens
+      {{ pageStart }}-{{ pageEnd }} de {{ data.page.totalItems }} itens
     </label>
   </div>
 
   <div class="pagination-go-to-page">
     <label for="page-selection" class="mr-1 mt-1">Página</label>
     <div class="br-input">
-      <select id="page-selection" (change)="changePage()" [(ngModel)]="currentPage">
+      <select id="page-selection" (change)="changePage()" [(ngModel)]="data.page.currentPage">
         <option *ngFor="let actualPage of pages" [ngValue]="actualPage">{{ actualPage + 1 }}</option>
       </select>
     </div>
   </div>
 
   <div class="pagination-arrows">
-    <button class="br-button circle" type="button" (click)="previousPage()" [disabled]="currentPage === 0">
+    <button class="br-button circle" type="button" (click)="previousPage()" [disabled]="data.page.currentPage === 0">
       <i class="fas fa-angle-left" aria-hidden="true"></i>
     </button>
-    <button class="br-button circle" type="button" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+    <button class="br-button circle" type="button" (click)="nextPage()" [disabled]="data.page.currentPage >= data.page.totalPages - 1">
       <i class="fas fa-angle-right" aria-hidden="true"></i>
     </button>
   </div>

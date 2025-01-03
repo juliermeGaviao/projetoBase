@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Scrim } from '@govbr-ds/core'
 
+import { DataTable } from 'src/app/shared/component/dynamic-table/dynamic-table-interface'
+
 import { ProductService } from 'src/app/services/product.service'
 import { SectorService } from 'src/app/services/sector.service'
 import { Sector } from 'src/app/model/sector'
@@ -19,21 +21,22 @@ export class ListProductComponent implements OnInit {
 
   private idDelete: number
 
-  headers: any = [
-    { name: 'Id', column: 'id', sortable: true },
-    { name: 'Nome', column: 'nome', sortable: true },
-    { name: 'Setor', column: 'setor.nome', sortable: true },
-    { name: 'Ações', column: null, sortable: false }
-  ]
-
-  dataTable: any = {
+  dataTable: DataTable = {
+    headers: [
+      { name: 'Id', column: 'id', sortable: true },
+      { name: 'Nome', column: 'nome', sortable: true },
+      { name: 'Setor', column: 'setor.nome', sortable: true },
+      { name: 'Ações', column: null, sortable: false }
+    ],
     records: [],
     page: {
       totalItems: 0,
       itemsPerPage: 10,
       currentPage: 0,
       totalPages: 0
-    }
+    },
+    orderBy: null,
+    orderDirect: null
   }
 
   public form: FormGroup
@@ -197,12 +200,6 @@ export class ListProductComponent implements OnInit {
     } else {
       scrimfoco.showScrim()
     }
-  }
-
-  sortBy(criteria: any) {
-    this.dataTable.page.currentPage = 0
-
-    this.search(criteria['orderBy'], criteria['orderDirect'])
   }
 
 }
