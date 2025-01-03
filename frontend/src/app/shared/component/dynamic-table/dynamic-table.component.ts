@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, ContentChildren, QueryList, TemplateRef } from '@angular/core'
+import { DataTable } from './dynamic-table.interface'
 
 @Component({
   selector: 'app-dynamic-table',
@@ -9,7 +10,7 @@ export class DynamicTableComponent {
 
   @ContentChildren('column') columns: QueryList<TemplateRef<any>>
 
-  @Input() data: any
+  @Input() data: DataTable
   @Input() pageSizes: number[] = [10, 25, 50, 100]
   
   @Output() pageChange = new EventEmitter<number>()
