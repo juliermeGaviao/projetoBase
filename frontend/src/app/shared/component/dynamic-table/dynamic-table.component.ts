@@ -7,20 +7,23 @@ import { Component, EventEmitter, Input, Output, ContentChildren, QueryList, Tem
 })
 export class DynamicTableComponent {
 
-  @ContentChildren('header') headers: QueryList<TemplateRef<any>>
   @ContentChildren('column') columns: QueryList<TemplateRef<any>>
 
+  @Input() headers: any[] = []
   @Input() data: any[] = []
   @Input() pageSizes: number[] = [10, 25, 50, 100]
   @Input() totalRecords: number = 0
-
+  
   @Output() pageChange = new EventEmitter<number>()
   @Output() pageSizeChange = new EventEmitter<number>()
+  @Output() sort = new EventEmitter<any>()
 
   constructor() { }
 
   currentPage: number = 0
   pageSize: number = 10
+  orderBy: string
+  orderDirect: string
 
   get totalPages(): number {
     return Math.ceil(this.totalRecords / this.pageSize)
@@ -76,6 +79,13 @@ export class DynamicTableComponent {
     }
 
     return false
+  }
+
+  sortBy(orderBy: string, orderDirect: string) {
+    this.orderBy = orderBy
+    this.orderDirect = orderDirect
+
+    this.sort.emit({orderBy, orderDirect})
   }
 
 }

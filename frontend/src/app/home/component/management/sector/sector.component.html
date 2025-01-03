@@ -11,13 +11,13 @@
   </div>
   <div class="row" *ngIf="view">
     <div class="col-12 d-flex justify-content-end">
-      <button id="voltar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cancel()"><i class="fas fa-undo"></i>Voltar</button>
+      <button id="voltar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cancel()"><icon class="fas fa-undo"/>Voltar</button>
     </div>
   </div>
   <div class="row" *ngIf="!view">
     <div class="col-12 d-flex justify-content-end">
-      <button id="cancelar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cancel()"><i class="fas fa-times-circle"></i>Cancelar</button>
-      <button id="enviar" type="submit" class="br-button primary mt-4"><i class="fas fa-save"></i>Salvar</button>
+      <button id="cancelar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cancel()"><icon class="fas fa-times-circle"/>Cancelar</button>
+      <button id="enviar" type="submit" class="br-button primary mt-4"><icon class="fas fa-save"/>Salvar</button>
     </div>
   </div>
 </form>

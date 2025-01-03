@@ -24,6 +24,12 @@ export class ListSectorComponent implements OnInit {
     }
   }
 
+  headers: any = [
+    { name: 'Id', column: 'id', sortable: true },
+    { name: 'Nome', column: 'nome', sortable: true },
+    { name: 'Ações', column: null, sortable: false }
+  ]
+
   private idDelete: number
 
   constructor(
@@ -45,11 +51,16 @@ export class ListSectorComponent implements OnInit {
     })
   }
 
-  search() {
+  search(orderBy: string = null, orderDirect: string = null) {
     let params: any = { "page": this.dataTable.page.currentPage, "size": this.dataTable.page.itemsPerPage }
 
     if (this.form.get('nome').value) {
       params.nome = this.form.get('nome').value
+    }
+
+    if (orderBy) {
+      params['orderBy'] = orderBy
+      params['orderDirect'] = orderDirect
     }
 
     this.toggleScrim('scrimLoading')
@@ -157,6 +168,12 @@ export class ListSectorComponent implements OnInit {
     } else {
       scrimfoco.showScrim()
     }
+  }
+
+  sortBy(criteria: any) {
+    this.dataTable.page.currentPage = 0
+
+    this.search(criteria['orderBy'], criteria['orderDirect'])
   }
 
 }

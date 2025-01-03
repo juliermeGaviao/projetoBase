@@ -9,7 +9,7 @@
     <h1>Gerenciar Produtos</h1>
   </div>
   <div class="col-4 d-flex justify-content-end">
-    <button id="novo" type="button" class="br-button primary mt-3" (click)="newItem()"><i class="fas fa-plus"></i>Novo</button>
+    <button id="novo" type="button" class="br-button primary mt-3" (click)="newItem()"><icon class="fas fa-plus"/>Novo</button>
   </div>
 </div>
 
@@ -24,31 +24,24 @@
       <br-select id="setor" name="setor" label="Setor do Produto:" [options]="sectors" formControlName="idSetor" placeholder="Filtrar por Setor"></br-select>
     </div>
     <div class="col-4 d-flex justify-content-end">
-      <button id="limpar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cleanFilters()"><i class="fas fa-eraser"></i>Limpar Filtro</button>
-      <button id="pesquisar" type="submit" class="br-button primary mt-4"><i class="fas fa-search"></i>Pesquisar</button>
+      <button id="limpar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cleanFilters()"><icon class="fas fa-eraser"/>Limpar Filtro</button>
+      <button id="pesquisar" type="submit" class="br-button primary mt-4"><icon class="fas fa-search"/>Pesquisar</button>
     </div>
   </div>
 </form>
 
 <div class="p-10px">&nbsp;</div>
 
-<app-dynamic-table [data]="dataTable.records" [totalRecords]="dataTable.page.totalItems"
-  (pageSizeChange)="changePageSize($event)" (pageChange)="pageChange($event)">
+<app-dynamic-table [headers]="headers" [data]="dataTable.records" [totalRecords]="dataTable.page.totalItems"
+  (pageSizeChange)="changePageSize($event)" (pageChange)="pageChange($event)" (sort)="sortBy($event)">
 
-  <ng-template #header let-item="row">Id</ng-template>
   <ng-template #column let-item="row">{{ item.id }}</ng-template>
-
-  <ng-template #header let-item="row">Nome</ng-template>
   <ng-template #column let-item="row">{{ item.nome }}</ng-template>
-
-  <ng-template #header let-item="row">Setor</ng-template>
   <ng-template #column let-item="row">{{ item.setor.nome }}</ng-template>
-
-  <ng-template #header let-item="row">Ações</ng-template>
   <ng-template #column let-item="row">
-    <button type="button" class="br-button circle small mr-2" (click)="view(item.id)" title="Visualizar"><i class="fas fa-eye"></i></button>
-    <button type="button" class="br-button circle small mr-2" (click)="edit(item.id)" title="Editar"><i class="fas fa-pen"></i></button>
-    <button type="button" class="br-button circle small" (click)="confirm(item.id)" title="Remover"><i class="fas fa-trash"></i></button>
+    <button type="button" class="br-button circle small mr-2" (click)="view(item.id)" title="Visualizar"><icon class="fas fa-eye"/></button>
+    <button type="button" class="br-button circle small mr-2" (click)="edit(item.id)" title="Editar"><icon class="fas fa-pen"/></button>
+    <button type="button" class="br-button circle small" (click)="confirm(item.id)" title="Remover"><icon class="fas fa-trash"/></button>
   </ng-template>
 
 </app-dynamic-table>

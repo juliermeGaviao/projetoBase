@@ -19,6 +19,13 @@ export class ListProductComponent implements OnInit {
 
   private idDelete: number
 
+  headers: any = [
+    { name: 'Id', column: 'id', sortable: true },
+    { name: 'Nome', column: 'nome', sortable: true },
+    { name: 'Setor', column: 'setor.nome', sortable: true },
+    { name: 'Ações', column: null, sortable: false }
+  ]
+
   dataTable: any = {
     records: [],
     page: {
@@ -53,7 +60,7 @@ export class ListProductComponent implements OnInit {
     })
   }
 
-  search() {
+  search(orderBy: string = null, orderDirect: string = null) {
     let params: any = { "page": this.dataTable.page.currentPage, "size": this.dataTable.page.itemsPerPage }
 
     if (this.form.get('nome').value) {
@@ -62,6 +69,11 @@ export class ListProductComponent implements OnInit {
 
     if (this.form.get('idSetor')?.value?.value) {
       params.idSetor = this.form.get('idSetor').value.value
+    }
+
+    if (orderBy) {
+      params['orderBy'] = orderBy
+      params['orderDirect'] = orderDirect
     }
 
     this.toggleScrim('scrimLoading')
@@ -185,6 +197,12 @@ export class ListProductComponent implements OnInit {
     } else {
       scrimfoco.showScrim()
     }
+  }
+
+  sortBy(criteria: any) {
+    this.dataTable.page.currentPage = 0
+
+    this.search(criteria['orderBy'], criteria['orderDirect'])
   }
 
 }

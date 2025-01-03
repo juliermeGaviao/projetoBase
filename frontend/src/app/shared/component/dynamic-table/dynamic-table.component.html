@@ -2,8 +2,9 @@
   <table class="table table-hover">
     <thead class="thead-light table-header-blue">
       <tr>
-        <th *ngFor="let header of headers" class="border-bottom">
-          <ng-container *ngTemplateOutlet="header"></ng-container>
+        <th *ngFor="let header of headers" class="border-bottom">{{ header.name }}
+          <a (click)="sortBy(header.column, 'asc')" *ngIf="header.sortable && (orderBy !== header.column || orderDirect === 'desc')"><icon class="fas fa-arrow-up"/></a>
+          <a (click)="sortBy(header.column, 'desc')" *ngIf="header.sortable && (orderBy === header.column && orderDirect === 'asc')"><icon class="fas fa-arrow-down"/></a>
         </th>
       </tr>
     </thead>
