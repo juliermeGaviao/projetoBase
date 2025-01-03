@@ -64,11 +64,11 @@ export class SectorComponent implements OnInit {
     })
   }
 
-  cancel(): void {
+  cancel() {
     this.router.navigate(['/home/sector'])
   }
 
-  send(): void {
+  send() {
     if (this.form.valid) {
       let sector: Sector = new Sector()
 

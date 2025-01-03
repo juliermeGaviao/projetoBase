@@ -16,6 +16,9 @@ export class ListProductComponent implements OnInit {
 
   sectors: any[] = []
 
+  private idDelete: number
+  public showDeleteModal: boolean = false
+
   dataTable: any = {
     records: [],
     page: {
@@ -103,51 +106,58 @@ export class ListProductComponent implements OnInit {
     }
   }
 
-  changePageSize(pageSize: number): void {
+  changePageSize(pageSize: number) {
     this.dataTable.page.currentPage = 0
     this.dataTable.page.itemsPerPage = pageSize
 
     this.search()
   }
 
-  pageChange(page: number): void {
+  pageChange(page: number) {
     this.dataTable.page.currentPage = page
 
     this.search()
   }
 
-  previousPage(): void {
+  previousPage() {
     this.dataTable.page.currentPage = this.dataTable.page.currentPage - 1
 
     this.search()
   }
 
-  nextPage(): void {
+  nextPage() {
     this.dataTable.page.currentPage = this.dataTable.page.currentPage + 1
 
     this.search()
   }
 
-  newItem(): void {
+  newItem() {
     this.router.navigate(['/home/product/new'])
   }
 
-  view(id: number): void {
+  view(id: number) {
     this.router.navigate(['/home/product/view', { "id": id, "view": true } ])
   }
 
-  edit(id: number): void {
+  edit(id: number) {
     this.router.navigate(['/home/product/edit', { "id": id } ])
   }
 
-  remove(id: number): void {
-    this.productService.deleteById(id).subscribe({
+  confirm(id: number) {
+    this.idDelete = id
+    this.showDeleteModal = true
+  }
+
+  remove() {
+    this.productService.deleteById(this.idDelete).subscribe({
       next: () => {
+        this.showDeleteModal = false
         this.search()
         this.message = { state: 'success', text: 'Setor removido com sucesso', show: true }
         setTimeout(() => { this.message = { state: '', text: '', show: false } }, 10000)
     },
       error: err => {
+        this.showDeleteModal = false
         console.log(err)
       }
     })
