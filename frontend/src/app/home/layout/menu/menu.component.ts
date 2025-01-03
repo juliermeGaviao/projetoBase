@@ -34,6 +34,7 @@ export class MenuComponent {
 
   navigate(route: any) {
     const { detail: pathRouter } = route
+    this.sharedService.isOpen = false
     this.router.navigate(pathRouter)
   }
 

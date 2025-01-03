@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
+import { Scrim } from '@govbr-ds/core'
 
 import { SectorService } from 'src/app/services/sector.service'
 
@@ -11,6 +12,7 @@ import { SectorService } from 'src/app/services/sector.service'
 export class ListSectorComponent implements OnInit {
 
   message: { state: string, text: string, show: boolean } = { state: '', text: '', show: false }
+  form: FormGroup
 
   dataTable: any = {
     records: [],
@@ -23,10 +25,6 @@ export class ListSectorComponent implements OnInit {
   }
 
   private idDelete: number
-  public showDeleteModal: boolean = false
-  public loading: boolean = false
-
-  public form: FormGroup
 
   constructor(
     private readonly router: Router,
@@ -54,7 +52,7 @@ export class ListSectorComponent implements OnInit {
       params.nome = this.form.get('nome').value
     }
 
-    this.loading = true
+    this.toggleScrim('scrimLoading')
     this.sectorService.getByParams(params).subscribe({
       next: (data: any) => {
         this.dataTable.records = data.sectors
@@ -63,11 +61,12 @@ export class ListSectorComponent implements OnInit {
         this.dataTable.page.currentPage = data.currentPage
         this.dataTable.page.totalItems = data.totalItems
         this.dataTable.page.itemsPerPage = params.size
-        this.loading = false
+
+        this.toggleScrim('scrimLoading')
       },
       error: err => {
-        this.loading = false
         console.log(err)
+        this.toggleScrim('scrimLoading')
       }
     })
   }
@@ -126,22 +125,38 @@ export class ListSectorComponent implements OnInit {
 
   confirm(id: number) {
     this.idDelete = id
-    this.showDeleteModal = true
+    this.toggleScrim('scrimModal')
   }
 
   remove() {
+    this.toggleScrim('scrimModal')
+    this.toggleScrim('scrimLoading')
+
     this.sectorService.deleteById(this.idDelete).subscribe({
       next: () => {
-        this.showDeleteModal = false
         this.search()
+        this.toggleScrim('scrimLoading')
         this.message = { state: 'success', text: 'Setor removido com sucesso', show: true }
         setTimeout(() => { this.message = { state: '', text: '', show: false } }, 10000)
       },
       error: err => {
-        this.showDeleteModal = false
         console.log(err)
+        this.toggleScrim('scrimLoading')
       }
     })
+  }
+
+  toggleScrim(component: string) {
+    const scrimfoco = new Scrim({
+      trigger: window.document.querySelector('#' + component),
+      escEnable: false
+    })
+
+    if (scrimfoco.trigger.classList.value.indexOf('active') >= 0) {
+      scrimfoco.hideScrim()
+    } else {
+      scrimfoco.showScrim()
+    }
   }
 
 }

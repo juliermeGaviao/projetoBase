@@ -85,11 +85,14 @@ export class ListProductComponent implements OnInit {
   }
 
   loadSectors() {
+    this.loading = true
     this.sectorService.getByParams({ "page": 0, "size": 100, "orderBy": 'nome' }).subscribe({
       next: (data: any) => {
+        this.loading = false
         this.sectors = data.sectors.map( (sector: Sector) => { return { value: sector.id, label: sector.nome } })
       },
       error: err => {
+        this.loading = false
         console.log(err)
       }
     })
@@ -154,6 +157,7 @@ export class ListProductComponent implements OnInit {
   }
 
   remove() {
+    this.loading = true
     this.productService.deleteById(this.idDelete).subscribe({
       next: () => {
         this.showDeleteModal = false
