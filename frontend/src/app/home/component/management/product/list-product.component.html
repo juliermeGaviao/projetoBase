@@ -16,7 +16,7 @@
       <br-input type="text" id="nome" name="nome" placeholder="Filtrar pelo nome do Produto" label="Nome do Produto:" formControlName="nome"></br-input>
     </div>
     <div class="col-4">
-      <br-select label="Setor do Produto:" [options]="sectors" formControlName="idSetor" placeholder="Filtrar por Setor"></br-select>
+      <br-select id="setor" name="setor" label="Setor do Produto:" [options]="sectors" formControlName="idSetor" placeholder="Filtrar por Setor"></br-select>
     </div>
     <div class="col-4 d-flex justify-content-end">
       <button id="limpar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cleanFilters()"><i class="fas fa-eraser"></i>Limpar Filtro</button>

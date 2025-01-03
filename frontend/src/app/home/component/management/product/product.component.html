@@ -9,6 +9,12 @@
       <br-message state="danger" feedback *ngIf="form.get('nome').invalid && form.get('nome').touched">Campo obrigatório.</br-message>
     </div>
   </div>
+  <div class="row mt-3">
+    <div class="col-12">
+      <br-select id="setor" name="setor" label="Setor do Produto:" [options]="sectors" formControlName="idSetor" placeholder="Selecionar Setor" [attr.disabled]="view"></br-select>
+      <br-message state="danger" feedback *ngIf="form.get('idSetor').invalid && form.get('idSetor').touched">Campo obrigatório.</br-message>
+    </div>
+  </div>
   <div class="row" *ngIf="view">
     <div class="col-12 d-flex justify-content-end">
       <button id="voltar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cancel()"><i class="fas fa-undo"></i>Voltar</button>

@@ -78,14 +78,14 @@ export class SectorComponent implements OnInit {
         sector.id = this.id
         this.sectorService.edit(sector).subscribe({
           next: () => {
-            this.router.navigate(['//home/sector'], { queryParams: { success: 'Setor alterado com sucesso' } } )
+            this.router.navigate(['/home/sector'], { queryParams: { success: 'Setor alterado com sucesso' } } )
           },
           error: (err) => { this.message = { state: 'danger', text: err.error.detail ?? 'Ocorreu um erro ao salvar o setor', show: true } }
         })
       } else {
         this.sectorService.save(sector).subscribe({
           next: () => {
-            this.router.navigate(['//home/sector'], { queryParams: { success: 'Setor inserido com sucesso' } } )
+            this.router.navigate(['/home/sector'], { queryParams: { success: 'Setor inserido com sucesso' } } )
           },
           error: (err) => { this.message = { state: 'danger', text: err.error.detail ?? 'Ocorreu um erro ao salvar o setor', show: true } }
         })

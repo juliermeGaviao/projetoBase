@@ -21,8 +21,8 @@ export class ProductService {
     return this.httpClient.delete(this.apiUrl + '/' + id)
   }
 
-  public save(product: Product) {
-    return this.httpClient.post<Product>(`${this.apiUrl}`, product)
+  public save(product: any) {
+    return this.httpClient.post<any>(`${this.apiUrl}`, product)
   }
 
   public edit(product: Product) {

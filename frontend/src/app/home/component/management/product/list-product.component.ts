@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 
 import { ProductService } from 'src/app/services/product.service'
-
 import { SectorService } from 'src/app/services/sector.service'
 import { Sector } from 'src/app/model/sector'
 
@@ -86,7 +85,6 @@ export class ListProductComponent implements OnInit {
         console.log(err)
       }
     })
-
   }
 
   cleanFilters() {
