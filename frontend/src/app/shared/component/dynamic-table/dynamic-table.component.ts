@@ -15,7 +15,6 @@ export class DynamicTableComponent {
   
   @Output() pageChange = new EventEmitter<number>()
   @Output() pageSizeChange = new EventEmitter<number>()
-  @Output() sort = new EventEmitter<any>()
 
   get pageStart(): number {
     return this.data.page.currentPage * this.data.page.itemsPerPage + 1
