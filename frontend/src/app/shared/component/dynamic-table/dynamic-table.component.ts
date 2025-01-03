@@ -62,14 +62,6 @@ export class DynamicTableComponent {
     }
   }
 
-  isHtml(value: any): boolean {
-    if (typeof value === 'string') {
-      return value.includes('<')
-    }
-
-    return false
-  }
-
   sortBy(orderBy: string, orderDirect: string) {
     this.data.orderBy = orderBy
     this.data.orderDirect = orderDirect
