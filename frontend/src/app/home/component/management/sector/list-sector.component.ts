@@ -24,6 +24,7 @@ export class ListSectorComponent implements OnInit {
 
   private idDelete: number
   public showDeleteModal: boolean = false
+  public loading: boolean = false
 
   public form: FormGroup
 
@@ -53,6 +54,7 @@ export class ListSectorComponent implements OnInit {
       params.nome = this.form.get('nome').value
     }
 
+    this.loading = true
     this.sectorService.getByParams(params).subscribe({
       next: (data: any) => {
         this.dataTable.records = data.sectors
@@ -61,8 +63,10 @@ export class ListSectorComponent implements OnInit {
         this.dataTable.page.currentPage = data.currentPage
         this.dataTable.page.totalItems = data.totalItems
         this.dataTable.page.itemsPerPage = params.size
+        this.loading = false
       },
       error: err => {
+        this.loading = false
         console.log(err)
       }
     })

@@ -18,6 +18,7 @@ export class ListProductComponent implements OnInit {
 
   private idDelete: number
   public showDeleteModal: boolean = false
+  public loading: boolean = false
 
   dataTable: any = {
     records: [],
@@ -64,6 +65,7 @@ export class ListProductComponent implements OnInit {
       params.idSetor = this.form.get('idSetor').value.value
     }
 
+    this.loading = true
     this.productService.getByParams(params).subscribe({
       next: (data: any) => {
         this.dataTable.records = data.products
@@ -72,8 +74,11 @@ export class ListProductComponent implements OnInit {
         this.dataTable.page.currentPage = data.currentPage
         this.dataTable.page.totalItems = data.totalItems
         this.dataTable.page.itemsPerPage = params.size
+
+        this.loading = false
       },
       error: err => {
+        this.loading = false
         console.log(err)
       }
     })

@@ -1,57 +1,64 @@
-
-<div class="row">
-  <div class="col-8">
-    <h1>Gerenciar Produtos</h1>
-  </div>
-  <div class="col-4 d-flex justify-content-end">
-    <button id="novo" type="button" class="br-button primary mt-3" (click)="newItem()"><i class="fas fa-plus"></i>Novo</button>
+<div class="row" style="min-height: 300px" *ngIf="loading">
+  <div class="col d-flex justify-content-center align-items-center">
+    <br-loading medium="true"></br-loading>
   </div>
 </div>
 
-<br-message [state]="message.state" closable *ngIf="message.show">{{ message.text }}</br-message>
-
-<form [formGroup]="form" (ngSubmit)="search()">
+<div *ngIf="!loading">
   <div class="row">
-    <div class="col-4">
-      <br-input type="text" id="nome" name="nome" placeholder="Filtrar pelo nome do Produto" label="Nome do Produto:" formControlName="nome"></br-input>
-    </div>
-    <div class="col-4">
-      <br-select id="setor" name="setor" label="Setor do Produto:" [options]="sectors" formControlName="idSetor" placeholder="Filtrar por Setor"></br-select>
+    <div class="col-8">
+      <h1>Gerenciar Produtos</h1>
     </div>
     <div class="col-4 d-flex justify-content-end">
-      <button id="limpar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cleanFilters()"><i class="fas fa-eraser"></i>Limpar Filtro</button>
-      <button id="pesquisar" type="submit" class="br-button primary mt-4"><i class="fas fa-search"></i>Pesquisar</button>
+      <button id="novo" type="button" class="br-button primary mt-3" (click)="newItem()"><i class="fas fa-plus"></i>Novo</button>
     </div>
   </div>
-</form>
 
-<div class="p-10px">&nbsp;</div>
+  <br-message [state]="message.state" closable *ngIf="message.show">{{ message.text }}</br-message>
 
-<app-dynamic-table [data]="dataTable.records" [totalRecords]="dataTable.page.totalItems"
-  (pageSizeChange)="changePageSize($event)" (pageChange)="pageChange($event)">
+  <form [formGroup]="form" (ngSubmit)="search()">
+    <div class="row">
+      <div class="col-4">
+        <br-input type="text" id="nome" name="nome" placeholder="Filtrar pelo nome do Produto" label="Nome do Produto:" formControlName="nome"></br-input>
+      </div>
+      <div class="col-4">
+        <br-select id="setor" name="setor" label="Setor do Produto:" [options]="sectors" formControlName="idSetor" placeholder="Filtrar por Setor"></br-select>
+      </div>
+      <div class="col-4 d-flex justify-content-end">
+        <button id="limpar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cleanFilters()"><i class="fas fa-eraser"></i>Limpar Filtro</button>
+        <button id="pesquisar" type="submit" class="br-button primary mt-4"><i class="fas fa-search"></i>Pesquisar</button>
+      </div>
+    </div>
+  </form>
 
-  <ng-template #header let-item="row">Id</ng-template>
-  <ng-template #column let-item="row">{{ item.id }}</ng-template>
+  <div class="p-10px">&nbsp;</div>
 
-  <ng-template #header let-item="row">Nome</ng-template>
-  <ng-template #column let-item="row">{{ item.nome }}</ng-template>
+  <app-dynamic-table [data]="dataTable.records" [totalRecords]="dataTable.page.totalItems"
+    (pageSizeChange)="changePageSize($event)" (pageChange)="pageChange($event)">
 
-  <ng-template #header let-item="row">Setor</ng-template>
-  <ng-template #column let-item="row">{{ item.setor.nome }}</ng-template>
+    <ng-template #header let-item="row">Id</ng-template>
+    <ng-template #column let-item="row">{{ item.id }}</ng-template>
 
-  <ng-template #header let-item="row">Ações</ng-template>
-  <ng-template #column let-item="row">
-    <button type="button" class="br-button circle small mr-2" (click)="view(item.id)" title="Visualizar"><i class="fas fa-eye"></i></button>
-    <button type="button" class="br-button circle small mr-2" (click)="edit(item.id)" title="Editar"><i class="fas fa-pen"></i></button>
-    <button type="button" class="br-button circle small" (click)="confirm(item.id)" title="Remover"><i class="fas fa-trash"></i></button>
-  </ng-template>
+    <ng-template #header let-item="row">Nome</ng-template>
+    <ng-template #column let-item="row">{{ item.nome }}</ng-template>
 
-</app-dynamic-table>
+    <ng-template #header let-item="row">Setor</ng-template>
+    <ng-template #column let-item="row">{{ item.setor.nome }}</ng-template>
 
-<br-modal *ngIf="showDeleteModal" title="Confirmação de exclusão" show style="position: fixed; z-index: 99999999; left: 40%; top: 35%">
-  <p>Tem certeza que deseja remover Produto?</p>
-  <div slot="buttons">
-    <button type="button" class="br-button secondary mr-2" (click)="showDeleteModal = false">Não</button>
-    <button type="button" class="br-button primary" (click)="remove()">Sim</button>
-  </div>
-</br-modal>
+    <ng-template #header let-item="row">Ações</ng-template>
+    <ng-template #column let-item="row">
+      <button type="button" class="br-button circle small mr-2" (click)="view(item.id)" title="Visualizar"><i class="fas fa-eye"></i></button>
+      <button type="button" class="br-button circle small mr-2" (click)="edit(item.id)" title="Editar"><i class="fas fa-pen"></i></button>
+      <button type="button" class="br-button circle small" (click)="confirm(item.id)" title="Remover"><i class="fas fa-trash"></i></button>
+    </ng-template>
+
+  </app-dynamic-table>
+
+  <br-modal *ngIf="showDeleteModal" title="Confirmação de exclusão" show style="position: fixed; z-index: 99999999; left: 40%; top: 35%">
+    <p>Tem certeza que deseja remover Produto?</p>
+    <div slot="buttons">
+      <button type="button" class="br-button secondary mr-2" (click)="showDeleteModal = false">Não</button>
+      <button type="button" class="br-button primary" (click)="remove()">Sim</button>
+    </div>
+  </br-modal>
+</div>
