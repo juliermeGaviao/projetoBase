@@ -63,7 +63,7 @@ export class ListProductComponent implements OnInit {
     })
   }
 
-  search(orderBy: string = null, orderDirect: string = null) {
+  search() {
     let params: any = { "page": this.dataTable.page.currentPage, "size": this.dataTable.page.itemsPerPage }
 
     if (this.form.get('nome').value) {
@@ -74,9 +74,9 @@ export class ListProductComponent implements OnInit {
       params.idSetor = this.form.get('idSetor').value.value
     }
 
-    if (orderBy) {
-      params['orderBy'] = orderBy
-      params['orderDirect'] = orderDirect
+    if (this.dataTable.orderBy) {
+      params['orderBy'] = this.dataTable.orderBy
+      params['orderDirect'] = this.dataTable.orderDirect
     }
 
     this.toggleScrim('scrimLoading')
