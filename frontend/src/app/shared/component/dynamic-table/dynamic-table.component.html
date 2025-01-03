@@ -3,9 +3,9 @@
     <thead class="thead-light table-header-blue">
       <tr>
         <th *ngFor="let header of data.headers" class="border-bottom">{{ header.name }}
-          <a (click)="sortBy(header.column, 'asc')" *ngIf="header.sortable && data.orderBy !== header.column" [title]="'Ordenação crescente por ' + header.name"><icon class="fas fa-sort"/></a>
-          <a (click)="sortBy(header.column, 'asc')" *ngIf="header.sortable && (data.orderBy === header.column && data.orderDirect === 'desc')" [title]="'Ordenação crescente por ' + header.name"><icon class="fas fa-sort-up"/></a>
-          <a (click)="sortBy(header.column, 'desc')" *ngIf="header.sortable && (data.orderBy === header.column && data.orderDirect === 'asc')" [title]="'Ordenação decrescente por ' + header.name"><icon class="fas fa-sort-down"/></a>
+          <a (click)="sortBy(header.column, 'asc')" *ngIf="header.sortable && data.orderBy !== header.column" [title]="'Ordenar ascendentemente por ' + header.name"><icon class="fas fa-sort"/></a>
+          <a (click)="sortBy(header.column, 'asc')" *ngIf="header.sortable && (data.orderBy === header.column && data.orderDirect === 'desc')" [title]="'Ordenar ascendentemente por ' + header.name"><icon class="fas fa-sort-up"/></a>
+          <a (click)="sortBy(header.column, 'desc')" *ngIf="header.sortable && (data.orderBy === header.column && data.orderDirect === 'asc')" [title]="'Ordenar descendentemente por ' + header.name"><icon class="fas fa-sort-down"/></a>
         </th>
       </tr>
     </thead>
