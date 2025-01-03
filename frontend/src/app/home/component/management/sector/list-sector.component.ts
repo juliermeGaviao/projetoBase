@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Scrim } from '@govbr-ds/core'
 
-import { DataTable } from 'src/app/shared/component/dynamic-table/dynamic-table-interface'
+import { DataTable } from 'src/app/shared/component/dynamic-table/dynamic-table.interface'
 
 import { SectorService } from 'src/app/services/sector.service'
 
