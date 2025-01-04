@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router, Params } from '@angular/router'
-import { Sector } from 'src/app/model/sector'
+import { Scrim } from '@govbr-ds/core'
 
+import { Sector } from 'src/app/model/sector'
 import { SectorService } from 'src/app/services/sector.service'
 
 @Component({
@@ -52,14 +53,19 @@ export class SectorComponent implements OnInit {
   }
 
   loadSector(id: number) {
+    this.toggleScrim('scrimLoading')
+
     this.sectorService.getById(id).subscribe({
       next: (data: any) => {
         this.form.setValue({
           nome: data.nome
         })
+
+        this.toggleScrim('scrimLoading')
       },
       error: err => {
-        console.log(err)
+        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar o setor', 'danger')
+        this.toggleScrim('scrimLoading')
       }
     })
   }
@@ -74,25 +80,57 @@ export class SectorComponent implements OnInit {
 
       sector.nome = this.form.value.nome
 
+      this.toggleScrim('scrimLoading')
+
       if (this.id) {
         sector.id = this.id
+
         this.sectorService.edit(sector).subscribe({
           next: () => {
+            this.toggleScrim('scrimLoading')
             this.router.navigate(['/home/sector'], { queryParams: { success: 'Setor alterado com sucesso' } } )
           },
-          error: (err) => { this.message = { state: 'danger', text: err.error.detail ?? 'Ocorreu um erro ao salvar o setor', show: true } }
+          error: err => {
+            this.toggleScrim('scrimLoading')
+            this.showMessage(err.error.detail ?? 'Ocorreu um erro ao salvar o setor', 'danger')
+          }
         })
       } else {
         this.sectorService.save(sector).subscribe({
           next: () => {
             this.router.navigate(['/home/sector'], { queryParams: { success: 'Setor inserido com sucesso' } } )
+            this.toggleScrim('scrimLoading')
           },
-          error: (err) => { this.message = { state: 'danger', text: err.error.detail ?? 'Ocorreu um erro ao salvar o setor', show: true } }
+          error: err => {
+            this.showMessage(err.error.detail ?? 'Ocorreu um erro ao salvar o setor', 'danger')
+            this.toggleScrim('scrimLoading')
+          }
         })
       }
     }
 
     this.form.markAllAsTouched()
+  }
+
+  toggleScrim(component: string) {
+    const scrimfoco = new Scrim({
+      trigger: window.document.querySelector('#' + component),
+      escEnable: false
+    })
+
+    if (scrimfoco.trigger.classList.value.indexOf('active') >= 0) {
+      scrimfoco.hideScrim()
+    } else {
+      scrimfoco.showScrim()
+    }
+  }
+
+  showMessage(content: string, status: string, timer: number = null) {
+    this.message = { state: status, text: content, show: true }
+
+    if (timer) {
+      setTimeout(() => { this.message = { state: '', text: '', show: false } }, timer)
+    }
   }
 
 }

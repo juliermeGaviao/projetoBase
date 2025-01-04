@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://bensapreendidos-rest.dev.ibama.gov.br/',
-  home: 'https://bensapreendidos.dev.ibama.gov.br/',
+  apiUrl: 'http://127.0.0.1:8080/',
+  home: 'http://127.0.0.1:80/',
 }

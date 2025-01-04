@@ -69,6 +69,7 @@ export class ListSectorComponent implements OnInit {
     }
 
     this.toggleScrim('scrimLoading')
+
     this.sectorService.getByParams(params).subscribe({
       next: (data: any) => {
         this.dataTable.records = data.sectors
@@ -81,7 +82,7 @@ export class ListSectorComponent implements OnInit {
         this.toggleScrim('scrimLoading')
       },
       error: err => {
-        console.log(err)
+        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar os setores', 'danger')
         this.toggleScrim('scrimLoading')
       }
     })
@@ -95,8 +96,7 @@ export class ListSectorComponent implements OnInit {
     if (this.route.queryParams) {
       this.route.queryParams.subscribe(params => {
         if (params['success']) {
-          this.message = { state: 'success', text: params['success'], show: true }
-          setTimeout(() => { this.message = { state: '', text: '', show: false } }, 10000)
+          this.showMessage(params['success'], 'success', 10000)
         }
       })
     }
@@ -152,12 +152,11 @@ export class ListSectorComponent implements OnInit {
       next: () => {
         this.search()
         this.toggleScrim('scrimLoading')
-        this.message = { state: 'success', text: 'Setor removido com sucesso', show: true }
-        setTimeout(() => { this.message = { state: '', text: '', show: false } }, 10000)
+        this.showMessage('Setor removido com sucesso', 'success', 10000)
       },
       error: err => {
-        console.log(err)
         this.toggleScrim('scrimLoading')
+        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao remover o setor', 'danger')
       }
     })
   }
@@ -172,6 +171,14 @@ export class ListSectorComponent implements OnInit {
       scrimfoco.hideScrim()
     } else {
       scrimfoco.showScrim()
+    }
+  }
+
+  showMessage(content: string, status: string, timer: number = null) {
+    this.message = { state: status, text: content, show: true }
+
+    if (timer) {
+      setTimeout(() => { this.message = { state: '', text: '', show: false } }, timer)
     }
   }
 

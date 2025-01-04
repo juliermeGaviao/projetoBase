@@ -11,7 +11,6 @@ import { FooterComponent } from './home/layout/footer/footer.component'
 import { HeaderComponent } from './home/layout/header/header.component'
 import { HomeComponent } from './home/home.component'
 import { MenuComponent } from './home/layout/menu/menu.component'
-import { MessageComponent } from './shared/component/message/message.component'
 import { HttpRequestInterceptor } from 'src/interceptor/HttpRequestInterceptor'
 import { AuthService } from './services/auth.service'
 import { DynamicTableComponent } from './shared/component/dynamic-table/dynamic-table.component'
@@ -31,7 +30,6 @@ import { ProductComponent } from './home/component/management/product/product.co
     HeaderComponent,
     HomeComponent,
     MenuComponent,
-    MessageComponent,
     DynamicTableComponent,
     WelcomeComponent,
     ListSectorComponent,

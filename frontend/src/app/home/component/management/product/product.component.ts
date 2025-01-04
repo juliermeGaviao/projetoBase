@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router, Params } from '@angular/router'
+import { Scrim } from '@govbr-ds/core'
 
 import { ProductService } from 'src/app/services/product.service'
 import { SectorService } from 'src/app/services/sector.service'
@@ -59,6 +60,8 @@ export class ProductComponent implements OnInit {
   }
 
   loadProduct(id: number) {
+    this.toggleScrim('scrimLoading')
+
     this.productService.getById(id).subscribe({
       next: (data: any) => {
         this.form.setValue({
@@ -66,21 +69,28 @@ export class ProductComponent implements OnInit {
           idSetor: data.setor.id
         })
 
+        this.toggleScrim('scrimLoading')
+
         this.loadSectors()
       },
       error: err => {
-        console.log(err)
+        this.toggleScrim('scrimLoading')
+        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar o produto', 'danger')
       }
     })
   }
 
   loadSectors() {
+    this.toggleScrim('scrimLoading')
+
     this.sectorService.getByParams({ "page": 0, "size": 100, "orderBy": 'nome' }).subscribe({
       next: (data: any) => {
         this.sectors = data.sectors.map( (sector: Sector) => { return { value: sector.id, label: sector.nome, selected: sector.id === this.form.value.idSetor } })
+        this.toggleScrim('scrimLoading')
       },
       error: err => {
-        console.log(err)
+        this.toggleScrim('scrimLoading')
+        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar setores', 'danger')
       }
     })
   }
@@ -92,6 +102,8 @@ export class ProductComponent implements OnInit {
   send(): void {
     if (this.form.valid) {
 
+      this.toggleScrim('scrimLoading')
+
       if (this.id) {
         const product: Product = { id: this.id, nome: this.form.value.nome, setor: { id: this.form.value.idSetor.value, nome: '' } }
 
@@ -99,19 +111,46 @@ export class ProductComponent implements OnInit {
           next: () => {
             this.router.navigate(['/home/product'], { queryParams: { success: 'Produto alterado com sucesso' } } )
           },
-          error: (err) => { this.message = { state: 'danger', text: err.error.detail ?? 'Ocorreu um erro ao salvar o produto', show: true } }
+          error: err => {
+            this.toggleScrim('scrimLoading')
+            this.showMessage(err.error.detail ?? 'Ocorreu um erro ao salvar o produto', 'danger')
+          }
         })
       } else {
         this.productService.save({ nome: this.form.value.nome, idSetor: this.form.value.idSetor.value }).subscribe({
           next: () => {
             this.router.navigate(['/home/product'], { queryParams: { success: 'Produto inserido com sucesso' } } )
           },
-          error: (err) => { this.message = { state: 'danger', text: err.error.detail ?? 'Ocorreu um erro ao salvar o produto', show: true } }
+          error: err => {
+            this.toggleScrim('scrimLoading')
+            this.showMessage(err.error.detail ?? 'Ocorreu um erro ao salvar o produto', 'danger')
+          }
         })
       }
     }
 
     this.form.markAllAsTouched()
+  }
+
+  toggleScrim(component: string) {
+    const scrimfoco = new Scrim({
+      trigger: window.document.querySelector('#' + component),
+      escEnable: false
+    })
+
+    if (scrimfoco.trigger.classList.value.indexOf('active') >= 0) {
+      scrimfoco.hideScrim()
+    } else {
+      scrimfoco.showScrim()
+    }
+  }
+
+  showMessage(content: string, status: string, timer: number = null) {
+    this.message = { state: status, text: content, show: true }
+
+    if (timer) {
+      setTimeout(() => { this.message = { state: '', text: '', show: false } }, timer)
+    }
   }
 
 }

@@ -92,7 +92,7 @@ export class ListProductComponent implements OnInit {
         this.toggleScrim('scrimLoading')
       },
       error: err => {
-        console.log(err)
+        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar os produtos', 'danger')
         this.toggleScrim('scrimLoading')
       }
     })
@@ -107,7 +107,7 @@ export class ListProductComponent implements OnInit {
         this.toggleScrim('scrimLoading')
       },
       error: err => {
-        console.log(err)
+        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar setores', 'danger')
         this.toggleScrim('scrimLoading')
       }
     })
@@ -122,8 +122,7 @@ export class ListProductComponent implements OnInit {
     if (this.route.queryParams) {
       this.route.queryParams.subscribe(params => {
         if (params['success']) {
-          this.message = { state: 'success', text: params['success'], show: true }
-          setTimeout(() => { this.message = { state: '', text: '', show: false } }, 10000)
+          this.showMessage(params['success'], 'success', 10000)
         }
       })
     }
@@ -179,11 +178,10 @@ export class ListProductComponent implements OnInit {
       next: () => {
         this.search()
         this.toggleScrim('scrimLoading')
-        this.message = { state: 'success', text: 'Setor removido com sucesso', show: true }
-        setTimeout(() => { this.message = { state: '', text: '', show: false } }, 10000)
+        this.showMessage('Produto removido com sucesso', 'success', 10000)
     },
       error: err => {
-        console.log(err)
+        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao remover o produto', 'danger')
         this.toggleScrim('scrimLoading')
       }
     })
@@ -199,6 +197,14 @@ export class ListProductComponent implements OnInit {
       scrimfoco.hideScrim()
     } else {
       scrimfoco.showScrim()
+    }
+  }
+
+  showMessage(content: string, status: string, timer: number = null) {
+    this.message = { state: status, text: content, show: true }
+
+    if (timer) {
+      setTimeout(() => { this.message = { state: '', text: '', show: false } }, timer)
     }
   }
 
