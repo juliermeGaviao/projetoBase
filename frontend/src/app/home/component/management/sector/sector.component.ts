@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router, Params } from '@angular/router'
 import { Scrim } from '@govbr-ds/core'
 
-import { Sector } from 'src/app/model/sector'
-import { SectorService } from 'src/app/services/sector.service'
+import { Sector } from '../../../../model/sector'
+import { SectorService } from '../../../../services/sector.service'
 
 @Component({
   selector: 'app-sector',

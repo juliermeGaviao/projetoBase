@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
-import { AuthService } from 'src/app/services/auth.service'
-import { LoginService } from 'src/app/services/login.service'
+import { AuthService } from '../../services/auth.service'
+import { LoginService } from '../../services/login.service'
 import { LoginComponent } from './login.component'
 
 describe('LoginComponent', () => {

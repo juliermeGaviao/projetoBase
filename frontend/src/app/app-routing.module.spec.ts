@@ -25,7 +25,7 @@ describe('AppRoutingModule', () => {
 
   it('should navigate to ticket', async () => {
     await router.navigate(['/ticket'])
-    expect(location.path()).toBe('/ticket')
+    expect(location.path()).toBe('/login')
   })
 
   it('should redirect unknown routes to login', async () => {

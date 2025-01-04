@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router, Params } from '@angular/router'
 import { Scrim } from '@govbr-ds/core'
 
-import { ProductService } from 'src/app/services/product.service'
-import { SectorService } from 'src/app/services/sector.service'
-import { Sector } from 'src/app/model/sector'
-import { Product } from 'src/app/model/product'
+import { ProductService } from '../../../../services/product.service'
+import { SectorService } from '../../../../services/sector.service'
+import { Sector } from '../../../../model/sector'
+import { Product } from '../../../../model/product'
 
 @Component({
   selector: 'app-product',

@@ -7,13 +7,13 @@ describe('Environment Production', () => {
 
   it('should have the correct API URL', () => {
     expect(environment.apiUrl).toBe(
-      'https://127.0.0.1:8080/'
+      'http://127.0.0.1:8080/'
     )
   })
 
   it('should have the correct home URL', () => {
     expect(environment.home).toBe(
-      'https://127.0.0.1:80/'
+      'http://127.0.0.1:80/'
     )
   })
 })

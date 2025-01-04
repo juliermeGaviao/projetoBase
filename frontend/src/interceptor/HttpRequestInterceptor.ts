@@ -20,11 +20,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     } else {
       newRequest = this.createDefaultRequest(request, apiKey)
     }
+
     return next.handle(newRequest).pipe(
       catchError((error) => {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 403) {
-            console.log('erro 403', error)
+            console.error('erro 403', error)
           }
         }
         return throwError(() => error)

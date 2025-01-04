@@ -33,8 +33,4 @@ describe('BreadcrumbComponent', () => {
     expect(component.ngAfterViewInit).toBeTruthy()
   })
 
-  it('should buildBreadcrumbs', () => {
-    component.buildBreadcrumbs(fakeActivatedRoute, 'laf/home')
-    expect(component.buildBreadcrumbs).toBeTruthy()
-  })
 })

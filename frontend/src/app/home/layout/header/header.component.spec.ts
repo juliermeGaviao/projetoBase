@@ -1,21 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HeaderComponent } from './header.component'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { Router } from '@angular/router'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 
 import { SharedService } from '../../../services/shared.service'
 import { of } from 'rxjs'
 import { RouterTestingModule } from '@angular/router/testing'
-import { AuthService } from 'src/app/services/auth.service'
-import { LoginService } from 'src/app/services/login.service'
+import { AuthService } from '../../../services/auth.service'
+import { LoginService } from '../../../services/login.service'
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent
   let fixture: ComponentFixture<HeaderComponent>
   let authService: AuthService
   let loginService: LoginService
-  let router: Router
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

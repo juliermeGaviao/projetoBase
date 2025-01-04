@@ -1,6 +1,6 @@
 import { inject } from '@angular/core'
 import { CanActivateFn, Router } from '@angular/router'
-import { LoginService } from 'src/app/services/login.service'
+import { LoginService } from '../../services/login.service'
 
 export const HomeAuthGuard: CanActivateFn = (route, state) => {
   if (inject(LoginService).isAuthenticated()) {

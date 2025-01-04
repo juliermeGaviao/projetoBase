@@ -1,10 +1,10 @@
 
 import { Component, OnInit } from '@angular/core'
 
-import { UsuarioResponse } from 'src/app/interfaces/usuarioResponse.interface'
-import { AuthService } from 'src/app/services/auth.service'
-import { LoginService } from 'src/app/services/login.service'
-import { SharedService } from 'src/app/services/shared.service'
+import { UsuarioResponse } from '../../../interfaces/usuarioResponse.interface'
+import { AuthService } from '../../../services/auth.service'
+import { LoginService } from '../../../services/login.service'
+import { SharedService } from '../../../services/shared.service'
 import { Router } from '@angular/router'
 
 /**

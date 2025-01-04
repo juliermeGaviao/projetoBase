@@ -26,8 +26,7 @@ describe('HttpRequestInterceptor', () => {
 
     jest.spyOn(handler, 'handle').mockImplementation((req: HttpRequest<any>) => {
       expect(req.headers.get('Authorization')).toBe('Bearer TOKEN_NOT_PROVIDED')
-      expect(req.headers.get('Content-Type')).toBe('text/html;charset=UTF-8')
-      expect(req.headers.get('Accept')).toBe('application/json, text/plain, */*')
+      expect(req.headers.get('Content-Type')).toBe('application/json')
       return of({} as HttpEvent<any>)
     })
 

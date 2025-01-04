@@ -31,6 +31,6 @@ describe('WelcomeComponent', () => {
 
   it('get value from h2', () => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h2').textContent).toContain('Seja bem vindo ao LAF  no Padrão Digital de Governo');
+    expect(compiled.querySelector('h2').textContent).toContain('Seja bem vindo ao Projeto Base');
   });
 });

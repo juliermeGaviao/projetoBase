@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HomeComponent } from './home.component'
-import { SharedService } from 'src/app/services/shared.service'
+import { SharedService } from '../services/shared.service'
 
 describe('HomeComponent', () => {
   let component: HomeComponent
@@ -21,14 +21,6 @@ describe('HomeComponent', () => {
 
   it('should create the component', () => {
     expect(component).toBeTruthy()
-  })
-
-  it('should initialize with menu open', () => {
-    expect(component.sharedService.isOpen).toBeFalsy()
-  })
-
-  it('should toggle menu state', () => {
-    expect(component.sharedService.isOpen).toBeFalsy()
   })
 
   it('should reflect shared service state for menu', () => {

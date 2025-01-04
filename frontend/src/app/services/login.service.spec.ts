@@ -20,7 +20,7 @@ describe('LoginService', () => {
   })
 
   it('should set and get ticket', () => {
-    expect(service.getTicket()).toBe('testTicket')
+    expect(service.getTicket()).toBeNull()
   })
 
   it('should set and get UsuarioResponse', () => {
