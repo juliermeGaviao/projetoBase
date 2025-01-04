@@ -1,3 +1,4 @@
 .angular
 .gitignore
 node_modules
+coverage
