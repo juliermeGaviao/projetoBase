@@ -7,13 +7,13 @@ describe('Environment Production', () => {
 
   it('should have the correct API URL', () => {
     expect(environment.apiUrl).toBe(
-      'https://bensapreendidos-rest.dev.ibama.gov.br/'
+      'https://127.0.0.1:8080/'
     )
   })
 
   it('should have the correct home URL', () => {
     expect(environment.home).toBe(
-      'https://bensapreendidos.dev.ibama.gov.br/'
+      'https://127.0.0.1:80/'
     )
   })
 })
