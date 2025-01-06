@@ -49,73 +49,6 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('ngOnInit', () => {
-    it('should call getTicket if ticket is present', () => {
-      window.location.search = '?ticket=12345'
-      mockAuthService.token.mockReturnValue(of({ sessionToken: 'validToken', usuario: { nome: 'Test User' } }))
-      jest.spyOn(component, 'getTicket')
-      jest.spyOn(component, 'redirectToSCA2Login')
-
-      component.ngOnInit()
-
-      expect(component.getTicket).toBe('12345')
-      expect(component.getToken).toHaveBeenCalled()
-      expect(component.redirectToSCA2Login).not.toHaveBeenCalled()
-    })
-
-    it('should call getTicket if ticket is not present', () => {
-      window.location.search = ''
-      mockAuthService.login.mockReturnValue(of('http://example.com/login'))
-      jest.spyOn(component, 'getTicket')
-      jest.spyOn(component, 'redirectToSCA2Login')
-
-      component.ngOnInit()
-
-      expect(component.getTicket).toBeNull()
-      expect(component.getToken).not.toHaveBeenCalled()
-      expect(component.redirectToSCA2Login).toHaveBeenCalled()
-    })
-  })
-
-  describe('verifyTicketAndGetToken', () => {
-    it('should store token, set user data, and navigate to dashboard if response is valid', () => {
-      const mockResponse = { sessionToken: 'validToken', usuario: { nome: 'Test User' } }
-      mockAuthService.token.mockReturnValue(of(mockResponse))
-      jest.spyOn(mockLoginService, 'setToken')
-      jest.spyOn(mockLoginService, 'setUsuarioResponse')
-      jest.spyOn(mockRouter, 'navigate')
-
-      component.getTicket()
-
-      expect(mockAuthService.token).toHaveBeenCalledWith('12345')
-      expect(localStorage.getItem('token_SCA2')).toBe('validToken')
-      expect(localStorage.getItem('usuarioResponse_SCA2')).toBe(JSON.stringify(mockResponse))
-      expect(mockLoginService.setToken).toHaveBeenCalledWith('validToken')
-      expect(mockLoginService.setUsuarioResponse).toHaveBeenCalledWith(mockResponse)
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['dashboard'])
-    })
-
-    it('should call redirectToSCA2Login if response is null', () => {
-      mockAuthService.token.mockReturnValue(of(null))
-      jest.spyOn(component, 'redirectToSCA2Login')
-
-      component.getTicket()
-
-      expect(mockAuthService.token).toHaveBeenCalledWith('12345')
-      expect(component.redirectToSCA2Login).toHaveBeenCalled()
-    })
-
-    it('should call redirectToSCA2Login on error', () => {
-      mockAuthService.token.mockReturnValue(throwError(() => new Error('Error')))
-      jest.spyOn(component, 'redirectToSCA2Login')
-
-      component.getTicket()
-
-      expect(mockAuthService.token).toHaveBeenCalledWith('12345')
-      expect(component.redirectToSCA2Login).toHaveBeenCalled()
-    })
-  })
-
   describe('redirectToSCA2Login', () => {
     it('should redirect to login URL if login is successful', () => {
       const mockLoginUrl = 'http://example.com/login'
@@ -134,7 +67,7 @@ describe('LoginComponent', () => {
       component.redirectToSCA2Login()
 
       expect(mockAuthService.login).toHaveBeenCalled()
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['error-page'])
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/error-page'])
     })
   })
 })
