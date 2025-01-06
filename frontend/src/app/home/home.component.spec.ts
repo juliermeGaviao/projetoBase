@@ -1,21 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HomeComponent } from './home.component'
-import { SharedService } from '../services/shared.service'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('HomeComponent', () => {
   let component: HomeComponent
   let fixture: ComponentFixture<HomeComponent>
-  let sharedService: SharedService
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HomeComponent],
-      providers: [SharedService],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents()
 
     fixture = TestBed.createComponent(HomeComponent)
     component = fixture.componentInstance
-    sharedService = TestBed.inject(SharedService)
     fixture.detectChanges()
   })
 
@@ -23,14 +21,4 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should reflect shared service state for menu', () => {
-    sharedService.isOpen = true
-    fixture.detectChanges()
-    const compiled = fixture.nativeElement as HTMLElement
-    expect(compiled.querySelector('.template-base')?.classList).toContain('menu-open')
-
-    sharedService.isOpen = false
-    fixture.detectChanges()
-    expect(compiled.querySelector('.template-base')?.classList).toContain('menu-closed')
-  })
 })

@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http"
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { catchError, Observable, throwError } from "rxjs"
 
@@ -23,11 +23,6 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
     return next.handle(newRequest).pipe(
       catchError((error) => {
-        if (error instanceof HttpErrorResponse) {
-          if (error.status === 403) {
-            console.error('erro 403', error)
-          }
-        }
         return throwError(() => error)
       }))
   }

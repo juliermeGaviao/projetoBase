@@ -33,6 +33,11 @@ describe('HeaderComponent', () => {
     loginService = TestBed.inject(LoginService)
 
     fixture.detectChanges()
+
+    Object.defineProperty(window, 'location', {
+      value: { search: '', href: '' },
+      writable: true,
+    })
   })
 
   it('should create the component', () => {

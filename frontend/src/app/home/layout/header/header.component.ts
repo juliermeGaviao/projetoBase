@@ -67,6 +67,7 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.showModalLogout = false
+
     this.authService.logout().subscribe({
       next: res => {
         if (typeof res === 'string' && res.startsWith('http')) {
