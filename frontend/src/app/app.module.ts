@@ -6,7 +6,6 @@ import { MarkdownModule, MarkedOptions } from 'ngx-markdown'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { BreadcrumbComponent } from './home/layout/breadcrumb/breadcrumb.component'
-import { CustomValueAccessorDirective } from './directives/CustomValueAccessor.directives'
 import { FooterComponent } from './home/layout/footer/footer.component'
 import { HeaderComponent } from './home/layout/header/header.component'
 import { HomeComponent } from './home/home.component'
@@ -24,7 +23,6 @@ import { ProductComponent } from './home/component/management/product/product.co
 @NgModule({
   declarations: [
     AppComponent,
-    CustomValueAccessorDirective,
     BreadcrumbComponent,
     FooterComponent,
     HeaderComponent,

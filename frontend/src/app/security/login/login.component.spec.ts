@@ -16,13 +16,15 @@ describe('LoginComponent', () => {
     mockRouter = {
       navigate: jest.fn(),
     }
+
     mockAuthService = {
       token: jest.fn(),
       login: jest.fn(),
     }
+
     mockLoginService = {
       setToken: jest.fn(),
-      setUsuarioResponse: jest.fn(),
+      setUsuarioResponse: jest.fn()
     }
 
     await TestBed.configureTestingModule({

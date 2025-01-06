@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   }
 
   getToken(ticket: string) {
-    this.authService.token(ticket).pipe(take(1))
+    this.authService.token(ticket)
       .subscribe({
         next: (usuario: UsuarioResponse) => {
           localStorage.setItem('token_SCA2', usuario.sessionToken)
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
   }
 
   redirectToSCA2Login() {
-    this.authService.login().pipe(take(1))
+    this.authService.login()
       .subscribe({
         next: (loginUrl: string) => {
           window.location.href = loginUrl

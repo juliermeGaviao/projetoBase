@@ -25,7 +25,8 @@
     "prettier": "npx prettier --write .",
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 80",
-    "test": "jest --no-cache"
+    "test": "jest --no-cache",
+    "test:coverage": "jest --no-cache --coverage"
   },
   "lint-staged": {
     "*": [
