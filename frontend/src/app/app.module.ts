@@ -36,7 +36,6 @@ import { ProductComponent } from './home/component/management/product/product.co
     ProductComponent
   ],
   imports: [
-    HeaderComponent,
     BrowserModule,
     FormsModule,
     AppRoutingModule,
