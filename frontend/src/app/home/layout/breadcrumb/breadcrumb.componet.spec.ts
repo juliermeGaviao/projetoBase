@@ -1,9 +1,10 @@
 import { TestBed, ComponentFixture } from "@angular/core/testing"
 import { BreadcrumbComponent } from "./breadcrumb.component"
-import { ActivatedRoute, Router } from "@angular/router"
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router"
 import { RouterTestingModule } from '@angular/router/testing'
 import { ListSectorComponent } from "../../component/management/sector/list-sector.component"
 import { SectorComponent } from "../../component/management/sector/sector.component"
+import { of } from 'rxjs'
 
 describe('BreadcrumbComponent', () => {
 
@@ -18,6 +19,29 @@ describe('BreadcrumbComponent', () => {
     const component: BreadcrumbComponent = fixture.componentInstance
 
     expect(component).toBeDefined()
+  })
+
+  it('should filter events by NavigationEnd', () => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      declarations: [BreadcrumbComponent],
+      providers: [{ provide: ActivatedRoute, useValue: { firstChild: null } },
+        {
+          provide: Router,
+          useValue: {
+            url: '/non-pdp/phases/8',
+            events: of(new NavigationEnd(0, 'http://localhost:4200/#/non-pdp/phases/8', 'http://localhost:4200/#/non-pdp/phases/8'))
+          }
+        }
+      ]
+    }).compileComponents()
+
+    const fixture: ComponentFixture<BreadcrumbComponent> = TestBed.createComponent(BreadcrumbComponent)
+    const component: BreadcrumbComponent = fixture.componentInstance
+
+    component.ngAfterViewInit()
+
+    expect(component.ngAfterViewInit).toBeTruthy()
   })
 
   it('should have no child', () => {
@@ -97,7 +121,7 @@ describe('BreadcrumbComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes([{ path: 'home',
         children: [{ path: 'sector', component: ListSectorComponent, data: { breadCrumb: 'Setor' }},
-          { path: 'view', component: SectorComponent, data: { breadCrumb: 'Visualizar' }}
+          { path: 'sector/view', component: SectorComponent, data: { breadCrumb: 'Visualizar' }}
         ]
       }])],
       declarations: [BreadcrumbComponent],
@@ -106,6 +130,33 @@ describe('BreadcrumbComponent', () => {
           snapshot: {
             routeConfig: { path: 'sector/view' }, url: [ { path: 'sector' }, { path: 'view' } ],
             data: { breadCrumb: 'Visualizar' }
+          }
+        } } }
+      ]
+    }).compileComponents()
+
+    const fixture: ComponentFixture<BreadcrumbComponent> = TestBed.createComponent(BreadcrumbComponent)
+    const component: BreadcrumbComponent = fixture.componentInstance
+
+    component.ngAfterViewInit()
+
+    expect(component.ngAfterViewInit).toBeTruthy()
+  })
+
+  it('should find route /home/sector/view/subsector', () => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule.withRoutes([{ path: 'home',
+        children: [{ path: 'sector', component: ListSectorComponent, data: { breadCrumb: 'Setor' }},
+          { path: 'sector/view', component: SectorComponent, data: { breadCrumb: 'Visualizar' }},
+          { path: 'sector/view/subsector', component: SectorComponent, data: { breadCrumb: 'Listar Subsetores' }}
+        ]
+      }])],
+      declarations: [BreadcrumbComponent],
+      providers: [
+        { provide: ActivatedRoute, useValue: { firstChild: {
+          snapshot: {
+            routeConfig: { path: 'sector/view/subsector' }, url: [ { path: 'sector' }, { path: 'view' }, { path: 'subsector' } ],
+            data: { breadCrumb: 'Listar Subsetores' }
           }
         } } }
       ]

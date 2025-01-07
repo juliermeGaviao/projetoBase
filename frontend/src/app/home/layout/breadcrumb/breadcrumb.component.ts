@@ -37,7 +37,7 @@ export class BreadcrumbComponent implements AfterViewInit {
       let home: Route = this.getHomeRoute()
 
       for (let i = 0; i < snapshot.url.length - 1; i++) {
-        path = (path.length > 0 ? '/' : '') + snapshot.url[i].path
+        path += (path.length > 0 ? '/' : '') + snapshot.url[i].path
 
         for (let route of home.children) {
           if (path === route.path) {

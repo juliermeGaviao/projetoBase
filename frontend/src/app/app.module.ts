@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component'
 import { MenuComponent } from './home/layout/menu/menu.component'
 import { HttpRequestInterceptor } from 'src/interceptor/HttpRequestInterceptor'
 import { AuthService } from './services/auth.service'
+import { CustomValueAccessorDirective } from './directives/CustomValueAccessor.directives'
 import { DynamicTableComponent } from './shared/component/dynamic-table/dynamic-table.component'
 import { WelcomeComponent } from './home/layout/welcome/welcome.component'
 
@@ -28,6 +29,7 @@ import { ProductComponent } from './home/component/management/product/product.co
     HeaderComponent,
     HomeComponent,
     MenuComponent,
+    CustomValueAccessorDirective,
     DynamicTableComponent,
     WelcomeComponent,
     ListSectorComponent,
