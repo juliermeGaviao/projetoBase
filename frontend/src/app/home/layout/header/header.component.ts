@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit {
 
     this.authService.logout().subscribe({
       next: res => {
-        if (typeof res === 'string' && res.startsWith('http')) {
+        if (res.startsWith('http')) {
           this.loginService.clear()
           window.location.href = res
         } else {
