@@ -9,7 +9,7 @@ import { UsuarioResponse } from '../interfaces/usuarioResponse.interface'
 })
 export class AuthService {
 
-private readonly apiurl = environment.apiUrl
+readonly apiurl: string = environment.apiUrl
 
 constructor(private readonly httpClient: HttpClient) { }
 

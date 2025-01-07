@@ -52,6 +52,11 @@ describe('LoginService', () => {
     expect(service.isAuthenticated()).toBe(true)
   })
 
+  it('should has ticket', () => {
+    localStorage.setItem('ticket_SCA2', 'testTicket')
+    expect(service.hasTicket()).toBe(true)
+  })
+
   it('should clear all data', () => {
     localStorage.setItem('token_SCA2', 'validToken')
     localStorage.setItem('ticket_SCA2', 'testTicket')
