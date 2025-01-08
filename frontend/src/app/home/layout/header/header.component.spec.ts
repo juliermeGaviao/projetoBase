@@ -187,7 +187,7 @@ describe('HeaderComponent', () => {
       component.onLogout()
 
       expect(loginService.clear).toHaveBeenCalled()
- 
+
       expect(navigateSpy).toHaveBeenCalledWith(['login'])
     })
   })
