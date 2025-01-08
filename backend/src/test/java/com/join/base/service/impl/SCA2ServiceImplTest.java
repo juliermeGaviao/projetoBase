@@ -1,6 +1,5 @@
 package com.join.base.service.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -129,14 +128,11 @@ class SCA2ServiceImplTest {
     }
 
     @Test
-    void logoutWithoutCredential() throws Exception {
+    void logoutWithoutCredential() {
         var auth = new UsernamePasswordAuthenticationToken(null, "", null);
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        ResponseEntity<String> result = service.logout();
-
-		assertTrue(result.getStatusCode().is2xxSuccessful());
-		assertEquals("Usuário não encontrado!", result.getBody());
+        assertThrows(LoginException.class, () -> service.logout());
     }
 
 }
