@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HeaderComponent } from './header.component'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core'
+import { HttpErrorResponse } from '@angular/common/http'
+import { Router } from "@angular/router"
 
 import { SharedService } from '../../../services/shared.service'
 import { of, throwError } from 'rxjs'
@@ -164,5 +166,30 @@ describe('HeaderComponent', () => {
     expect(loginService.clear).toHaveBeenCalled()
   })
 
+  it('should call authService.logout and loginService.clear on logout', () => {
+    jest.spyOn(authService, 'logout').mockReturnValue(of('http://localhost:4200/login'))
+    jest.spyOn(loginService, 'clear')
+
+    component.onLogout()
+
+    expect(authService.logout).toHaveBeenCalled()
+    expect(loginService.clear).toHaveBeenCalled()
+  })
+
+  it('should call authService.logout and loginService.clear on logout', () => {
+    jest.spyOn(authService, 'logout').mockReturnValue(throwError(() => new HttpErrorResponse({ status: 403, statusText: 'Forbidden' })))
+    jest.spyOn(loginService, 'clear')
+
+    fixture.ngZone?.run(() => {
+      const router: Router = TestBed.inject(Router)
+      const navigateSpy = jest.spyOn(router, 'navigate')
   
+      component.onLogout()
+
+      expect(loginService.clear).toHaveBeenCalled()
+ 
+      expect(navigateSpy).toHaveBeenCalledWith(['login'])
+    })
+  })
+
 })
