@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     if (this.loginService.hasTicket()) {
       return this.loginService.getTicket()
     } else {
-      const url = this.router.url
+      const url: string = this.router.url
 
       if (url?.includes('?ticket=')) {
         return url.substring(url.indexOf('=') + 1, url.length)
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
           this.loginService.setUsuarioResponse(usuario)
           this.router.navigate(['home'])
         },
-        error: () => {
+        error: (error: Error) => {
           this.loginService.clear()
           this.router.navigate(['/error-page'])
         },
@@ -60,14 +60,13 @@ export class LoginComponent implements OnInit {
   }
 
   redirectToSCA2Login() {
-    this.authService.login()
-      .subscribe({
-        next: (loginUrl: string) => {
-          window.location.href = loginUrl
-        },
-        error: () => {
-          this.router.navigate(['/error-page'])
-        }
-      })
+    this.authService.login().subscribe({
+      next: (loginUrl: string) => {
+        window.location.href = loginUrl
+      },
+      error: (error: Error) => {
+        this.router.navigate(['/error-page'])
+      }
+    })
   }
 }

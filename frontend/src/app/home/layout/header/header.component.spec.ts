@@ -183,7 +183,7 @@ describe('HeaderComponent', () => {
     fixture.ngZone?.run(() => {
       const router: Router = TestBed.inject(Router)
       const navigateSpy = jest.spyOn(router, 'navigate')
-  
+
       component.onLogout()
 
       expect(loginService.clear).toHaveBeenCalled()
