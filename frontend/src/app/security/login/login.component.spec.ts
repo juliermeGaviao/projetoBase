@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, tick, waitForAsync } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import { of, throwError } from 'rxjs'
 import { AuthService } from '../../services/auth.service'
