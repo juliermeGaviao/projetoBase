@@ -18,5 +18,8 @@ describe('PageErrorComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  it('should catch error', () => {
+    expect(() => component.ngOnInit()).toThrow()
+  })
   
 })

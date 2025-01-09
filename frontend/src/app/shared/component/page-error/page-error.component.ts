@@ -10,6 +10,7 @@ export class PageErrorComponent implements OnInit {
   @Input() descriptionError: string = 'Talvez você tenha se equivocado ao digitar o endereço URL ou quem sabe nós tenhamos cometido uma falha por aqui.'
 
   constructor() { }
+
   ngOnInit(): void {
     throw new Error('Method not implemented.')
   }

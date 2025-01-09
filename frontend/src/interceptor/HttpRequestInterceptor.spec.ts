@@ -1,4 +1,4 @@
-import { HttpHandler, HttpRequest, HttpEvent, HttpErrorResponse } from '@angular/common/http'
+import { HttpHandler, HttpRequest, HttpHeaders, HttpEvent, HttpErrorResponse } from '@angular/common/http'
 import { of, throwError } from 'rxjs'
 import { HttpRequestInterceptor } from './HttpRequestInterceptor'
 
@@ -35,6 +35,20 @@ describe('HttpRequestInterceptor', () => {
     })
   })
 
+  it('should add authorization and content headers to the request for file upload', (done) => {
+    const mockRequest = new HttpRequest('GET', '/test', { headers: new HttpHeaders( { 'x-file-upload': 'x-file-upload' } ) })
+
+    jest.spyOn(handler, 'handle').mockImplementation((req: HttpRequest<any>) => {
+      expect(req.headers.get('Accept')).toBe('*/*')
+      expect(req.headers.get('charset')).toBe('utf-8')
+      return of({} as HttpEvent<any>)
+    })
+
+    interceptor.intercept(mockRequest, handler).subscribe(() => {
+      done()
+    })
+  })
+
   it('should catch an HTTP error response', (done) => {
     const mockRequest = new HttpRequest('GET', '/test', {})
     const errorResponse = new HttpErrorResponse({
@@ -43,7 +57,7 @@ describe('HttpRequestInterceptor', () => {
     })
 
     jest.spyOn(handler, 'handle').mockImplementation(() => {
-      return throwError(errorResponse)
+      return throwError(() => errorResponse)
     })
 
     interceptor.intercept(mockRequest, handler).subscribe({
@@ -53,4 +67,5 @@ describe('HttpRequestInterceptor', () => {
       },
     })
   })
+
 })
