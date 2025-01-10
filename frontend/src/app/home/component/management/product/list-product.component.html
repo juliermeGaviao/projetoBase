@@ -32,7 +32,7 @@
 
 <div class="p-10px">&nbsp;</div>
 
-<app-dynamic-table [data]="dataTable" (pageSizeChange)="changePageSize($event)" (pageChange)="pageChange($event)">
+<dynamic-table [data]="dataTable" (pageSizeChange)="changePageSize($event)" (pageChange)="pageChange($event)">
 
   <ng-template #column let-item="row">{{ item.id }}</ng-template>
   <ng-template #column let-item="row">{{ item.nome }}</ng-template>
@@ -43,7 +43,7 @@
     <button type="button" class="br-button circle small" (click)="confirm(item.id)" title="Remover"><icon class="fas fa-trash"/></button>
   </ng-template>
 
-</app-dynamic-table>
+</dynamic-table>
 
 <div id="scrimModal" class="br-scrim-util foco">
   <div class="col d-flex justify-content-center align-items-end" style="min-height: 450px">

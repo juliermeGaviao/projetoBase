@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, ContentChildren, QueryList, Tem
 import { DataTable } from './dynamic-table.interface'
 
 @Component({
-  selector: 'app-dynamic-table',
+  selector: 'dynamic-table',
   templateUrl: './dynamic-table.component.html',
   styleUrls: ['./dynamic-table.component.css']
 })

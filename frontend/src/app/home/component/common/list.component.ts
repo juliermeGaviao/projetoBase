@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core'
+import { Injectable, OnInit } from '@angular/core'
 import { DataTable } from '../../../shared/component/dynamic-table/dynamic-table.interface'
 import { FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { toggleScrim } from './util'
 import { MessageService } from '../../../services/message.service'
 
-@Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html'
-})
+@Injectable()
 export abstract class ListComponent implements OnInit {
 
   form: FormGroup
