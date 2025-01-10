@@ -1,6 +1,8 @@
 import { Directive, ElementRef, HostListener, Renderer2, forwardRef } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 
+export const directiveFunction = () => CustomValueAccessorDirective
+
 /**
  * Diretiva customizada para acessar e controlar o valor de um input.
  */
@@ -9,16 +11,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CustomValueAccessorDirective),
-      multi: true,
-    },
-  ],
+      useExisting: forwardRef(directiveFunction),
+      multi: true
+    }
+  ]
 })
 export class CustomValueAccessorDirective implements ControlValueAccessor {
   private onChange: (value: string) => void = () => {}
   private onTouched: () => void = () => {}
   private _value: string
-  public disabled = false
+  disabled = false
 
   constructor(
     private readonly elementRef: ElementRef,
@@ -28,7 +30,7 @@ export class CustomValueAccessorDirective implements ControlValueAccessor {
   /**
    * Obtém o valor do campo.
    */
-  public get value(): string {
+  get value(): string {
     return this._value
   }
 
@@ -36,7 +38,7 @@ export class CustomValueAccessorDirective implements ControlValueAccessor {
    * Define o valor do campo.
    * @param val O valor a ser definido.
    */
-  public set value(val: string) {
+  set value(val: string) {
     if (val !== this._value) {
       this._value = val
       this.onChange(this._value)
@@ -54,7 +56,7 @@ export class CustomValueAccessorDirective implements ControlValueAccessor {
    * Registra uma função de retorno de chamada a ser chamada quando o valor do campo mudar.
    * @param fn A função de retorno de chamada.
    */
-  public registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn
   }
 
@@ -62,7 +64,7 @@ export class CustomValueAccessorDirective implements ControlValueAccessor {
    * Registra uma função de retorno de chamada a ser chamada quando o campo for tocado.
    * @param fn A função de retorno de chamada.
    */
-  public registerOnTouched(fn: () => void): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn
   }
 
@@ -70,7 +72,7 @@ export class CustomValueAccessorDirective implements ControlValueAccessor {
    * Define o estado de desabilitado do campo.
    * @param isDisabled Indica se o campo deve ser desabilitado.
    */
-  public setDisabledState(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled
   }
 
@@ -78,7 +80,7 @@ export class CustomValueAccessorDirective implements ControlValueAccessor {
    * Escreve um novo valor para o campo.
    * @param value O novo valor a ser escrito.
    */
-  public writeValue(value: any): void {
+  writeValue(value: any): void {
     this.value = value
   }
 
@@ -88,7 +90,7 @@ export class CustomValueAccessorDirective implements ControlValueAccessor {
    * @param value O valor do evento de input.
    */
   @HostListener('input', ['$event.detail'])
-  private handleInput(value: string): void {
+  handleInput(value: string): void {
     this.value = value
   }
 
@@ -98,7 +100,7 @@ export class CustomValueAccessorDirective implements ControlValueAccessor {
    * @param value O valor do evento de change.
    */
   @HostListener('change', ['$event.detail'])
-  private handleChange(value: string): void {
+  handleChange(value: string): void {
     this.onChange(value[0])
   }
 
@@ -108,7 +110,8 @@ export class CustomValueAccessorDirective implements ControlValueAccessor {
    * @param event O evento de blur.
    */
   @HostListener('blur')
-  private handleBlur(event: any): void {
+  handleBlur(event: any): void {
     this.onTouched()
   }
+
 }

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { toggleScrim } from '../../common/util'
 import { MessageService } from '../../../../services/message.service'
 
-import { ListComponent } from '../../common/list.component'
+import { ListCRUD } from '../../common/list.component'
 import { ProductService } from '../../../../services/product.service'
 import { SectorService } from '../../../../services/sector.service'
 import { Sector } from '../../../../model/sector'
@@ -13,7 +13,7 @@ import { Sector } from '../../../../model/sector'
   selector: 'app-list-product',
   templateUrl: './list-product.component.html'
 })
-export class ListProductComponent extends ListComponent {
+export class ListProductComponent extends ListCRUD {
 
   sectors: any[] = []
 

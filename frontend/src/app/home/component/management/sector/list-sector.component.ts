@@ -4,14 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { toggleScrim } from '../../common/util'
 import { MessageService } from '../../../../services/message.service'
 
-import { ListComponent } from '../../common/list.component'
+import { ListCRUD } from '../../common/list.component'
 import { SectorService } from '../../../../services/sector.service'
 
 @Component({
   selector: 'app-list-sector',
   templateUrl: './list-sector.component.html'
 })
-export class ListSectorComponent extends ListComponent {
+export class ListSectorComponent extends ListCRUD {
 
   constructor(
     protected readonly router: Router,

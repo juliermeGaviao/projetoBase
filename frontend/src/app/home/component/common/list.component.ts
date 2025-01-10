@@ -6,7 +6,7 @@ import { toggleScrim } from './util'
 import { MessageService } from '../../../services/message.service'
 
 @Injectable()
-export abstract class ListComponent implements OnInit {
+export abstract class ListCRUD implements OnInit {
 
   form: FormGroup
 
