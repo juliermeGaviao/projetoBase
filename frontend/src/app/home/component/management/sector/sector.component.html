@@ -6,7 +6,7 @@
 
 <h1>{{title}}</h1>
 
-<br-message [state]="message.state" closable *ngIf="message.show">{{ message.text }}</br-message>
+<br-message [state]="messageService.message.state" closable *ngIf="messageService.message.show">{{ messageService.message.text }}</br-message>
 
 <form [formGroup]="form" (ngSubmit)="send()">
   <div class="row">

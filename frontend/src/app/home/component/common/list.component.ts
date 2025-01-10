@@ -33,8 +33,7 @@ export abstract class ListCRUD implements OnInit {
     protected readonly router: Router,
     protected readonly route: ActivatedRoute,
     public readonly messageService: MessageService
-  )
-  { }
+  ) { }
 
   ngOnInit() {
     this.init()
