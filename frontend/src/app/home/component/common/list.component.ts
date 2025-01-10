@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { DataTable } from '../../../shared/component/dynamic-table/dynamic-table.interface'
 import { FormGroup } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { Scrim } from '@govbr-ds/core'
+import { toggleScrim } from './util'
+import { MessageService } from '../../../services/message.service'
 
 @Component({
   selector: 'app-list',
@@ -10,7 +11,6 @@ import { Scrim } from '@govbr-ds/core'
 })
 export abstract class ListComponent implements OnInit {
 
-  message: { state: string, text: string, show: boolean } = { state: '', text: '', show: false }
   form: FormGroup
 
   dataTable: DataTable = {
@@ -34,7 +34,9 @@ export abstract class ListComponent implements OnInit {
 
   constructor(
     protected readonly router: Router,
-    protected readonly route: ActivatedRoute)
+    protected readonly route: ActivatedRoute,
+    public readonly messageService: MessageService
+  )
   { }
 
   ngOnInit() {
@@ -65,7 +67,7 @@ export abstract class ListComponent implements OnInit {
     if (this.route.queryParams) {
       this.route.queryParams.subscribe(params => {
         if (params['success']) {
-          this.showMessage(params['success'], 'success', 10000)
+          this.messageService.showMessage(params['success'], 'success', 10000)
         }
       })
     }
@@ -85,13 +87,13 @@ export abstract class ListComponent implements OnInit {
   }
 
   previousPage() {
-    this.dataTable.page.currentPage = this.dataTable.page.currentPage - 1
+    this.dataTable.page.currentPage--
 
     this.search()
   }
 
   nextPage() {
-    this.dataTable.page.currentPage = this.dataTable.page.currentPage + 1
+    this.dataTable.page.currentPage++
 
     this.search()
   }
@@ -106,45 +108,24 @@ export abstract class ListComponent implements OnInit {
 
   confirm(id: number) {
     this.idDelete = id
-    this.toggleScrim('scrimModal')
+    toggleScrim('scrimModal')
   }
 
   remove(crudService: any, successMessage: string, errorMessage: string) {
-    this.toggleScrim('scrimModal')
-    this.toggleScrim('scrimLoading')
+    toggleScrim('scrimModal')
+    toggleScrim('scrimLoading')
 
     crudService.deleteById(this.idDelete).subscribe({
       next: () => {
         this.search()
-        this.toggleScrim('scrimLoading')
-        this.showMessage('Setor removido com sucesso', 'success', 10000)
+        toggleScrim('scrimLoading')
+        this.messageService.showMessage(successMessage, 'success', 10000)
       },
       error: (err: any) => {
-        this.toggleScrim('scrimLoading')
-        this.showMessage(err?.message ?? 'Ocorreu um erro ao remover o setor', 'danger')
+        toggleScrim('scrimLoading')
+        this.messageService.showMessage(err?.message ?? errorMessage, 'danger')
       }
     })
-  }
-
-  toggleScrim(component: string) {
-    const scrimfoco = new Scrim({
-      trigger: window.document.querySelector('#' + component),
-      escEnable: false
-    })
-
-    if (scrimfoco.trigger.classList.value.indexOf('active') >= 0) {
-      scrimfoco.hideScrim()
-    } else {
-      scrimfoco.showScrim()
-    }
-  }
-
-  showMessage(content: string, status: string, timer: number = null) {
-    this.message = { state: status, text: content, show: true }
-
-    if (timer) {
-      setTimeout(() => { this.message = { state: '', text: '', show: false } }, timer)
-    }
   }
 
 }

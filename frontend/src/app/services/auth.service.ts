@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core'
 import { UsuarioResponse } from '../interfaces/usuarioResponse.interface'
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
 

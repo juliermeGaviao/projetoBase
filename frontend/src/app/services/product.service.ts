@@ -3,33 +3,34 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { environment } from '../../environments/environment'
 import { Product } from '../model/product'
+import { CrudService } from '../interfaces/crud-service.interface'
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class ProductService {
+export class ProductService implements CrudService<Product> {
 
   private readonly apiUrl = environment.apiUrl + 'product'
 
   constructor(private readonly httpClient: HttpClient) { }
 
-  getByParams(params: any) {
+  getByParams(params: any): Observable<any> {
     return this.httpClient.get<Product[]>(this.apiUrl + '/page', { params })
   }
 
-  deleteById(id: number) {
-    return this.httpClient.delete(this.apiUrl + '/' + id)
+  deleteById(id: number): Observable<any> {
+    return this.httpClient.delete<Product>(this.apiUrl + '/' + id)
   }
 
-  public save(product: any) {
-    return this.httpClient.post<any>(`${this.apiUrl}`, product)
+  save(dto: any): Observable<any> {
+    return this.httpClient.post<Product>(`${this.apiUrl}`, dto)
   }
 
-  public edit(product: Product) {
-    return this.httpClient.put<Product>(`${this.apiUrl}`, product)
+  edit(dto: Product): Observable<any> {
+    return this.httpClient.put<Product>(`${this.apiUrl}`, dto)
   }
 
-  getById(id: number): Observable<Product> {
+  getById(id: number): Observable<any> {
     return this.httpClient.get<Product>(this.apiUrl + '/' + id)
   }
 

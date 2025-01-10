@@ -3,33 +3,34 @@ import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { environment } from '../../environments/environment'
 import { Sector } from '../model/sector'
+import { CrudService } from '../interfaces/crud-service.interface'
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class SectorService {
+export class SectorService implements CrudService<Sector> {
 
   private readonly apiUrl = environment.apiUrl + 'sector'
 
   constructor(private readonly httpClient: HttpClient) { }
 
-  getByParams(params: any) {
+  getByParams(params: any): Observable<any> {
     return this.httpClient.get<Sector[]>(this.apiUrl + '/page', { params })
   }
 
-  deleteById(id: number) {
-    return this.httpClient.delete(this.apiUrl + '/' + id)
+  deleteById(id: number): Observable<any> {
+    return this.httpClient.delete<Sector>(this.apiUrl + '/' + id)
   }
 
-  public save(sector: Sector) {
-    return this.httpClient.post<Sector>(`${this.apiUrl}`, sector)
+  save(dto: Sector): Observable<any> {
+    return this.httpClient.post<Sector>(`${this.apiUrl}`, dto)
   }
 
-  public edit(sector: Sector) {
-    return this.httpClient.put<Sector>(`${this.apiUrl}`, sector)
+  edit(dto: Sector): Observable<any> {
+    return this.httpClient.put<Sector>(`${this.apiUrl}`, dto)
   }
 
-  getById(id: number): Observable<Sector> {
+  getById(id: number): Observable<any> {
     return this.httpClient.get<Sector>(this.apiUrl + '/' + id)
   }
 

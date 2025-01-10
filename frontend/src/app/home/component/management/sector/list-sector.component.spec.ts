@@ -123,4 +123,86 @@ describe('ListSectorComponent', () => {
     expect(component.dataTable.page.itemsPerPage).toEqual(3)
   })
 
+  it('should go to new sector page', () => {
+    const navigateSpy = jest.spyOn(router, 'navigate')
+
+    fixture.ngZone?.run(() => {
+      component.newItem()
+    })
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/home/sector/new'])
+  })
+
+  it('should go to view sector page', () => {
+    const navigateSpy = jest.spyOn(router, 'navigate')
+
+    fixture.ngZone?.run(() => {
+      component.view(1)
+    })
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/home/sector/view', { "id": 1, "view": true }])
+  })
+
+  it('should go to edit sector page', () => {
+    const navigateSpy = jest.spyOn(router, 'navigate')
+
+    fixture.ngZone?.run(() => {
+      component.edit(1)
+    })
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/home/sector/edit', { "id": 1 }])
+  })
+
+  it('should remove sector', () => {
+    jest.spyOn(sectorService, 'deleteById').mockReturnValue(of({id: 1, nome: "Cosméticos"}))
+
+    component.remove()
+
+    expect(component).toBeTruthy()
+  })
+
+  it('should get error on removing sector with message error', () => {
+    jest.spyOn(sectorService, 'deleteById').mockReturnValue(throwError(() => new Error('Mensagem de erro')))
+
+    component.remove()
+
+    expect(component).toBeTruthy()
+  })
+
+  it('should get error on removing sector with no message error', () => {
+    jest.spyOn(sectorService, 'deleteById').mockReturnValue(throwError(() => null))
+
+    component.remove()
+
+    expect(component).toBeTruthy()
+  })
+
+  it('should change page', () => {
+    component.pageChange(1)
+
+    expect(component.dataTable.page.currentPage).toEqual(1)
+  })
+
+  it('should go to previous page', () => {
+    component.dataTable.page.currentPage = 0
+
+    component.previousPage()
+
+    expect(component.dataTable.page.currentPage).toEqual(-1)
+  })
+
+  it('should go to next page', () => {
+    component.dataTable.page.currentPage = -1
+
+    component.nextPage()
+
+    expect(component.dataTable.page.currentPage).toEqual(0)
+  })
+
+  it('should show removal confirmation window', () => {
+    component.confirm(1)
+
+    expect(component).toBeTruthy()
+  })
+
 })

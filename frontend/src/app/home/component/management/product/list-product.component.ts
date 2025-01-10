@@ -1,6 +1,8 @@
 import { Component } from '@angular/core'
 import { FormBuilder } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
+import { toggleScrim } from '../../common/util'
+import { MessageService } from '../../../../services/message.service'
 
 import { ListComponent } from '../../common/list.component'
 import { ProductService } from '../../../../services/product.service'
@@ -18,11 +20,12 @@ export class ListProductComponent extends ListComponent {
   constructor(
     protected readonly router: Router,
     protected readonly route: ActivatedRoute,
+    public readonly messageService: MessageService,
     private readonly fb: FormBuilder,
     private readonly sectorService: SectorService,
     private readonly productService: ProductService)
   {
-    super(router, route)
+    super(router, route, messageService)
   }
 
   setTableHeader(): void {
@@ -63,32 +66,32 @@ export class ListProductComponent extends ListComponent {
       params['orderDirect'] = this.dataTable.orderDirect
     }
 
-    this.toggleScrim('scrimLoading')
+    toggleScrim('scrimLoading')
     this.productService.getByParams(params).subscribe({
       next: (data: any) => {
         this.dataTable.records = data.products
         super.setPageInfo(data, params.size)
 
-        this.toggleScrim('scrimLoading')
+        toggleScrim('scrimLoading')
       },
       error: err => {
-        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar os produtos', 'danger')
-        this.toggleScrim('scrimLoading')
+        this.messageService.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar os produtos', 'danger')
+        toggleScrim('scrimLoading')
       }
     })
   }
 
   loadSectors() {
-    this.toggleScrim('scrimLoading')
+    toggleScrim('scrimLoading')
     this.sectorService.getByParams({ "page": 0, "size": 100, "orderBy": 'nome' }).subscribe({
       next: (data: any) => {
         this.sectors = data.sectors.map( (sector: Sector) => { return { value: sector.id, label: sector.nome } })
 
-        this.toggleScrim('scrimLoading')
+        toggleScrim('scrimLoading')
       },
       error: err => {
-        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar setores', 'danger')
-        this.toggleScrim('scrimLoading')
+        this.messageService.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar setores', 'danger')
+        toggleScrim('scrimLoading')
       }
     })
   }
