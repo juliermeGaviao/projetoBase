@@ -46,6 +46,10 @@ export abstract class FormCRUD implements OnInit {
   protected abstract postEntityLoadingAction(): void
 
   loadEntity(defaultErrorMessage: string) {
+    if (!this.id) {
+      return
+    }
+
     toggleScrim('scrimLoading')
 
     this.service.getById(this.id).subscribe({

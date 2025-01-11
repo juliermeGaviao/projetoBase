@@ -33,6 +33,10 @@ export class ProductComponent extends FormCRUD {
   init() {
     this.title += 'Produto'
     this.loadEntity('Erro ao carregar dados do setor')
+
+    if (!this.id) {
+      this.loadSectors()
+    }
   }
 
   protected postEntityLoadingAction(): void {
@@ -73,13 +77,12 @@ export class ProductComponent extends FormCRUD {
   }
 
   protected getDto(): Entity {
-    const result: Product = {
-      id: this.id,
-      nome: this.form.value.nome,
-      setor: {
-        id: this.form.value.idSetor.value,
-        nome: ''
-      }
+    let result: any
+
+    if (this.id) {
+      result = { id: this.id, nome: this.form.value.nome, setor: { id: this.form.value.idSetor.value, nome: '' } }
+    } else {
+      result = { idSetor: this.form.value.idSetor.value, nome: this.form.value.nome }
     }
 
     return result
