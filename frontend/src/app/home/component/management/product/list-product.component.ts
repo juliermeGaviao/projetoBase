@@ -75,7 +75,7 @@ export class ListProductComponent extends ListCRUD {
         toggleScrim('scrimLoading')
       },
       error: err => {
-        this.messageService.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar os produtos', 'danger')
+        this.messageService.showMessage(err?.message ?? 'Ocorreu um erro ao carregar os produtos', 'danger')
         toggleScrim('scrimLoading')
       }
     })
@@ -90,7 +90,7 @@ export class ListProductComponent extends ListCRUD {
         toggleScrim('scrimLoading')
       },
       error: err => {
-        this.messageService.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar setores', 'danger')
+        this.messageService.showMessage(err?.message ?? 'Ocorreu um erro ao carregar setores', 'danger')
         toggleScrim('scrimLoading')
       }
     })

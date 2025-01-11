@@ -35,14 +35,15 @@ export abstract class FormCRUD implements OnInit {
       this.title = 'Novo '
     }
 
-    this.init()
-
     this.buildForm()
+
+    this.init()
   }
 
   protected abstract init(): void
   protected abstract buildForm(): void
   protected abstract setFormValues(entity: Entity): void
+  protected abstract postEntityLoadingAction(): void
 
   loadEntity(defaultErrorMessage: string) {
     toggleScrim('scrimLoading')
@@ -50,11 +51,12 @@ export abstract class FormCRUD implements OnInit {
     this.service.getById(this.id).subscribe({
       next: (data: any) => {
         this.setFormValues(data)
+        this.postEntityLoadingAction()
 
         toggleScrim('scrimLoading')
       },
       error: err => {
-        this.messageService.showMessage(err.error.detail ?? defaultErrorMessage, 'danger')
+        this.messageService.showMessage(err?.message ?? defaultErrorMessage, 'danger')
         toggleScrim('scrimLoading')
       }
     })

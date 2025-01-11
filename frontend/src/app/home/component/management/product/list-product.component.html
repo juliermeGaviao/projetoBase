@@ -18,10 +18,10 @@
 <form [formGroup]="form" (ngSubmit)="search()">
   <div class="row">
     <div class="col-4">
-      <br-input type="text" id="nome" name="nome" placeholder="Filtrar pelo nome do Produto" label="Nome do Produto:" formControlName="nome"></br-input>
+      <br-input type="text" id="nomeProduto" placeholder="Filtrar pelo nome do Produto" label="Nome do Produto:" formControlName="nome"></br-input>
     </div>
     <div class="col-4">
-      <br-select id="setor" name="setor" label="Setor do Produto:" [options]="sectors" formControlName="idSetor" placeholder="Filtrar por Setor"></br-select>
+      <br-select id="setorProduto" label="Setor do Produto:" [options]="sectors" formControlName="idSetor" placeholder="Filtrar por Setor"></br-select>
     </div>
     <div class="col-4 d-flex justify-content-end">
       <button id="limpar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cleanFilters()"><icon class="fas fa-eraser"/>Limpar Filtro</button>

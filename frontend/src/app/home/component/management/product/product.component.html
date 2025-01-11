@@ -6,18 +6,18 @@
 
 <h1>{{title}}</h1>
 
-<br-message [state]="message.state" closable *ngIf="message.show">{{ message.text }}</br-message>
+<br-message [state]="messageService.message.state" closable *ngIf="messageService.message.show">{{ messageService.message.text }}</br-message>
 
 <form [formGroup]="form" (ngSubmit)="send()">
   <div class="row">
     <div class="col-12">
-      <br-input type="text" id="nome" placeholder="Insira o nome do Setor" label="Nome do Setor:" formControlName="nome" [attr.disabled]="view"></br-input>
+      <br-input type="text" id="nomeProduto" placeholder="Insira o nome do Setor" label="Nome do Setor:" formControlName="nome" [attr.disabled]="view"></br-input>
       <br-message state="danger" feedback *ngIf="form.get('nome').invalid && form.get('nome').touched">Campo obrigatório.</br-message>
     </div>
   </div>
   <div class="row mt-3">
     <div class="col-12">
-      <br-select id="setor" name="setor" label="Setor do Produto:" [options]="sectors" formControlName="idSetor" placeholder="Selecionar Setor" [attr.disabled]="view"></br-select>
+      <br-select id="setorProduto" label="Setor do Produto:" [options]="sectors" formControlName="idSetor" placeholder="Selecionar Setor" [attr.disabled]="view"></br-select>
       <br-message state="danger" feedback *ngIf="form.get('idSetor').invalid && form.get('idSetor').touched">Campo obrigatório.</br-message>
     </div>
   </div>

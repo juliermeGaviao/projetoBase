@@ -1,55 +1,42 @@
-import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
-import { ActivatedRoute, Router, Params } from '@angular/router'
-import { Scrim } from '@govbr-ds/core'
+import { Component } from '@angular/core'
+import { FormBuilder, Validators, FormControl } from '@angular/forms'
+import { ActivatedRoute, Router } from '@angular/router'
+import { toggleScrim } from '../../common/util'
 
 import { ProductService } from '../../../../services/product.service'
 import { SectorService } from '../../../../services/sector.service'
 import { Sector } from '../../../../model/sector'
-import { Product } from '../../../../model/product'
+import { MessageService } from '../../../../services/message.service'
+import { FormCRUD } from '../../common/view-new-edit.component'
+import { Entity } from '../../../../interfaces/entity.interface'
+import { Product } from 'src/app/model/product'
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html'
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent extends FormCRUD {
 
   sectors: any[] = []
 
-  message: { state: string, text: string, show: boolean } = { state: '', text: '', show: false }
-
-  title: string
-  private id: number
-  view: boolean
-
-  public form: FormGroup
-
   constructor(
-    private readonly router: Router,
+    protected readonly router: Router,
+    protected readonly route: ActivatedRoute,
+    public readonly messageService: MessageService,
     private readonly fb: FormBuilder,
-    private readonly route: ActivatedRoute,
     private readonly sectorService: SectorService,
     private readonly productService: ProductService)
-  { }
+  {
+    super(router, route, messageService, productService)
+  }
 
-  ngOnInit() {
-    const params: Params = this.route.snapshot.params
+  init() {
+    this.title += 'Produto'
+    this.loadEntity('Erro ao carregar dados do setor')
+  }
 
-    this.id = params?.id ? parseInt(params.id) : null
-    this.view = params?.view
-
-    this.buildForm()
-
-    if (this.view) {
-      this.title = 'Visualizar Produto'
-      this.loadProduct(this.id)
-    } else if (this.id) {
-      this.title = 'Editar Produto'
-      this.loadProduct(this.id)
-    } else {
-      this.title = 'Novo Produto'
-      this.loadSectors()
-    }
+  protected postEntityLoadingAction(): void {
+    this.loadSectors()
   }
 
   buildForm() {
@@ -59,98 +46,47 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  loadProduct(id: number) {
-    this.toggleScrim('scrimLoading')
-
-    this.productService.getById(id).subscribe({
-      next: (data: any) => {
-        this.form.setValue({
-          nome: data.nome,
-          idSetor: data.setor.id
-        })
-
-        this.toggleScrim('scrimLoading')
-
-        this.loadSectors()
-      },
-      error: err => {
-        this.toggleScrim('scrimLoading')
-        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar o produto', 'danger')
-      }
+  setFormValues(data: any) {
+    this.form.setValue({
+      nome: data.nome,
+      idSetor: data.setor.id
     })
   }
 
   loadSectors() {
-    this.toggleScrim('scrimLoading')
+    toggleScrim('scrimLoading')
 
     this.sectorService.getByParams({ "page": 0, "size": 100, "orderBy": 'nome' }).subscribe({
       next: (data: any) => {
         this.sectors = data.sectors.map( (sector: Sector) => { return { value: sector.id, label: sector.nome, selected: sector.id === this.form.value.idSetor } })
-        this.toggleScrim('scrimLoading')
+        toggleScrim('scrimLoading')
       },
       error: err => {
-        this.toggleScrim('scrimLoading')
-        this.showMessage(err.error.detail ?? 'Ocorreu um erro ao carregar setores', 'danger')
+        toggleScrim('scrimLoading')
+        this.messageService.showMessage(err?.message ?? 'Ocorreu um erro ao carregar setores', 'danger')
       }
     })
   }
 
   cancel(): void {
-    this.router.navigate(['/home/product'])
+    this.navigate('/home/product')
   }
 
-  send(): void {
-    if (this.form.valid) {
-
-      this.toggleScrim('scrimLoading')
-
-      if (this.id) {
-        const product: Product = { id: this.id, nome: this.form.value.nome, setor: { id: this.form.value.idSetor.value, nome: '' } }
-
-        this.productService.edit(product).subscribe({
-          next: () => {
-            this.router.navigate(['/home/product'], { queryParams: { success: 'Produto alterado com sucesso' } } )
-          },
-          error: err => {
-            this.toggleScrim('scrimLoading')
-            this.showMessage(err.error.detail ?? 'Ocorreu um erro ao salvar o produto', 'danger')
-          }
-        })
-      } else {
-        this.productService.save({ nome: this.form.value.nome, idSetor: this.form.value.idSetor.value }).subscribe({
-          next: () => {
-            this.router.navigate(['/home/product'], { queryParams: { success: 'Produto inserido com sucesso' } } )
-          },
-          error: err => {
-            this.toggleScrim('scrimLoading')
-            this.showMessage(err.error.detail ?? 'Ocorreu um erro ao salvar o produto', 'danger')
-          }
-        })
+  protected getDto(): Entity {
+    const result: Product = {
+      id: this.id,
+      nome: this.form.value.nome,
+      setor: {
+        id: this.form.value.idSetor.value,
+        nome: ''
       }
     }
 
-    this.form.markAllAsTouched()
+    return result
   }
 
-  toggleScrim(component: string) {
-    const scrimfoco = new Scrim({
-      trigger: window.document.querySelector('#' + component),
-      escEnable: false
-    })
-
-    if (scrimfoco.trigger.classList.value.indexOf('active') >= 0) {
-      scrimfoco.hideScrim()
-    } else {
-      scrimfoco.showScrim()
-    }
-  }
-
-  showMessage(content: string, status: string, timer: number = null) {
-    this.message = { state: status, text: content, show: true }
-
-    if (timer) {
-      setTimeout(() => { this.message = { state: '', text: '', show: false } }, timer)
-    }
+  send(): void {
+    super.send('/home/product', this.id ? 'Produto alterado com sucesso': 'Produto inserido com sucesso', 'Ocorreu um erro ao salvar o produto')
   }
 
 }

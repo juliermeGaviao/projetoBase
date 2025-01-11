@@ -13,12 +13,12 @@
   </div>
 </div>
 
-<br-message [state]="messageService.message" closable *ngIf="messageService.message.show">{{ messageService.message.text }}</br-message>
+<br-message [state]="messageService.message.state" closable *ngIf="messageService.message.show">{{messageService. message.text }}</br-message>
 
 <form [formGroup]="form" (ngSubmit)="search()">
   <div class="row">
     <div class="col-4">
-      <br-input type="text" id="nome" name="nome" placeholder="Filtrar pelo nome do Setor" label="Nome do Setor:" formControlName="nome"></br-input>
+      <br-input type="text" id="nomeSetor" placeholder="Filtrar pelo nome do Setor" label="Nome do Setor:" formControlName="nome"></br-input>
     </div>
     <div class="col-8 d-flex justify-content-end">
       <button id="limpar" type="reset" class="br-button secondary mt-4 mr-1" (click)="cleanFilters()"><icon class="fas fa-eraser"/>Limpar Filtro</button>
