@@ -53,11 +53,11 @@ export class ListProductComponent extends ListCRUD {
 
     let params: any = { "page": this.dataTable.page.currentPage, "size": this.dataTable.page.itemsPerPage }
 
-    if (this.form.get('nome').value) {
+    if (this.form.value.nome) {
       params.nome = this.form.get('nome').value
     }
 
-    if (this.form.get('idSetor')?.value?.value) {
+    if (this.form.value.idSetor) {
       params.idSetor = this.form.get('idSetor').value.value
     }
 
