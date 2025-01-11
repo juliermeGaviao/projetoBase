@@ -29,7 +29,9 @@ export class SectorComponent extends FormCRUD {
     this.loadEntity('Erro ao carregar dados do setor')
   }
 
-  protected postEntityLoadingAction(): void { }
+  protected postEntityLoadingAction(): void {
+    // do nothing
+  }
 
   buildForm() {
     this.form = this.fb.group({
