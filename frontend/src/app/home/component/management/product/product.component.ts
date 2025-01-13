@@ -9,7 +9,6 @@ import { Sector } from '../../../../model/sector'
 import { MessageService } from '../../../../services/message.service'
 import { FormCRUD } from '../../common/view-new-edit.component'
 import { Entity } from '../../../../interfaces/entity.interface'
-import { Product } from 'src/app/model/product'
 
 @Component({
   selector: 'app-product',
@@ -62,7 +61,7 @@ export class ProductComponent extends FormCRUD {
 
     this.sectorService.getByParams({ "page": 0, "size": 100, "orderBy": 'nome' }).subscribe({
       next: (data: any) => {
-        this.sectors = data.sectors.map( (sector: Sector) => { return { value: sector.id, label: sector.nome, selected: sector.id === this.form.value.idSetor } })
+        this.sectors = data.sectors.map( (sector: Sector) => { return {value: sector.id, label: sector.nome, selected: sector.id === this.form.value.idSetor } })
         toggleScrim('scrimLoading')
       },
       error: err => {

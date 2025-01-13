@@ -39,7 +39,7 @@ describe('ListProductComponent', () => {
 
   it('should get list of products', () => {
     const response: any = {
-      "products": [ { "id": 1, "nome": "Cosméticos" }, { "id": 26, "nome": "Alimentos" } ],
+      "products": [ { "id": 1, "nome": "Batom", "setor": { "id": 1, "nome": "Cosméticos" } }, { "id": 2, "nome": "Heineken", "setor": { "id": 28, "nome": "Bebidas" } } ],
       "totalItems": 1,
       "totalPages": 1,
       "currentPage": 0
@@ -54,7 +54,7 @@ describe('ListProductComponent', () => {
 
   it('should get list of products filtered by name, sector and order by name ascendent', () => {
     const response: any = {
-      "products": [ { "id": 1, "nome": "Cosméticos" } ],
+      "products": [ { "id": 1, "nome": "Batom", "setor": { "id": 1, "nome": "Cosméticos" } } ],
       "totalItems": 1,
       "totalPages": 1,
       "currentPage": 0
