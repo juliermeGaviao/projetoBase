@@ -48,9 +48,11 @@ public class SCA2ServiceImpl implements SCA2Service {
 	/***
 	 *
 	 * @return
+	 * @throws InterruptedException 
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	public ResponseEntity<String> logout() throws java.io.IOException, java.lang.InterruptedException {
+	public ResponseEntity<String> logout() throws InterruptedException, IOException {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		if (!(authentication.getPrincipal() instanceof SCA2User)) {
@@ -64,15 +66,18 @@ public class SCA2ServiceImpl implements SCA2Service {
 			.uri(URI.create(sca2LogoutUrl)).POST(HttpRequest.BodyPublishers.noBody())
 			.build();
 
+		ResponseEntity<String> result = null;
 		try (HttpClient client = HttpClient.newHttpClient()) {
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
 			if (response.statusCode() == OK.value()) {
-				return ResponseEntity.ok(scaLogoutRedirect + encode(sca2SystemUrl, UTF_8.toString()));
+				result = ResponseEntity.ok(scaLogoutRedirect + encode(sca2SystemUrl, UTF_8.toString()));
+			} else {
+				result = ResponseEntity.internalServerError().body("Erro ao realizar integração com SCA2");
 			}
-
-			return ResponseEntity.internalServerError().body("Erro ao realizar integração com SCA2");
 		}
+
+		return result;
 	}
 
 	/***
@@ -93,20 +98,23 @@ public class SCA2ServiceImpl implements SCA2Service {
 				.uri(URI.create(String.format(urlDoLoginAndJwt, encode(sca2SystemUrl, UTF_8.toString()), ticket)))
 				.POST(HttpRequest.BodyPublishers.noBody()).build();
 
+		ResponseEntity<String> result;
 		try (HttpClient client = HttpClient.newHttpClient()) {
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
 			if (response.statusCode() == OK.value()) {
-				return ResponseEntity.ok(response.body());
+				result = ResponseEntity.ok(response.body());
 			} else {
-				return ResponseEntity.internalServerError().body("Autenticação não realizada");
+				result = ResponseEntity.internalServerError().body("Autenticação não realizada");
 			}
 		} catch (IOException e) {
-			return ResponseEntity.internalServerError().body("Erro ao realizar a consulta no serviço SCA2");
+			result = ResponseEntity.internalServerError().body("Erro ao realizar a consulta no serviço SCA2");
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			return ResponseEntity.internalServerError().body("Erro ao realizar a consulta no serviço SCA2");
+			result = ResponseEntity.internalServerError().body("Erro ao realizar a consulta no serviço SCA2");
 		}
+
+		return result;
 	}
 
 }

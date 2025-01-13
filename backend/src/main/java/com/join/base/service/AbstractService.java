@@ -62,7 +62,7 @@ public abstract class AbstractService {
 	}
 
 	public <T> void checkIdValue(Long id, CrudRepository<T, Long> repository) {
-		if (id == null || id <= 0 || !repository.existsById(id)) {
+		if (id <= 0 || !repository.existsById(id)) {
 			throw new ParametrizedMessageException(HttpStatus.BAD_REQUEST, MessagesUtil.ITEM_INEXISTENTE);
 		}
 	}

@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -20,6 +22,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.join.base.exception.AuthException;
 import com.join.base.util.TestUtil;
 
@@ -35,9 +39,14 @@ class SCA2TokenValidatorTest {
 	@Mock
 	private HttpResponse<String> response;
 
+	@Mock
+	private ObjectMapper objectMapper;
+
+	private String body = "{\"login\":\"99999999999\",\"nome\":\"Nononono\",\"numPessoa\":65178865,\"email\":\"nome@gmail.com\",\"usuarioInterno\":true,\"perfilUnidadesVinculadas\":{\"lstPerfilUnidades\":[]},\"roles\":[{\"authority\":\"ROLE_MOD_LAF_INT_FUN_LAF_INT_FCA_ACESSAR\"}],\"rolesSuprimidas\":{\"certificadoA3\":[],\"govBrOuro\":[],\"govBrPrata\":[]},\"loginVia\":\"USUARIO_SENHA\",\"emissorCertificadoSerpro\":false,\"tipoFuncionario\":\"1\",\"podeAcessarSistema\":true,\"autenticacaoMultifator\":false,\"tipoCertificado\":null,\"isRoleSuprimidaPorLoginSemCertificado\":false}";
+
     @BeforeEach
     void setUp() {
-    	validator = new SCA2TokenValidator(urlToValidateJWT);
+    	validator = new SCA2TokenValidator(urlToValidateJWT, objectMapper);
     }
 
     @Test
@@ -74,13 +83,21 @@ class SCA2TokenValidatorTest {
 
     @Test
     void getAuthenticationTest() {
-    	String body = "{\"login\":\"99999999999\",\"nome\":\"Nononono\",\"numPessoa\":65178865,\"email\":\"nome@gmail.com\",\"usuarioInterno\":true,\"perfilUnidadesVinculadas\":{\"lstPerfilUnidades\":[]},\"roles\":[{\"authority\":\"ROLE_MOD_LAF_INT_FUN_LAF_INT_FCA_ACESSAR\"}],\"rolesSuprimidas\":{\"certificadoA3\":[],\"govBrOuro\":[],\"govBrPrata\":[]},\"loginVia\":\"USUARIO_SENHA\",\"emissorCertificadoSerpro\":false,\"tipoFuncionario\":\"1\",\"podeAcessarSistema\":true,\"autenticacaoMultifator\":false,\"tipoCertificado\":null,\"isRoleSuprimidaPorLoginSemCertificado\":false}";
+    	SCA2TokenValidator newValidator = new SCA2TokenValidator(urlToValidateJWT, null);
 
 		when(response.body()).thenReturn(body);
 
-		Authentication authentication = validator.getAuthentication("token", response);
+		Authentication authentication = newValidator.getAuthentication("token", response);
 
 		assertTrue(authentication.isAuthenticated());
+    }
+
+	@Test
+    void getAuthenticationTestFails() throws JsonProcessingException {
+		when(response.body()).thenReturn(body);
+    	when(objectMapper.readValue(anyString(), eq(SCA2User.class))).thenThrow(JsonProcessingException.class);
+
+    	assertThrows(AuthException.class, () -> validator.getAuthentication("token", response));
     }
 
 }

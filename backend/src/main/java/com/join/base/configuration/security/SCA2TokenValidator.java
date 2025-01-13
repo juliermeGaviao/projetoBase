@@ -23,8 +23,11 @@ public class SCA2TokenValidator {
 
 	private String urlToValidateJWT;
 
-	public SCA2TokenValidator(@Value("${spring.security.sca-token-validator}") String urlToValidateJWT) {
+	private ObjectMapper objectMapper;
+
+	public SCA2TokenValidator(@Value("${spring.security.sca-token-validator}") String urlToValidateJWT, ObjectMapper objectMapper) {
 		this.urlToValidateJWT = urlToValidateJWT;
+		this.objectMapper = objectMapper != null ? objectMapper : new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 	}
 
 	/**
@@ -66,7 +69,7 @@ public class SCA2TokenValidator {
 	 */
 	public Authentication getAuthentication(String token, HttpResponse<String> response) {
 		try {
-			SCA2User sca2User = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES).readValue(response.body(), SCA2User.class);
+			SCA2User sca2User = this.objectMapper.readValue(response.body(), SCA2User.class);
 
 			sca2User.setToken(token);
 

@@ -7,22 +7,22 @@ import org.mockito.Mockito;
 
 public class TestUtil {
 
-    private static HttpClient httpClientMock;
+    private static MockedStatic<HttpClient> httpClientMockedStatic;
 
     public static HttpClient getHttpClientMock() {
-    	if (httpClientMock == null) {
-    		setupAll();
-    	}
+		HttpClient result = Mockito.mock(HttpClient.class);
 
-    	return httpClientMock;
+		getMockStatic().when(HttpClient::newHttpClient).thenReturn(result);
+
+    	return result;
     }
 
-    private static void setupAll() {
-    	MockedStatic<HttpClient> httpClientMockedStatic = Mockito.mockStatic(HttpClient.class);
+    private static MockedStatic<HttpClient> getMockStatic() {
+    	if (httpClientMockedStatic == null) {
+        	httpClientMockedStatic = Mockito.mockStatic(HttpClient.class);
+    	}
 
-    	httpClientMock = Mockito.mock(HttpClient.class);
-
-    	httpClientMockedStatic.when(HttpClient::newHttpClient).thenReturn(httpClientMock);
+    	return httpClientMockedStatic;
     }
 
 }

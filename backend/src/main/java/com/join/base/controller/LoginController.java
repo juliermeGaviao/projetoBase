@@ -3,6 +3,7 @@ package com.join.base.controller;
 import static java.net.URLEncoder.encode;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +45,7 @@ public class LoginController {
 	}
 
 	@GetMapping("/logout")
-	public ResponseEntity<String> logout() throws java.io.IOException, java.lang.InterruptedException {
+	public ResponseEntity<String> logout() throws InterruptedException, IOException {
 		return sca2Service.logout();
 	}
 
