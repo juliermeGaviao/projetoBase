@@ -2,172 +2,174 @@ import { TestBed, ComponentFixture } from "@angular/core/testing"
 import { BreadcrumbComponent } from "./breadcrumb.component"
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router"
 import { RouterTestingModule } from '@angular/router/testing'
+import { of } from 'rxjs'
 import { ListSectorComponent } from "../../component/management/sector/list-sector.component"
 import { SectorComponent } from "../../component/management/sector/sector.component"
-import { of } from 'rxjs'
 
 describe('BreadcrumbComponent', () => {
+  let component: BreadcrumbComponent
+  let fixture: ComponentFixture<BreadcrumbComponent>
 
-  it('should create', () => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule.withRoutes([{
+        path: 'home',
+        children: [
+          { path: 'sector', component: ListSectorComponent, data: { breadCrumb: 'Setor' } },
+          { path: 'sector/view', component: SectorComponent, data: { breadCrumb: 'Visualizar' } },
+          { path: 'sector/view/subsector', component: SectorComponent, data: { breadCrumb: 'Listar Subsetores' } }
+        ]
+      }])],
       declarations: [BreadcrumbComponent],
       providers: [{ provide: ActivatedRoute, useValue: { firstChild: null } }]
     }).compileComponents()
-
-    const fixture: ComponentFixture<BreadcrumbComponent> = TestBed.createComponent(BreadcrumbComponent)
-    const component: BreadcrumbComponent = fixture.componentInstance
-
-    expect(component).toBeDefined()
   })
 
-  it('should filter events by NavigationEnd', () => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [BreadcrumbComponent],
-      providers: [{ provide: ActivatedRoute, useValue: { firstChild: null } },
-        {
-          provide: Router,
-          useValue: {
-            url: '/non-pdp/phases/8',
-            events: of(new NavigationEnd(0, 'http://localhost:4200/#/non-pdp/phases/8', 'http://localhost:4200/#/non-pdp/phases/8'))
-          }
-        }
-      ]
-    }).compileComponents()
+  describe('when theres no router', () => {
+    beforeEach(async () => {
+      fixture = TestBed.createComponent(BreadcrumbComponent)
 
-    const fixture: ComponentFixture<BreadcrumbComponent> = TestBed.createComponent(BreadcrumbComponent)
-    const component: BreadcrumbComponent = fixture.componentInstance
+      component = fixture.componentInstance
+    
+      fixture.detectChanges()
+    })
 
-    component.ngAfterViewInit()
+    it('should create the component', () => {
+      expect(component).toBeTruthy()
+    })
 
-    expect(component.ngAfterViewInit).toBeTruthy()
-  })
+    it('should initiate the component', () => {
+      component.ngAfterViewInit()
 
-  it('should have no child', () => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [BreadcrumbComponent],
-      providers: [{ provide: ActivatedRoute, useValue: { firstChild: null } }]
-    }).compileComponents()
+      expect(component.ngAfterViewInit).toBeTruthy()
+    })
 
-    const fixture: ComponentFixture<BreadcrumbComponent> = TestBed.createComponent(BreadcrumbComponent)
-    const component: BreadcrumbComponent = fixture.componentInstance
-
-    component.ngAfterViewInit()
-
-    expect(component.ngAfterViewInit).toBeTruthy()
-  })
-
-  it('should go home', () => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([])],
-      declarations: [BreadcrumbComponent],
-      providers: [{ provide: ActivatedRoute, useValue: { firstChild: null } }
-      ]
-    }).compileComponents()
-
-    const fixture: ComponentFixture<BreadcrumbComponent> = TestBed.createComponent(BreadcrumbComponent)
-    const component: BreadcrumbComponent = fixture.componentInstance
-
-    fixture.ngZone?.run(() => {
+    it('should go home', () => {
       const router: Router = TestBed.inject(Router)
       const navigateSpy = jest.spyOn(router, 'navigate')
-  
-      component.goHome()
-  
+
+      fixture.ngZone?.run(() => {
+        component.goHome()
+      })
+
       expect(navigateSpy).toHaveBeenCalledWith(['/home'])
     })
-  })
-
-  it('should navigate', () => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([])],
-      declarations: [BreadcrumbComponent],
-      providers: [{ provide: ActivatedRoute, useValue: { firstChild: null } }]
-    }).compileComponents()
-
-    const fixture: ComponentFixture<BreadcrumbComponent> = TestBed.createComponent(BreadcrumbComponent)
-    const component: BreadcrumbComponent = fixture.componentInstance
-
-    fixture.ngZone?.run(() => {
+  
+    it('should navigate', () => {
       const router: Router = TestBed.inject(Router)
       const navigateSpy = jest.spyOn(router, 'navigate')
-  
-      component.navigate('/home/sector')
-  
+
+      fixture.ngZone?.run(() => {
+        component.navigate('/home/sector')
+      })
+
       expect(navigateSpy).toHaveBeenCalledWith(['/home/sector'])
     })
+
   })
 
-  it('should have no configured routes', () => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [BreadcrumbComponent],
-      providers: [
-        { provide: ActivatedRoute, useValue: { firstChild: { snapshot: { routeConfig: { path: '' } } } } }
-      ]
-    }).compileComponents()
+  describe('when theres router defined', () => {
 
-    const fixture: ComponentFixture<BreadcrumbComponent> = TestBed.createComponent(BreadcrumbComponent)
-    const component: BreadcrumbComponent = fixture.componentInstance
+    beforeEach(async () => {
+      TestBed.overrideProvider(Router, {
+        useValue: {
+          url: '/non-pdp/phases/8',
+          events: of(new NavigationEnd(0, 'http://localhost:4200/#/non-pdp/phases/8', 'http://localhost:4200/#/non-pdp/phases/8'))
+        }
+      })
 
-    component.ngAfterViewInit()
+      fixture = TestBed.createComponent(BreadcrumbComponent)
 
-    expect(component.ngAfterViewInit).toBeTruthy()
+      component = fixture.componentInstance
+    
+      fixture.detectChanges()
+    })
+
+    it('should create the component', () => {
+      component.ngAfterViewInit()
+
+      expect(component.ngAfterViewInit).toBeTruthy()
+    })
+
   })
 
-  it('should find route /home/sector/view', () => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([{ path: 'home',
-        children: [{ path: 'sector', component: ListSectorComponent, data: { breadCrumb: 'Setor' }},
-          { path: 'sector/view', component: SectorComponent, data: { breadCrumb: 'Visualizar' }}
-        ]
-      }])],
-      declarations: [BreadcrumbComponent],
-      providers: [
-        { provide: ActivatedRoute, useValue: { firstChild: {
-          snapshot: {
-            routeConfig: { path: 'sector/view' }, url: [ { path: 'sector' }, { path: 'view' } ],
-            data: { breadCrumb: 'Visualizar' }
+  describe('when ative route is empty', () => {
+
+    beforeEach(async () => {
+      TestBed.overrideProvider(ActivatedRoute, { useValue: { firstChild: { snapshot: { routeConfig: { path: '' } } } }
+      })
+
+      fixture = TestBed.createComponent(BreadcrumbComponent)
+
+      component = fixture.componentInstance
+    
+      fixture.detectChanges()
+    })
+
+    it('should create the component', () => {
+      component.ngAfterViewInit()
+
+      expect(component.ngAfterViewInit).toBeTruthy()
+    })
+  
+  })
+
+  describe('should find route /home/sector/view', () => {
+
+    beforeEach(async () => {
+      TestBed.overrideProvider(ActivatedRoute, {
+        useValue: {
+          firstChild: {
+            snapshot: {
+              routeConfig: { path: 'sector/view' }, url: [ { path: 'sector' }, { path: 'view' } ],
+              data: { breadCrumb: 'Visualizar' }
+            }
           }
-        } } }
-      ]
-    }).compileComponents()
+        }
+      })
 
-    const fixture: ComponentFixture<BreadcrumbComponent> = TestBed.createComponent(BreadcrumbComponent)
-    const component: BreadcrumbComponent = fixture.componentInstance
+      fixture = TestBed.createComponent(BreadcrumbComponent)
 
-    component.ngAfterViewInit()
+      component = fixture.componentInstance
+    
+      fixture.detectChanges()
+    })
 
-    expect(component.ngAfterViewInit).toBeTruthy()
+    it('should create the component', () => {
+      component.ngAfterViewInit()
+
+      expect(component.ngAfterViewInit).toBeTruthy()
+    })
+  
   })
 
-  it('should find route /home/sector/view/subsector', () => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([{ path: 'home',
-        children: [{ path: 'sector', component: ListSectorComponent, data: { breadCrumb: 'Setor' }},
-          { path: 'sector/view', component: SectorComponent, data: { breadCrumb: 'Visualizar' }},
-          { path: 'sector/view/subsector', component: SectorComponent, data: { breadCrumb: 'Listar Subsetores' }}
-        ]
-      }])],
-      declarations: [BreadcrumbComponent],
-      providers: [
-        { provide: ActivatedRoute, useValue: { firstChild: {
-          snapshot: {
-            routeConfig: { path: 'sector/view/subsector' }, url: [ { path: 'sector' }, { path: 'view' }, { path: 'subsector' } ],
-            data: { breadCrumb: 'Listar Subsetores' }
+  describe('should find route /home/sector/view/subsector', () => {
+
+    beforeEach(async () => {
+      TestBed.overrideProvider(ActivatedRoute, {
+        useValue: {
+          firstChild: {
+            snapshot: {
+              routeConfig: { path: 'sector/view/subsector' }, url: [ { path: 'sector' }, { path: 'view' }, { path: 'subsector' } ],
+              data: { breadCrumb: 'Listar Subsetores' }
+            }
           }
-        } } }
-      ]
-    }).compileComponents()
+        }
+      })
 
-    const fixture: ComponentFixture<BreadcrumbComponent> = TestBed.createComponent(BreadcrumbComponent)
-    const component: BreadcrumbComponent = fixture.componentInstance
+      fixture = TestBed.createComponent(BreadcrumbComponent)
 
-    component.ngAfterViewInit()
+      component = fixture.componentInstance
+    
+      fixture.detectChanges()
+    })
 
-    expect(component.ngAfterViewInit).toBeTruthy()
+    it('should create the component', () => {
+      component.ngAfterViewInit()
+
+      expect(component.ngAfterViewInit).toBeTruthy()
+    })
+  
   })
 
 })
