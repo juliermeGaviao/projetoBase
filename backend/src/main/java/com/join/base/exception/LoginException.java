@@ -1,5 +1,8 @@
 package com.join.base.exception;
 
+import lombok.Getter;
+
+@Getter
 public class LoginException extends RuntimeException {
 
     private static final long serialVersionUID = 2505085615663441379L;
@@ -11,7 +14,4 @@ public class LoginException extends RuntimeException {
         this.codeStatus = status;
     }
 
-    public int getCodeStatus() {
-        return codeStatus;
-    }
 }

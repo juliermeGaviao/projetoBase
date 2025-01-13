@@ -62,7 +62,13 @@ describe('ListProductComponent', () => {
 
     jest.spyOn(productService, 'getByParams').mockReturnValue(of(response))
 
-    component.form = new FormGroup( { nome: new FormControl('Cosméticos'), idSetor: new FormControl(1) } )
+    component.form = new FormGroup( { nome: new FormControl('Cosméticos'), idSetor: new FormControl() } )
+
+    component.form.setValue({
+      nome: 'Cosméticos',
+      idSetor: { value: 1, label: 'Batom', selected: true }
+    })
+
     component.dataTable.orderBy = 'nome'
     component.dataTable.orderDirect = 'asc'
     component.search()

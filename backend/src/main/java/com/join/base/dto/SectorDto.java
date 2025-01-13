@@ -1,5 +1,8 @@
 package com.join.base.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,5 +22,13 @@ public class SectorDto {
 
 	@NonNull
 	private String nome;
+
+	private List<ProductDto> products;
+
+	public SectorDto(Long id, String nome) {
+		this.id = id;
+		this.nome = nome;
+		this.products = new ArrayList<>();
+	}
 
 }

@@ -1,6 +1,7 @@
 package com.join.base.configuration;
 
-import org.hibernate.collection.spi.PersistentCollection;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +13,8 @@ public class MapperConfig {
 	ModelMapper modelMapperBean() {
 		ModelMapper modelMapper = new ModelMapper();
 
-		// Não mapear os filhos @OneToMany
-		modelMapper.getConfiguration().setPropertyCondition(context -> !(context.getSource() instanceof PersistentCollection));
+		// Não mapear campos @OneToMany
+		modelMapper.getConfiguration().setPropertyCondition(context -> !(context.getSource() instanceof List));
 
 		return modelMapper;
 	}

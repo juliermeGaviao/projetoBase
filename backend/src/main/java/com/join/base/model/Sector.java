@@ -36,7 +36,7 @@ public class Sector {
     private String nome;
 
     @OneToMany(mappedBy = "setor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Product> productList = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
 
     public Sector(String nome) {
     	this.nome = nome;
