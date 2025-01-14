@@ -32,6 +32,8 @@ A versão 20.18 do Node.js é sugerida para ser instalada como base desse módul
 
 ## 2. Instalação
 
+A construção dos módulos backend e frontend do projeto base podem ser efetivadas de forma paralela e completamente independente. Obviamente, o contrário ocorre na execução na qual o backend depende da existência e perfeitas condições de funcionamento do banco de dados. Assim como o frontend é totalmente dependente, quanto a seu funcionamento, do módulo backend ligado e funcional.
+
 ### 2.1 Backend
 
  
