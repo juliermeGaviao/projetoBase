@@ -17,7 +17,7 @@ spring:
   security:
     sca2-login-get-jwt: https://homsca2.ibama.serpro.gov.br/sca2sessao/api/v2/sessao/login?service=%s&ticket=%s
     sca2-login-redirect: https://homlogin.sso2.ibama.serpro.gov.br/cas/login?service=%s
-    sca2-system-url: https://127.0.0.1/ticket
+    sca2-system-url: http://127.0.0.1/base/login
     sca-get-token: https://homlogin.sso2.ibama.serpro.gov.br/sca2sessao/api/v2/sessao/login
     sca-token-validator: https://homsca2.ibama.serpro.gov.br/sca2sessao/api/v2/sessao/validar
     sca-logout: https://homsca2.ibama.serpro.gov.br/sca2sessao/api/v1/sessao/logout
