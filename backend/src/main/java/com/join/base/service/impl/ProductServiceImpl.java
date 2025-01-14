@@ -78,7 +78,7 @@ public class ProductServiceImpl extends AbstractService {
 
         Page<Product> pageList = null;
         if (filter.nome() != null || filter.idSetor() != null) {
-            Specification<Product> filterQuery = ProductSpecification.createQuery(filter);
+            Specification<Product> filterQuery = new ProductSpecification(filter);
 
             pageList = productRepository.findAll(filterQuery, pageble);
         } else {
