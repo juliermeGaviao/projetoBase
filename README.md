@@ -6,6 +6,8 @@ Para exemplificar os diversos elementos e aspectos do desenvolvimento de softwar
 
 A relação entre as entidades é: todo produto pertence a um setor, mas nem todo setor possui produtos. Ou seja, uma relação 1xN entre prouto e setor.
 
+O projeto Base distribui tais funcionalidades ao longo de 3 camadas: banco de dados, backend e frontend. E, assim como o software em si, este documento é estruturado de forma contextualizada nessa organização.
+
 ## 1. Pré-requisitos
 
 O projeto Base, como uma aplicação corporativa, utiliza banco de dados relacional para armazenamento dos registros de setores e produtos.
@@ -22,7 +24,7 @@ Por ora, é suficiente informar que o projeto Base já contém configurações p
 
 ### 1.2 Backend
 
-O módulo backend do projeto Base está apoiado no framework Spring Boot, na versão 3.3.6, mais especificamente. No entanto, na construção do módulo é usado o Apache Maven como plataforma de gestão de dependências do Spring Boot e também quem coordena a execução de testes unitários assim como a própria construção do artefato final.
+O módulo backend do projeto Base está apoiado no framework Spring Boot, na versão 3.3.6, mais especificamente. No entanto, na construção do módulo é usado o Apache Maven como plataforma de gestão de dependências do Spring Boot e também quem coordena a execução de testes unitários assim como a própria construção do artefato final. Tudo isso, apoiado em Java, versão 21 ou superior.
 
 ### 1.3 Frontend
 
@@ -36,7 +38,10 @@ A construção dos módulos backend e frontend do projeto base podem ser efetiva
 
 ### 2.1 Backend
 
- 
+Com JDK 21 e Apache Maven disponíveis, ou com a utilizado de plugin compatível da IDE preferida, o seguinte comando deve ser executado para construção do backend:
+
+
+
 ### 2.2 Frontend
 
 ## 3. Características
