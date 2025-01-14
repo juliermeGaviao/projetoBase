@@ -14,7 +14,7 @@ Esta documentação não tem escopo a instalação da infraestrutura de software
 
 A partir dessas ferramentas, o projeto pode ser construído e executado.
 
-1.1 ### Banco de Dados
+### 1.1 Banco de Dados
 
 O banco de dados utilizado no projeto Base depende do perfil spring boot utilizado na execução do backend. Maiores detalhes a respeito de perfil de execução do backend serão apresentados nas seções seguintes deste documento.
 
@@ -24,9 +24,9 @@ Abaixo, é apresentado o diagrama de entidade-relacionamento utilizado no projet
 
 ![!](assets/er.png)
 
-### 1.1 Backend
+### 1.2 Backend
 
-### 1.2 Frontend
+### 1.3 Frontend
 
 ## 2. Instalação
 
