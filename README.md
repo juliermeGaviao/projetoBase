@@ -22,9 +22,7 @@ Por ora, é suficiente informar que o projeto Base já contém configurações p
 
 Abaixo, é apresentado o diagrama de entidade-relacionamento utilizado no projeto.
 
-<center>
-![!](assets/er.png)
-</center>
+<center><img src="assets/er.png"/></center>
 
 ### 1.1 Backend
 
