@@ -35,7 +35,7 @@ public class Sector {
     @Column(name = "nome", nullable = false)
     private String nome;
 
-    @OneToMany(mappedBy = "setor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "setor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> products = new ArrayList<>();
 
     public Sector(String nome) {
