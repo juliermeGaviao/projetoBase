@@ -9,7 +9,7 @@
     <h1>Gerenciar Setores</h1>
   </div>
   <div class="col-4 d-flex justify-content-end">
-    <button id="novo" type="button" class="br-button primary mt-3" (click)="newItem()"><icon class="fas fa-plus"/>Novo</button>
+    <button id="novo" type="button" class="br-button primary mt-3" (click)="newItem()" [attr.disabled]="loginService.disable('ROLE_BASE_ADM_FUNC_CAD_CADASTRAR')"><icon class="fas fa-plus"/>Novo</button>
   </div>
 </div>
 
@@ -34,9 +34,9 @@
   <ng-template #column let-item="row">{{ item.id }}</ng-template>
   <ng-template #column let-item="row">{{ item.nome }}</ng-template>
   <ng-template #column let-item="row">
-    <button type="button" class="br-button circle small mr-2" (click)="view(item.id)" title="Visualizar"><icon class="fas fa-eye"/></button>
-    <button type="button" class="br-button circle small mr-2" (click)="edit(item.id)" title="Editar"><icon class="fas fa-pen"/></button>
-    <button type="button" class="br-button circle small" (click)="confirm(item.id)" title="Remover"><icon class="fas fa-trash"/></button>
+    <button type="button" class="br-button circle small mr-2" (click)="view(item.id)" title="Visualizar" [attr.disabled]="loginService.disable('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')"><icon class="fas fa-eye"/></button>
+    <button type="button" class="br-button circle small mr-2" (click)="edit(item.id)" title="Editar" [attr.disabled]="loginService.disable('ROLE_BASE_ADM_FUNC_CAD_CADASTRAR')"><icon class="fas fa-pen"/></button>
+    <button type="button" class="br-button circle small" (click)="confirm(item.id)" title="Remover" [attr.disabled]="loginService.disable('ROLE_BASE_ADM_FUNC_CAD_CADASTRAR')"><icon class="fas fa-trash"/></button>
   </ng-template>
 
 </dynamic-table>

@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 
@@ -32,7 +31,6 @@ import com.join.base.query.SectorPageFilterQuery;
 import com.join.base.repository.SectorRepository;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class SectorServiceImplTest {
 
 	@Mock

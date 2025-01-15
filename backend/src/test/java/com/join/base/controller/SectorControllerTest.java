@@ -23,6 +23,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,6 +33,7 @@ import com.join.base.service.impl.SectorServiceImpl;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser(roles={"BASE_ADM_FUNC_CAD_CADASTRAR", "BASE_VIS_FUNC_VIS_ACESSAR"})
 class SectorControllerTest {
 
 	@Autowired
@@ -96,6 +98,7 @@ class SectorControllerTest {
 	}
 
 	@Test
+	@WithMockUser(roles="BASE_VIS_FUNC_VIS_ACESSAR")
 	void getProductPageableTest() throws Exception {
         Map<String, Object> response = new HashMap<>();
 

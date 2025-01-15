@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,7 @@ public class SectorController {
 			@ApiResponse(responseCode = "200", description = "Found sector", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = SectorDto.class)) }),
 			@ApiResponse(responseCode = "404", description = "Sector not found", content = @Content) })
+    @PreAuthorize("hasRole('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')")
 	@GetMapping("/{id}")
 	public ResponseEntity<SectorDto> get(@PathVariable Long id) {
 		Optional<SectorDto> result = sectorServiceImpl.get(id);
@@ -52,6 +54,7 @@ public class SectorController {
 	@Operation(summary = "Get all sectors")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "All finded sectors", content = {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = SectorDto.class)) }) })
+    @PreAuthorize("hasRole('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')")
 	@GetMapping("/all")
 	public ResponseEntity<List<SectorDto>> get() {
 		List<SectorDto> result = sectorServiceImpl.list();
@@ -67,6 +70,7 @@ public class SectorController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "All sectors of requested page", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = SectorDto.class)) }) })
+    @PreAuthorize("hasRole('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')")
 	@GetMapping("/page")
 	public ResponseEntity<Map<String, Object>> getPage(SectorPageFilterQuery filter) {
 		return ResponseEntity.ok(sectorServiceImpl.list(filter));
@@ -78,6 +82,7 @@ public class SectorController {
 	 * @return
 	 */
 	@Operation(summary = "Add an sector")
+    @PreAuthorize("hasRole('ROLE_BASE_ADM_FUNC_CAD_CADASTRAR')")
 	@PostMapping
 	public ResponseEntity<SectorDto> post(@RequestBody CreateSectorCommand command) {
 		SectorDto result = sectorServiceImpl.save(command);
@@ -91,6 +96,7 @@ public class SectorController {
 	 * @return
 	 */
 	@Operation(summary = "Update an sector")
+    @PreAuthorize("hasRole('ROLE_BASE_ADM_FUNC_CAD_CADASTRAR')")
 	@PutMapping
 	public ResponseEntity<SectorDto> update(@RequestBody SectorDto sectorDto) {
 		SectorDto result = sectorServiceImpl.update(sectorDto);
@@ -104,6 +110,7 @@ public class SectorController {
 	 * @return
 	 */
 	@Operation(summary = "Delete an sector")
+    @PreAuthorize("hasRole('ROLE_BASE_ADM_FUNC_CAD_CADASTRAR')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		sectorServiceImpl.delete(id);

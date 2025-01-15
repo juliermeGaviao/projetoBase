@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 
@@ -28,7 +27,6 @@ import com.join.base.exception.AuthException;
 import com.join.base.util.TestUtil;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class SCA2TokenValidatorTest {
 
 	@Value("${spring.security.sca-token-validator}")

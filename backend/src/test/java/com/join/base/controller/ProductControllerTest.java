@@ -25,6 +25,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +37,7 @@ import com.join.base.service.impl.ProductServiceImpl;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser(roles={"BASE_ADM_FUNC_CAD_CADASTRAR", "BASE_VIS_FUNC_VIS_ACESSAR"})
 class ProductControllerTest {
 
 	@Autowired

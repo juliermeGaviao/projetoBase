@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,7 @@ public class ProductController {
 			@ApiResponse(responseCode = "200", description = "Found product", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = ProductDto.class)) }),
 			@ApiResponse(responseCode = "404", description = "Product not found", content = @Content) })
+    @PreAuthorize("hasRole('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')")
 	@GetMapping("/{id}")
 	public ResponseEntity<ProductDto> get(@PathVariable Long id) {
 		Optional<ProductDto> result = productServiceImpl.get(id);
@@ -52,6 +54,7 @@ public class ProductController {
 	@Operation(summary = "Get all products")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "All finded products", content = {
 			@Content(mediaType = "application/json", schema = @Schema(implementation = ProductDto.class)) }) })
+    @PreAuthorize("hasRole('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')")
 	@GetMapping("/all")
 	public ResponseEntity<List<ProductDto>> get() {
 		List<ProductDto> result = productServiceImpl.list();
@@ -67,6 +70,7 @@ public class ProductController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "All products of requested page", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = ProductDto.class)) }) })
+    @PreAuthorize("hasRole('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')")
 	@GetMapping("/page")
 	public ResponseEntity<Map<String, Object>> getPage(ProductPageFilterQuery filter) {
 		return ResponseEntity.ok(productServiceImpl.list(filter));
@@ -78,6 +82,7 @@ public class ProductController {
 	 * @return
 	 */
 	@Operation(summary = "Add an product")
+    @PreAuthorize("hasRole('ROLE_BASE_ADM_FUNC_CAD_CADASTRAR')")
 	@PostMapping
 	public ResponseEntity<ProductDto> post(@RequestBody CreateProductCommand command) {
 		ProductDto result = productServiceImpl.save(command);
@@ -91,6 +96,7 @@ public class ProductController {
 	 * @return
 	 */
 	@Operation(summary = "Update an product")
+    @PreAuthorize("hasRole('ROLE_BASE_ADM_FUNC_CAD_CADASTRAR')")
 	@PutMapping
 	public ResponseEntity<ProductDto> update(@RequestBody ProductDto productDto) {
 		ProductDto result = productServiceImpl.update(productDto);
@@ -104,6 +110,7 @@ public class ProductController {
 	 * @return
 	 */
 	@Operation(summary = "Delete an product")
+    @PreAuthorize("hasRole('ROLE_BASE_ADM_FUNC_CAD_CADASTRAR')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		productServiceImpl.delete(id);

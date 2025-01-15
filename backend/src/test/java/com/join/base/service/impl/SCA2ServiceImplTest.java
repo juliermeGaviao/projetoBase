@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +26,6 @@ import com.join.base.exception.LoginException;
 import com.join.base.util.TestUtil;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class SCA2ServiceImplTest {
 
 	@Value("${spring.security.sca-logout}")

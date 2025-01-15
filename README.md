@@ -24,7 +24,7 @@ Por ora, é suficiente informar que o projeto Base já contém configurações p
 
 ### 1.2 Backend
 
-O módulo backend do projeto Base está apoiado no framework Spring Boot, na versão 3.3.6, mais especificamente. No entanto, na construção do módulo é usado o Apache Maven como plataforma de gestão de dependências do Spring Boot e também quem coordena a execução de testes unitários assim como a própria construção do artefato final. Tudo isso, apoiado em Java, versão 21 ou superior.
+O módulo backend do projeto Base está apoiado no framework Spring Boot, na versão 3.3.7, mais especificamente. No entanto, na construção do módulo é usado o Apache Maven como plataforma de gestão de dependências do Spring Boot e também quem coordena a execução de testes unitários assim como a própria construção do artefato final. Tudo isso, apoiado em Java, versão 21 ou superior.
 
 ### 1.3 Frontend
 

@@ -8,6 +8,7 @@ import { ListCRUD } from '../../common/list.component'
 import { ProductService } from '../../../../services/product.service'
 import { SectorService } from '../../../../services/sector.service'
 import { Sector } from '../../../../model/sector'
+import { LoginService } from 'src/app/services/login.service'
 
 @Component({
   selector: 'app-list-product',
@@ -21,6 +22,7 @@ export class ListProductComponent extends ListCRUD {
     protected readonly router: Router,
     protected readonly route: ActivatedRoute,
     public readonly messageService: MessageService,
+    public readonly loginService: LoginService,
     private readonly fb: FormBuilder,
     private readonly sectorService: SectorService,
     private readonly productService: ProductService)

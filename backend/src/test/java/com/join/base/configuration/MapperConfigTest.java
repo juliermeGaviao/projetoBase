@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.join.base.dto.ProductDto;
@@ -14,7 +13,6 @@ import com.join.base.model.Product;
 import com.join.base.model.Sector;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class MapperConfigTest {
 
 	@Autowired

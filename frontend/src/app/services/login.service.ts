@@ -46,4 +46,22 @@ export class LoginService {
     this.userResponse.next(null)
   }
 
+  hasRole(role: string): boolean {
+    let result: boolean = false
+
+    if (this.userResponse.value?.usuario) {
+      const roles: any[] = this.userResponse.value.usuario.roles
+
+      for (let i = 0; i < roles.length && !result; i++) {
+        result = role === roles[i].authority
+      }
+    }
+
+    return result
+  }
+
+  disable(role: string): boolean {
+    return this.hasRole(role) ? null : true
+  }
+
 }

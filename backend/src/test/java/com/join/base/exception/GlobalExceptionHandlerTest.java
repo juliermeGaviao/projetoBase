@@ -5,14 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class GlobalExceptionHandlerTest {
 
 	@Autowired
@@ -35,6 +33,24 @@ class GlobalExceptionHandlerTest {
 
 	@Test
 	void handleParametrizedMessageExceptionTest() {
+		ProblemDetail problem = globalExceptionHandler.handleException(new ParametrizedMessageException(HttpStatus.INTERNAL_SERVER_ERROR, "Mensagem de Erro"));
+
+		assertEquals("Mensagem de Erro", problem.getDetail());
+	}
+
+	@Test
+	void handleGenericExceptionTestProfile() {
+		env.setActiveProfiles("test");
+
+		ProblemDetail problem = globalExceptionHandler.handleException(new RuntimeException());
+
+		assertEquals("Ocorreu um erro inesperado", problem.getDetail());
+	}
+
+	@Test
+	void handleParametrizedMessageExceptionTestProfile() {
+		env.setActiveProfiles("test");
+
 		ProblemDetail problem = globalExceptionHandler.handleException(new ParametrizedMessageException(HttpStatus.INTERNAL_SERVER_ERROR, "Mensagem de Erro"));
 
 		assertEquals("Mensagem de Erro", problem.getDetail());

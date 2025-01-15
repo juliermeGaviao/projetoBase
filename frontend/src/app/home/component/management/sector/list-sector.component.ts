@@ -6,6 +6,7 @@ import { MessageService } from '../../../../services/message.service'
 
 import { ListCRUD } from '../../common/list.component'
 import { SectorService } from '../../../../services/sector.service'
+import { LoginService } from 'src/app/services/login.service'
 
 @Component({
   selector: 'app-list-sector',
@@ -18,7 +19,8 @@ export class ListSectorComponent extends ListCRUD {
     protected readonly route: ActivatedRoute,
     public readonly messageService: MessageService,
     private readonly fb: FormBuilder,
-    private readonly sectorService: SectorService)
+    private readonly sectorService: SectorService,
+    public readonly loginService: LoginService)
   {
     super(router, route, messageService)
   }

@@ -8,14 +8,12 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class SecurityConfigurationTest {
 
 	private SecurityConfiguration securityConfiguration;
@@ -36,6 +34,21 @@ class SecurityConfigurationTest {
 
 	@Test
 	void securityFilterChain() throws Exception {
+		when(env.matchesProfiles(anyString())).thenReturn(Boolean.FALSE);
+		when(httpSecurity.csrf(any())).thenReturn(httpSecurity);
+		when(httpSecurity.addFilterBefore(any(), any())).thenReturn(httpSecurity);
+		when(httpSecurity.authorizeHttpRequests(any())).thenReturn(httpSecurity);
+		when(httpSecurity.build()).thenReturn(null);
+
+		SecurityFilterChain result = securityConfiguration.securityFilterChain(httpSecurity);
+
+		assertNull(result);
+	}
+
+	@Test
+	void securityFilterChainProfileTest() throws Exception {
+		env.setActiveProfiles("test");
+
 		when(env.matchesProfiles(anyString())).thenReturn(Boolean.FALSE);
 		when(httpSecurity.csrf(any())).thenReturn(httpSecurity);
 		when(httpSecurity.addFilterBefore(any(), any())).thenReturn(httpSecurity);
