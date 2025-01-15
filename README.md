@@ -196,16 +196,20 @@ A tela de visualização, inserção e edição; conforme mostrado abaixo, é ma
 
 Essecialemente, contém um formulário que oportuniza visualização, inserção e alteração de campos componentes da entidade de banco de dados gerenciada pelo CRUD. Excetuando-se o modo visualizar, a tela permite cancelar a ação corrente da tela ou salvar os dados. No modo restante, apenas há o botão voltar à tela de listagem do CRUD.
 
-No contexto de restrição de acesso através de perfis de usuário oriundos do SCA 2, é possível, por exemplo, habilitar ou não a disponibilidade de botões da interface consultando a lista de perfis do usuário. A tela abaixo se encaixa no contexto onde o usuário tem perfil de visualização de dados de CRUD mas não pode alterar registros. Notar que apenas o botão de visualização está disponível ao usuário, porém os botões de novo produto, editar e remover estão desabilitados.
+No contexto de restrição de acesso através de perfis de usuário oriundos do SCA 2, é possível, por exemplo, habilitar ou não a disponibilidade de botões da interface consultando a lista de perfis do usuário. A tela abaixo se encaixa no contexto onde o usuário tem perfil de visualização de dados de CRUD mas não pode alterar produtos. Notar que apenas o botão de visualização está disponível ao usuário, porém os botões de novo produto, editar e remover estão desabilitados.
 
 ![!](assets/perfilVisualizador.png)
 
 ## 5. Considerações Finais
 
-Conclusão
+A questão final, em relação ao projeto Base, diz respeito à qualidade do código. Nesse contexto, o projeto se coloca como modelo a ser seguido, não só na qualidade dos indicadores como também nas soluções adotadas no âmbito de teste unitário.
+
+No backend, os testes unitários cobrem situações comumente fora do escopo de atuação de projetos regulares como testar permissionamento de perfil de usuário, de acesso a endpoints REST ou montagem de predicados de consulta SQL a banco de dados. A partir disso, chegou-se aos seguintes indicadores de qualidade de código para o módulo backend:
 
 ![!](assets/indicador-qualidade-backend.png)
 
-Frontend
+O mesmo se aplica ao módulo frontend, no qual há testes contemplando permissionamento de perfis de usuário, testes sobre componentes compostos via herança e testes sobre elementos do leiaute da interface como menu, trilha de migalha de pão ou tabela de listagem de registros. Com efeito, o conjunto de indicadores abaixo foi extraído do frontend:
 
 ![!](assets/indicador-qualidade-frontend.png)
+
+Software sempre tem espaço para melhorias, em qualquer de suas camadas. No entanto, o projeto Base tem por objevtivo cobrir os principais aspectos e requisitos funcionais e não funcionais recorrentes nos projetos do Ibama.
