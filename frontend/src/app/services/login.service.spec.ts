@@ -75,4 +75,45 @@ describe('LoginService', () => {
     localStorage.setItem('usuarioResponse_SCA2', null)
     expect(service.getUsuarioResponse()).toBeNull()
   })
+
+  it('should disable because theres no role', () => {
+      const mockUserResponse: UsuarioResponse = { sessionToken: 'abc123' } as UsuarioResponse
+
+      service.setUsuarioResponse(mockUserResponse)
+
+      const result: boolean = service.disable('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')
+
+      expect(result).toBeTruthy()
+  })
+
+  it('should disable because theres no role', () => {
+    const mockUserResponse: UsuarioResponse = { usuario: { roles: [] } } as UsuarioResponse
+
+    service.setUsuarioResponse(mockUserResponse)
+
+    const result: boolean = service.disable('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')
+
+    expect(result).toBeTruthy()
+  })
+
+  it('should disable because theres no role', () => {
+    const mockUserResponse: UsuarioResponse = { usuario: { roles: [ { authority: 'ROLE_BASE_ADM_FUNC_CAD_CADASTRAR' } ] } } as UsuarioResponse
+
+    service.setUsuarioResponse(mockUserResponse)
+
+    const result: boolean = service.disable('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')
+
+    expect(result).toBeTruthy()
+  })
+
+  it('should not disable because theres no role', () => {
+    const mockUserResponse: UsuarioResponse = { usuario: { roles: [ { authority: 'ROLE_BASE_VIS_FUNC_VIS_ACESSAR' } ] } } as UsuarioResponse
+
+    service.setUsuarioResponse(mockUserResponse)
+
+    const result: boolean = service.disable('ROLE_BASE_VIS_FUNC_VIS_ACESSAR')
+
+    expect(result).toBeNull()
+  })
+
 })

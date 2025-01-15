@@ -6,7 +6,7 @@ import { MessageService } from '../../../../services/message.service'
 
 import { ListCRUD } from '../../common/list.component'
 import { SectorService } from '../../../../services/sector.service'
-import { LoginService } from 'src/app/services/login.service'
+import { LoginService } from '../../../../services/login.service'
 
 @Component({
   selector: 'app-list-sector',

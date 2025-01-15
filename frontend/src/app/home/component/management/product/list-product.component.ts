@@ -8,7 +8,7 @@ import { ListCRUD } from '../../common/list.component'
 import { ProductService } from '../../../../services/product.service'
 import { SectorService } from '../../../../services/sector.service'
 import { Sector } from '../../../../model/sector'
-import { LoginService } from 'src/app/services/login.service'
+import { LoginService } from '../../../../services/login.service'
 
 @Component({
   selector: 'app-list-product',
