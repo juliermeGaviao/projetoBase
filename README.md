@@ -137,6 +137,11 @@ Por fim, um seção importante de configuração do backend diz respeito ao SCA2
 - Módulo, funcionalidade e ação: ao menos, cada um desses elementos deve ser criado denro de uma aplicação SCA 2;
 - Perfil de usuário: ao menos um perfil circunscrido à aplicação deve ser criado. O projeto Base não associa qualquer de suas funcionalidades a qualquer perfil que devesse autorização sua utilização. No entanto, cabe esclarecer que isso é possível incorporar, principalmente no módulo backend;
 - Vínculo usuário e perfil: associa um usuário, tipicamente um CPF pré-configurado no sistema SIGER, a um perfil definido na aplicação;
+- Montagem de perfis de usuário: no projeto Base foram criados no SCA 2 dois perfis (ROLE_BASE_VIS_FUNC_VIS_ACESSAR e ROLE_BASE_ADM_FUNC_CAD_CADASTRAR); o primeiro permite a visualização de dados enquanto que o segundo permite criar, editar ou remover elementos dos CRUDs de setor e de produto;
+
+No cenário em que o usuário somente possui perfil de adminstrador, a listagem de registro está proibida. A tela abaixo mostra a falha que ocorre no backend ao acessar o endpoint para listagem de produtos:
+
+![!](assets/perfilAdministrador.png)
 
 As propriedades do backend, abaixo, contém diferentes partes do processo de comunicação com o SCA, circunscritos ao login, validação de token e logout.
 
@@ -189,7 +194,11 @@ A tela de visualização, inserção e edição; conforme mostrado abaixo, é ma
 
 ![!](assets/editar.png)
 
-Essecialemente, contém um formulário que oportuniza visualização, inserção e altearação de campos componentes da entidade de banco de dados gerenciada pelo CRUD. Excetuando-se o modo visualizar, a tela permite cancelar a ação corrente da tela ou salvar os dados. No modo restante, apenas há o botão voltar à tela de listagem do CRUD.
+Essecialemente, contém um formulário que oportuniza visualização, inserção e alteração de campos componentes da entidade de banco de dados gerenciada pelo CRUD. Excetuando-se o modo visualizar, a tela permite cancelar a ação corrente da tela ou salvar os dados. No modo restante, apenas há o botão voltar à tela de listagem do CRUD.
+
+No contexto de restrição de acesso através de perfis de usuário oriundos do SCA 2, é possível, por exemplo, habilitar ou não a disponibilidade de botões da interface consultando a lista de perfis do usuário. A tela abaixo se encaixa no contexto onde o usuário tem perfil de visualização de dados de CRUD mas não pode alterar registros. Notar que apenas o botão de visualização está disponível ao usuário, porém os botões de novo produto, editar e remover estão desabilitados.
+
+![!](assets/perfilVisualizador.png)
 
 ## 5. Considerações Finais
 
