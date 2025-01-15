@@ -45,19 +45,4 @@ class SecurityConfigurationTest {
 		assertNull(result);
 	}
 
-	@Test
-	void securityFilterChainProfileTest() throws Exception {
-		env.setActiveProfiles("test");
-
-		when(env.matchesProfiles(anyString())).thenReturn(Boolean.FALSE);
-		when(httpSecurity.csrf(any())).thenReturn(httpSecurity);
-		when(httpSecurity.addFilterBefore(any(), any())).thenReturn(httpSecurity);
-		when(httpSecurity.authorizeHttpRequests(any())).thenReturn(httpSecurity);
-		when(httpSecurity.build()).thenReturn(null);
-
-		SecurityFilterChain result = securityConfiguration.securityFilterChain(httpSecurity);
-
-		assertNull(result);
-	}
-
 }

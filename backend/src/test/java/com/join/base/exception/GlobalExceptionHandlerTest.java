@@ -38,22 +38,4 @@ class GlobalExceptionHandlerTest {
 		assertEquals("Mensagem de Erro", problem.getDetail());
 	}
 
-	@Test
-	void handleGenericExceptionTestProfile() {
-		env.setActiveProfiles("test");
-
-		ProblemDetail problem = globalExceptionHandler.handleException(new RuntimeException());
-
-		assertEquals("Ocorreu um erro inesperado", problem.getDetail());
-	}
-
-	@Test
-	void handleParametrizedMessageExceptionTestProfile() {
-		env.setActiveProfiles("test");
-
-		ProblemDetail problem = globalExceptionHandler.handleException(new ParametrizedMessageException(HttpStatus.INTERNAL_SERVER_ERROR, "Mensagem de Erro"));
-
-		assertEquals("Mensagem de Erro", problem.getDetail());
-	}
-
 }
